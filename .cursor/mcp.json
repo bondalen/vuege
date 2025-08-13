@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "postgres-mcp": {
+      "command": "/home/alex/projects/vuege/venv/bin/postgres-mcp",
+      "args": ["--access-mode", "unrestricted", "postgresql://testuser:testpass@localhost:5432/testdb"],
+      "env": {},
+      "description": "PostgreSQL MCP Server for database operations"
+    }
+  }
+}
+

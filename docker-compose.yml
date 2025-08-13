@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres-java:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.postgres-java
+    container_name: postgres-java-universal
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=testdb
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/16/main
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+
