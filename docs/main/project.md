@@ -34,6 +34,7 @@ Vuege - это CRUD веб-сервис для учета организацио
 #### Backend
 - **Spring Boot**: 3.4.5
 - **Java**: 21 LTS (Eclipse Temurin)
+- **Lombok**: 1.18.34 (минимизация boilerplate кода)
 - **GraphQL**: Spring GraphQL
 - **Database Access**: R2DBC (реактивный)
 - **Database**: PostgreSQL 16 + PostGIS
@@ -294,12 +295,12 @@ src/main/java/my/fe/vuege/
 │   ├── GraphQLController.java
 │   └── HealthController.java
 ├── model/
-│   ├── OrganizationalUnit.java
-│   ├── Position.java
-│   ├── Person.java
-│   ├── PersonPosition.java
-│   ├── HistoricalPeriod.java
-│   └── GeoPoint.java
+│   ├── OrganizationalUnit.java (с Lombok аннотациями)
+│   ├── Position.java (с Lombok аннотациями)
+│   ├── Person.java (с Lombok аннотациями)
+│   ├── PersonPosition.java (с Lombok аннотациями)
+│   ├── HistoricalPeriod.java (с Lombok аннотациями)
+│   └── GeoPoint.java (с Lombok аннотациями)
 ├── repository/
 │   ├── OrganizationalUnitRepository.java
 │   ├── PositionRepository.java
@@ -556,14 +557,69 @@ module.exports = function (ctx) {
 - **Reactive** - реактивная архитектура
 - **Type Safety** - строгая типизация
 
+### Использование Lombok
+
+#### Цель интеграции
+Lombok интегрирован в проект для минимизации boilerplate кода в Java-классах, что повышает читаемость и снижает вероятность ошибок.
+
+#### Основные аннотации
+```java
+// Для моделей данных
+@Data                    // Геттеры, сеттеры, toString, equals, hashCode
+@Builder                 // Паттерн Builder
+@NoArgsConstructor      // Конструктор без параметров
+@AllArgsConstructor     // Конструктор со всеми параметрами
+@RequiredArgsConstructor // Конструктор с обязательными параметрами
+
+// Для сервисов и контроллеров
+@Slf4j                  // Автоматическое логирование
+@RequiredArgsConstructor // Внедрение зависимостей через конструктор
+
+// Для репозиториев
+@Repository             // Spring Repository
+@RequiredArgsConstructor // Внедрение зависимостей
+```
+
+#### Пример использования в моделях
+```java
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrganizationalUnit {
+    private String id;
+    private String name;
+    private OrganizationType type;
+    private LocalDate foundedDate;
+    private LocalDate dissolvedDate;
+    private GeoPoint location;
+    private boolean isFictional;
+    private HistoricalPeriod historicalPeriod;
+    private String parentUnitId;
+    private List<String> childUnitIds;
+    private List<Transformation> transformations;
+}
+```
+
+#### Правила использования
+- **Модели данных**: Используем `@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- **Сервисы**: Используем `@Slf4j`, `@RequiredArgsConstructor`
+- **Контроллеры**: Используем `@Slf4j`, `@RequiredArgsConstructor`
+- **Репозитории**: Используем `@Repository`, `@RequiredArgsConstructor`
+- **Исключения**: Не используем Lombok для сложной бизнес-логики
+
 ### Стандарты кодирования
 - **TypeScript** - строгий режим
 - **ESLint** - линтинг кода
 - **Prettier** - форматирование
 - **Pre-commit hooks** - проверка перед коммитом
+- **Lombok** - минимизация boilerplate кода в Java
+- **Lombok Annotations** - стандартизированное использование аннотаций
 
 ### Документирование
 - **JSDoc** - документация функций
+- **JavaDoc** - документация Java классов
+- **Lombok Documentation** - документация аннотаций
 - **GraphQL Schema** - документация API
 - **README** - документация проекта
 - **Changelog** - история изменений
