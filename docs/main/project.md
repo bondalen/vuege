@@ -17,8 +17,13 @@ Vuege - это CRUD веб-сервис для учета организацио
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Vuege Application                        │
+│                     (Quasar Framework)                      │
 ├─────────────────────────────────────────────────────────────┤
 │  Frontend (Vue.js + Quasar + TanStack Router + Apollo)     │
+│  ├── Web (SPA/PWA/SSR)                                     │
+│  ├── Mobile (iOS/Android via Capacitor)                    │
+│  └── Desktop (Windows/macOS/Linux via Electron)            │
+├─────────────────────────────────────────────────────────────┤
 │  Backend (Spring Boot + GraphQL + R2DBC)                   │
 │  Database (PostgreSQL 16 + PostGIS)                        │
 └─────────────────────────────────────────────────────────────┘
@@ -37,11 +42,12 @@ Vuege - это CRUD веб-сервис для учета организацио
 
 #### Frontend
 - **Framework**: Vue.js 3.4.21
-- **UI Library**: Quasar 2.16.1
+- **UI Library**: Quasar 2.16.1 (поддержка Web/Mobile/Desktop)
 - **Router**: TanStack Router 1.16.0
 - **GraphQL Client**: Apollo Client 3.13.5
 - **Language**: TypeScript 5.4.0
 - **Build Tool**: Vite
+- **Deployment**: SPA (разработка), PWA/SSR (Web), Capacitor (Mobile), Electron (Desktop)
 
 #### Infrastructure
 - **Container**: postgres-java-universal (PostgreSQL 16 + Java 21)
@@ -421,6 +427,23 @@ volumes:
 ```
 
 ### Сборка и развертывание
+
+#### Frontend разработка (SPA)
+```bash
+# Разработка в режиме SPA
+quasar dev
+
+# Сборка SPA для продакшена
+quasar build
+
+# Тестирование PWA возможностей
+quasar dev --mode pwa
+
+# Сборка PWA для продакшена
+quasar build --mode pwa
+```
+
+#### Backend
 ```bash
 # Сборка проекта
 mvn clean package
@@ -451,10 +474,12 @@ docker-compose ps
 - [ ] Реализация резолверов
 
 ### Этап 3: Frontend (Недели 5-6)
+- [ ] Настройка Quasar SPA режима разработки
 - [ ] Создание основных страниц
 - [ ] Интеграция с GraphQL
 - [ ] Реализация CRUD операций
 - [ ] Базовая валидация
+- [ ] Настройка конфигурации для переключения между режимами
 
 ### Этап 4: ГИС-функциональность (Недели 7-8)
 - [ ] Интеграция PostGIS
@@ -474,6 +499,53 @@ docker-compose ps
 - [ ] E2E тесты
 - [ ] Производительность
 - [ ] Безопасность
+
+## Стратегия развертывания
+
+### Режим разработки по умолчанию: SPA
+Для обеспечения максимальной скорости разработки и простоты отладки выбран **SPA (Single Page Application)** как основной режим разработки.
+
+**Обоснование выбора:**
+- ✅ **Быстрая разработка** - мгновенная перезагрузка при изменениях
+- ✅ **Простая отладка** - Vue DevTools работают идеально
+- ✅ **ГИС-функциональность** - карты и интерактивные элементы лучше работают в SPA
+- ✅ **Исторические данные** - сложная навигация по временным шкалам удобнее в SPA
+- ✅ **GraphQL интеграция** - Apollo Client лучше интегрируется с SPA
+
+### Стратегия развертывания по этапам:
+```
+Разработка: SPA (быстро, просто, гибко)
+    ↓
+Тестирование: SPA + PWA (добавляем офлайн возможности)
+    ↓
+Продакшен: Выбор в зависимости от требований
+    - Web: SPA или PWA
+    - Mobile: Capacitor
+    - Desktop: Electron
+```
+
+### Конфигурация Quasar для разработки
+```javascript
+// quasar.config.js
+module.exports = function (ctx) {
+  return {
+    // Режим разработки - SPA
+    build: {
+      distDir: 'dist/spa',
+      publicPath: '/'
+    },
+    
+    // Легкое переключение на PWA для тестирования
+    pwa: {
+      workboxPluginMode: 'GenerateSW',
+      workboxOptions: {
+        skipWaiting: true,
+        clientsClaim: true
+      }
+    }
+  }
+}
+```
 
 ## Стандарты и принципы
 
