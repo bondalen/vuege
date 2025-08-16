@@ -1,269 +1,151 @@
-# Настройка SSH-агента для автоматической аутентификации
+# Настройка SSH подключения к GitHub
 
-## Проблема
-При выполнении `git push` запрашивается passphrase для SSH-ключа, что требует ручного ввода и не позволяет автоматизировать процесс.
+## Обзор
 
-## Решение: SSH-агент
+Данный документ описывает настройку и использование SSH подключения к GitHub для проекта Vuege.
 
-### Что такое SSH-агент
-SSH-агент - это программа, которая хранит приватные ключи в памяти и автоматически предоставляет их для аутентификации SSH-соединений.
+## Текущее состояние
 
-### Настройка SSH-агента
+✅ **SSH подключение настроено и работает**
+- SSH ключи: `id_ed25519_github` и `id_ed25519_auto`
+- Remote URL: `git@github.com:bondalen/vuege.git`
+- Автоматический скрипт: `src/infrastructure/scripts/setup-ssh-agent.sh`
 
-#### 1. Запуск SSH-агента
+## Быстрый старт
+
+### Автоматическая настройка
+```bash
+# Запуск автоматического скрипта настройки
+./src/infrastructure/scripts/setup-ssh-agent.sh
+```
+
+### Ручная настройка
+```bash
+# 1. Запуск SSH агента
+eval "$(ssh-agent -s)"
+
+# 2. Добавление ключей
+ssh-add ~/.ssh/id_ed25519_github
+ssh-add ~/.ssh/id_ed25519_auto
+
+# 3. Тестирование подключения
+ssh -T git@github.com
+```
+
+## Проверка статуса
+
+### SSH агент
+```bash
+# Проверка запущенного агента
+ssh-add -l
+
+# Ожидаемый вывод:
+# 256 SHA256:KeGFqcWDH5cbqJNcoCyg5MI7cmkVz7OIVuyed+E8qAk alex@vuege (ED25519)
+# 256 SHA256:aeUTKdQy4LgniCIup4J8RtrRRFlsjsdx+M3jFuwKAZE alex@vuege-auto (ED25519)
+```
+
+### GitHub подключение
+```bash
+# Тест подключения к GitHub
+ssh -T git@github.com
+
+# Ожидаемый вывод:
+# Hi bondalen! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+### Git remote
+```bash
+# Проверка настроенного remote
+git remote -v
+
+# Ожидаемый вывод:
+# origin  git@github.com:bondalen/vuege.git (fetch)
+# origin  git@github.com:bondalen/vuege.git (push)
+```
+
+## Решение проблем
+
+### Проблема: "Permission denied (publickey)"
+**Причина**: SSH ключ не добавлен в GitHub или SSH агент не запущен
+
+**Решение**:
+1. Проверить SSH агент: `ssh-add -l`
+2. Если агент не запущен: `eval "$(ssh-agent -s)"`
+3. Добавить ключ: `ssh-add ~/.ssh/id_ed25519_github`
+4. Проверить ключ в GitHub: Settings → SSH and GPG keys
+
+### Проблема: "Could not open a connection to your authentication agent"
+**Причина**: SSH агент не запущен
+
+**Решение**:
 ```bash
 eval "$(ssh-agent -s)"
-```
-
-#### 2. Добавление SSH-ключа в агент
-```bash
 ssh-add ~/.ssh/id_ed25519_github
 ```
-При первом добавлении потребуется ввести passphrase один раз.
 
-#### 3. Проверка добавленных ключей
+### Проблема: Git операции требуют пароль
+**Причина**: Используется HTTPS вместо SSH
+
+**Решение**:
 ```bash
-ssh-add -l
+# Переключить на SSH
+git remote set-url origin git@github.com:bondalen/vuege.git
+
+# Проверить
+git remote -v
 ```
 
-### Автоматический запуск SSH-агента
+## Автоматизация
 
-#### Для текущей сессии
-Добавьте в `~/.bashrc` или `~/.zshrc`:
+### Автоматический запуск при старте терминала
+Добавить в `~/.bashrc`:
 ```bash
-# Запуск SSH-агента при старте терминала
+# SSH агент для проекта Vuege
 if [ -z "$SSH_AUTH_SOCK" ]; then
     eval "$(ssh-agent -s)" > /dev/null
     ssh-add ~/.ssh/id_ed25519_github 2>/dev/null
 fi
 ```
 
-#### Для системы (systemd)
-Создайте файл `~/.config/systemd/user/ssh-agent.service`:
-```ini
-[Unit]
-Description=SSH key agent
-
-[Service]
-Type=forking
-Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
-ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
-
-[Install]
-WantedBy=default.target
-```
-
-Затем включите сервис:
-```bash
-systemctl --user enable ssh-agent
-systemctl --user start ssh-agent
-```
-
-### Проверка работы
-
-#### Тест подключения к GitHub
-```bash
-ssh -T git@github.com
-```
-
-#### Тест git push
-```bash
-git push origin main
-```
-
-### Преимущества использования SSH-агента
-
-1. **Автоматическая аутентификация**: не нужно вводить passphrase при каждом push
-2. **Безопасность**: ключи хранятся в памяти только во время сессии
-3. **Удобство**: возможность автоматизации git-операций
-4. **Производительность**: быстрые SSH-соединения
-
-### Управление SSH-агентом
-
-#### Просмотр добавленных ключей
-```bash
-ssh-add -l
-```
-
-#### Удаление всех ключей
-```bash
-ssh-add -D
-```
-
-#### Удаление конкретного ключа
-```bash
-ssh-add -d ~/.ssh/id_ed25519_github
-```
-
-#### Остановка SSH-агента
-```bash
-ssh-agent -k
-```
-
-### Troubleshooting
-
-#### SSH-агент не запущен
-```bash
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519_github
-```
-
-#### Ключ не добавлен
-```bash
-ssh-add -l
-# Если список пустой, добавьте ключ:
-ssh-add ~/.ssh/id_ed25519_github
-```
-
-#### Проблемы с правами доступа
-```bash
-chmod 600 ~/.ssh/id_ed25519_github
-chmod 700 ~/.ssh
-```
-
-#### Проблемы с персистентным хранением ключей (WSL2)
-Если ключ добавляется, но не сохраняется между командами:
-
-1. **Полная перезагрузка SSH-агента**:
-```bash
-ssh-agent -k
-unset SSH_AUTH_SOCK && unset SSH_AGENT_PID
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519_github
-```
-
-2. **Проверка переменных окружения**:
-```bash
-echo "SSH_AUTH_SOCK: $SSH_AUTH_SOCK"
-echo "SSH_AGENT_PID: $SSH_AGENT_PID"
-```
-
-3. **Проверка процесса агента**:
-```bash
-ps aux | grep ssh-agent
-```
-
-4. **Диагностика подключения**:
-```bash
-ssh-add -l                    # Должен показать ключ
-ssh -T git@github.com         # Должен показать "successfully authenticated"
-git fetch --dry-run          # Должен работать без запроса passphrase
-```
-
-#### Проблемы с passphrase
-Если система не принимает passphrase:
-
-1. **Проверьте правильность passphrase**
-2. **Попробуйте перезапустить терминал**
-3. **Очистите SSH-агент и добавьте ключ заново**:
-```bash
-ssh-agent -k
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519_github
-```
-
-#### Конфликты с автоматической настройкой
-Если есть конфликты с настройками в ~/.bashrc:
-
-1. **Проверьте содержимое ~/.bashrc**:
-```bash
-grep -n "ssh-agent" ~/.bashrc
-```
-
-2. **Временно отключите автоматическую настройку**:
-```bash
-# Закомментируйте строки с ssh-agent в ~/.bashrc
-```
-
-3. **Перезапустите терминал**:
-```bash
-source ~/.bashrc
-```
-
-### Интеграция с Cursor IDE
-
-После настройки SSH-агента все git-операции в Cursor IDE будут работать автоматически без запроса passphrase.
-
-### Безопасность
-
-- SSH-агент хранит ключи только в памяти
-- При перезагрузке системы ключи нужно добавлять заново
-- Используйте `ssh-add -t <время>` для ограничения времени жизни ключа в агенте
-
-### Примеры использования
-
-#### Автоматический push после коммита
-```bash
-git add .
-git commit -m "Обновление документации"
-git push origin main  # Без запроса passphrase
-```
-
-#### Автоматизация в скриптах
+### Использование в скриптах
 ```bash
 #!/bin/bash
-# Скрипт автоматического деплоя
-git add .
-git commit -m "Автоматический коммит"
-git push origin main  # Работает без вмешательства
+# Проверка SSH агента перед git операциями
+if ! ssh-add -l &>/dev/null; then
+    echo "SSH агент не запущен, запускаем..."
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_ed25519_github
+fi
 ```
 
-### Использование git-ssh-wrapper.sh
-Для автоматической проверки SSH-агента перед git-командами используйте обертку:
+## Безопасность
+
+### Права доступа к ключам
 ```bash
-# Вместо: git push origin main
-./git-ssh-wrapper.sh push origin main
+# Проверить права
+ls -la ~/.ssh/id_ed25519_github
 
-# Или импортируйте функции в свой скрипт:
-source ./git-ssh-wrapper.sh
-git_with_ssh_check push origin main
+# Исправить если нужно
+chmod 600 ~/.ssh/id_ed25519_github
+chmod 644 ~/.ssh/id_ed25519_github.pub
 ```
 
-### Автоматическая проверка SSH-агента
-Функция `check_ssh_agent()` автоматически проверяет и настраивает SSH-агент:
-```bash
-source ./git-ssh-wrapper.sh
-check_ssh_agent  # Автоматически запустит setup-ssh-agent.sh если нужно
-```
+### Ротация ключей
+Рекомендуется периодически обновлять SSH ключи:
+1. Создать новый ключ: `ssh-keygen -t ed25519 -C "your_email@example.com"`
+2. Добавить в GitHub
+3. Обновить в проекте
+4. Удалить старый ключ
 
----
+## Связанные документы
 
-## Автоматическая настройка
+- [Основная документация проекта](../main/project.md)
+- [Журнал изменений](../main/changelog.md)
+- [Отслеживание задач](../main/tasktracker.md)
 
-### Быстрая настройка
-Для автоматической настройки SSH-агента выполните:
-```bash
-./setup-ssh-agent.sh
-```
+## Контакты
 
-Этот скрипт автоматически:
-- Проверит существование SSH-ключа
-- Исправит права доступа
-- Запустит SSH-агент
-- Добавит ключ в агент
-- Проверит подключение к GitHub
-- Настроит автоматический запуск
-
-### Проверка работы
-После настройки проверьте:
-```bash
-ssh-add -l                    # Должен показать ключ
-ssh -T git@github.com         # Должен показать "successfully authenticated"
-git fetch --dry-run          # Должен работать без ошибок
-```
-
-## История настройки
-- 2024-12-19: Создан автоматический скрипт настройки SSH-агента
-- 2024-12-19: Улучшены правила работы с SSH-агентом в .cursorrules
-- 2024-12-19: Добавлена автоматическая настройка в ~/.bashrc
-- 2025-08-14: Настроен SSH-агент для автоматической аутентификации
-- 2025-08-14: Протестирована работа git push без запроса passphrase
-- 2025-08-14: Настроен автоматический запуск SSH-агента в ~/.bashrc
-- 2025-08-14: Протестирована работа в новых сессиях терминала
-- 2025-08-14: ✅ ПРОТЕСТИРОВАНО: SSH-агент работает корректно после перезапуска
-- 2025-08-14: ✅ ПРОТЕСТИРОВАНО: git push выполняется без запроса passphrase
-- 2025-08-14: ✅ ПРОТЕСТИРОВАНО: Подключение к GitHub работает автоматически
-- 2025-08-15: ✅ ДОБАВЛЕНО: Автоматическая проверка SSH-агента перед git-командами
-- 2025-08-15: ✅ ДОБАВЛЕНО: Функция-обертка git-ssh-wrapper.sh для автоматизации
-- 2025-08-15: ✅ ДОБАВЛЕНО: Персистентное хранение SSH-ключей в рамках сессии
-- 2025-08-15: ✅ ДОБАВЛЕНО: Улучшенные правила в .cursorrules с автоматической проверкой
+При возникновении проблем с SSH подключением:
+1. Проверить данный документ
+2. Запустить автоматический скрипт настройки
+3. Создать issue в проекте с описанием проблемы
