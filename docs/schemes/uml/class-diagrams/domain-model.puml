@@ -1,0 +1,226 @@
+@startuml domain-model
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam class {
+    BackgroundColor #E3F2FD
+    BorderColor #1976D2
+    FontColor #000000
+    FontSize 12
+}
+skinparam enum {
+    BackgroundColor #F3E5F5
+    BorderColor #7B1FA2
+    FontColor #000000
+}
+
+title Доменная модель Vuege - Система учета организационных единиц
+
+' Основные сущности доменной модели
+class OrganizationalUnit {
+    +String id
+    +String name
+    +UnitType type
+    +Date foundedDate
+    +Date? dissolvedDate
+    +GeoPoint location
+    +boolean isFictional
+    +HistoricalPeriod historicalPeriod
+    +String? parentUnitId
+    +List<String> childUnitIds
+    +List<Transformation> transformations
+    --
+    +create()
+    +update()
+    +dissolve()
+    +addChildUnit()
+    +removeChildUnit()
+    +getActivePositions()
+    +getHistoricalData()
+}
+
+class Position {
+    +String id
+    +String title
+    +String description
+    +String organizationalUnitId
+    +Date createdDate
+    +Date? abolishedDate
+    +boolean isActive
+    +PositionType type
+    +String? requirements
+    --
+    +create()
+    +update()
+    +abolish()
+    +getCurrentHolder()
+    +getHistoricalHolders()
+}
+
+class Person {
+    +String id
+    +String firstName
+    +String lastName
+    +String? middleName
+    +Date birthDate
+    +Date? deathDate
+    +String? biography
+    +String? nationality
+    +List<PersonPosition> positions
+    --
+    +create()
+    +update()
+    +addPosition()
+    +removePosition()
+    +getCurrentPositions()
+    +getHistoricalPositions()
+}
+
+class PersonPosition {
+    +String id
+    +String personId
+    +String positionId
+    +Date startDate
+    +Date? endDate
+    +String? notes
+    +boolean isActive
+    +String? appointmentReason
+    --
+    +create()
+    +update()
+    +endPosition()
+    +isCurrentlyActive()
+}
+
+class HistoricalPeriod {
+    +String id
+    +String name
+    +String description
+    +Date startDate
+    +Date? endDate
+    +String? notes
+    +PeriodType type
+    +String? parentPeriodId
+    --
+    +create()
+    +update()
+    +endPeriod()
+    +getSubPeriods()
+    +isActive()
+}
+
+class GeoPoint {
+    +double latitude
+    +double longitude
+    +String? description
+    +String? address
+    +String? country
+    +String? region
+    +String? city
+    --
+    +calculateDistance(GeoPoint other)
+    +isWithinBounds(GeoPoint center, double radius)
+    +getFormattedAddress()
+}
+
+class Transformation {
+    +String id
+    +String organizationalUnitId
+    +TransformationType type
+    +Date date
+    +String description
+    +String? targetUnitId
+    +String? reason
+    +String? approvedBy
+    --
+    +create()
+    +getDetails()
+    +getAffectedUnits()
+}
+
+class Report {
+    +String id
+    +ReportType type
+    +String title
+    +String description
+    +ReportStatus status
+    +Date createdAt
+    +Date? completedAt
+    +String? filePath
+    +String? emailRecipient
+    +Map<String, Object> parameters
+    --
+    +generate()
+    +sendByEmail()
+    +download()
+    +getStatus()
+}
+
+' Перечисления
+enum UnitType {
+    STATE
+    GOVERNMENT
+    COMMERCIAL
+}
+
+enum PositionType {
+    EXECUTIVE
+    MANAGERIAL
+    TECHNICAL
+    ADMINISTRATIVE
+    MILITARY
+    POLITICAL
+}
+
+enum PeriodType {
+    ERA
+    CENTURY
+    DECADE
+    YEAR
+    MONTH
+    DAY
+}
+
+enum TransformationType {
+    MERGE
+    SPLIT
+    RENAME
+    RELOCATE
+    DISSOLVE
+    REFORM
+}
+
+enum ReportType {
+    ORGANIZATION
+    HISTORICAL_PERIOD
+    GEOGRAPHIC
+    PERSON
+    CUSTOM
+}
+
+enum ReportStatus {
+    PENDING
+    GENERATING
+    COMPLETED
+    FAILED
+    SENT
+}
+
+' Связи между сущностями
+OrganizationalUnit ||--o{ Position : "has positions"
+OrganizationalUnit ||--o{ OrganizationalUnit : "parent-child"
+OrganizationalUnit ||--o{ Transformation : "undergoes"
+OrganizationalUnit }o--|| HistoricalPeriod : "belongs to"
+OrganizationalUnit }o--|| GeoPoint : "located at"
+
+Person ||--o{ PersonPosition : "holds"
+Position ||--o{ PersonPosition : "occupied by"
+PersonPosition }o--|| Person : "belongs to"
+PersonPosition }o--|| Position : "refers to"
+
+HistoricalPeriod ||--o{ HistoricalPeriod : "parent-child"
+
+Report }o--|| OrganizationalUnit : "reports about"
+Report }o--|| Person : "reports about"
+Report }o--|| HistoricalPeriod : "reports about"
+
+@enduml

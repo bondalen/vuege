@@ -1,0 +1,26 @@
+@startuml
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+    BackgroundColor #E1F5FE
+    BorderColor #0277BD
+    FontColor #000000
+}
+skinparam startColor #4CAF50
+skinparam endColor #F44336
+skinparam decisionColor #FF9800
+
+title Простой пример BPMN диаграммы
+
+start
+:Начальная задача;
+:Промежуточная задача;
+if (Условие?) then (да)
+    :Задача при выполнении условия;
+else (нет)
+    :Задача при невыполнении условия;
+endif
+:Финальная задача;
+stop
+
+@enduml

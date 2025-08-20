@@ -1,0 +1,58 @@
+# Универсальный контейнер с PostgreSQL 16 и Java 21 LTS
+FROM ubuntu:24.04
+
+# Установка необходимых пакетов
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    gnupg \
+    software-properties-common \
+    ca-certificates \
+    locales \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка Java 21 LTS (Eclipse Temurin)
+RUN wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - \
+    && echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list \
+    && apt-get update \
+    && apt-get install -y temurin-21-jdk \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка PostgreSQL 16
+RUN apt-get update && apt-get install -y \
+    postgresql \
+    postgresql-contrib \
+    && rm -rf /var/lib/apt/lists/*
+
+# Настройка переменных окружения
+ENV JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Настройка PostgreSQL
+RUN sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/16/main/postgresql.conf \
+    && sed -i "s/local   all             all                                     peer/local   all             all                                     md5/" /etc/postgresql/16/main/pg_hba.conf \
+    && echo "host    all             all             0.0.0.0/0               md5" >> /etc/postgresql/16/main/pg_hba.conf
+
+# Создание скрипта запуска
+RUN echo '#!/bin/bash\n\
+echo "=== Универсальный контейнер PostgreSQL + Java ==="\n\
+echo "Java версия:"\n\
+java -version\n\
+echo\n\
+echo "PostgreSQL статус:"\n\
+service postgresql status\n\
+echo\n\
+echo "Контейнер готов к работе!"\n\
+echo "PostgreSQL доступен на порту 5432"\n\
+echo "Java доступна в переменной JAVA_HOME: $JAVA_HOME"\n\
+echo\n\
+# Поддерживаем контейнер запущенным\n\
+tail -f /dev/null' > /usr/local/bin/start.sh \
+    && chmod +x /usr/local/bin/start.sh
+
+# Открываем порт PostgreSQL
+EXPOSE 5432
+
+# Команда по умолчанию
+CMD ["/usr/local/bin/start.sh"]
+

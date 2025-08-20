@@ -1,0 +1,146 @@
+@startuml report-generation
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam sequence {
+    ArrowColor #1976D2
+    ActorBorderColor #1976D2
+    LifeLineBorderColor #1976D2
+    ParticipantBorderColor #1976D2
+    ParticipantBackgroundColor #E3F2FD
+}
+
+title Процесс генерации отчётов в Vuege
+
+actor User as U
+participant "Frontend" as F
+participant "GraphQL Controller" as GQL
+participant "Report Service" as RS
+participant "Report Generator" as RG
+participant "File Storage" as FS
+participant "Email Service" as ES
+participant "Database" as DB
+
+== Генерация отчёта ==
+
+U -> F: Запрос генерации отчёта
+activate F
+
+F -> GQL: generateReport(type, parameters)
+activate GQL
+
+GQL -> RS: createReport(type, parameters)
+activate RS
+
+RS -> DB: saveReportStatus(PENDING)
+activate DB
+DB --> RS: reportId
+deactivate DB
+
+RS --> GQL: reportId
+deactivate RS
+
+GQL --> F: reportId
+deactivate GQL
+
+F --> U: Отчёт поставлен в очередь
+deactivate F
+
+== Асинхронная обработка ==
+
+RS -> RG: generateReport(reportId)
+activate RG
+
+RG -> DB: getReportParameters(reportId)
+activate DB
+DB --> RG: parameters
+deactivate DB
+
+RG -> DB: queryData(parameters)
+activate DB
+DB --> RG: data
+deactivate DB
+
+RG -> RG: generateFile(data, format)
+activate RG
+RG -> FS: saveFile(file, reportId)
+activate FS
+FS --> RG: filePath
+deactivate FS
+deactivate RG
+
+RG -> DB: updateReportStatus(COMPLETED, filePath)
+activate DB
+DB --> RG: success
+deactivate DB
+
+RG --> RS: generation completed
+deactivate RG
+
+== Уведомление пользователя ==
+
+RS -> F: notifyUser(reportId, status)
+activate F
+F --> U: Отчёт готов
+deactivate F
+
+== Скачивание отчёта ==
+
+U -> F: Скачать отчёт
+activate F
+
+F -> GQL: downloadReport(reportId)
+activate GQL
+
+GQL -> RS: getReportFile(reportId)
+activate RS
+
+RS -> DB: getReportPath(reportId)
+activate DB
+DB --> RS: filePath
+deactivate DB
+
+RS -> FS: getFile(filePath)
+activate FS
+FS --> RS: file
+deactivate FS
+
+RS --> GQL: file
+deactivate RS
+
+GQL --> F: file
+deactivate GQL
+
+F --> U: Файл отчёта
+deactivate F
+
+== Отправка по email (опционально) ==
+
+U -> F: Отправить по email
+activate F
+
+F -> GQL: sendReportByEmail(reportId, email)
+activate GQL
+
+GQL -> RS: sendReportEmail(reportId, email)
+activate RS
+
+RS -> ES: sendEmail(file, email)
+activate ES
+ES --> RS: email sent
+deactivate ES
+
+RS -> DB: updateReportStatus(SENT)
+activate DB
+DB --> RS: success
+deactivate DB
+
+RS --> GQL: email sent
+deactivate RS
+
+GQL --> F: email sent
+deactivate GQL
+
+F --> U: Отчёт отправлен
+deactivate F
+
+@enduml

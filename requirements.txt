@@ -1,0 +1,10 @@
+# Единый файл зависимостей для проекта Vuege
+# Установка: pip install -r requirements.txt
+
+# Основные зависимости для cursor-directory-scraper.py
+playwright>=1.40.0
+asyncio
+pathlib
+typing
+
+# Дополнительные зависимости будут добавляться по мере развития проекта

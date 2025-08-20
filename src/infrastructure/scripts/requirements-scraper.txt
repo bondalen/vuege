@@ -1,0 +1,6 @@
+# Зависимости для cursor-directory-scraper.py
+# УСТАРЕЛО: Используйте единый requirements.txt в корне проекта
+# Установка: pip install -r ../../requirements.txt
+
+# Основные зависимости перенесены в корневой requirements.txt
+# Этот файл оставлен для обратной совместимости

@@ -1,0 +1,134 @@
+@startuml system-architecture
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam component {
+    BackgroundColor #E8F5E8
+    BorderColor #2E7D32
+    FontColor #000000
+}
+skinparam interface {
+    BackgroundColor #FFF3E0
+    BorderColor #F57C00
+    FontColor #000000
+}
+skinparam database {
+    BackgroundColor #F3E5F5
+    BorderColor #7B1FA2
+    FontColor #000000
+}
+
+title Архитектура системы Vuege
+
+package "Frontend (Vue.js + Quasar)" {
+    [Web Application] as WebApp
+    [Mobile Application] as MobileApp
+    [Desktop Application] as DesktopApp
+    
+    interface "GraphQL Client" as GraphQLClient
+    interface "Router" as Router
+    interface "State Management" as StateMgmt
+}
+
+package "Backend (Spring Boot)" {
+    [GraphQL Controller] as GraphQLController
+    [REST Controller] as RestController
+    [Report Controller] as ReportController
+    
+    package "Services" {
+        [OrganizationalUnit Service] as OrgService
+        [Person Service] as PersonService
+        [Position Service] as PositionService
+        [Report Service] as ReportService
+        [GIS Service] as GISService
+        [Email Service] as EmailService
+    }
+    
+    package "Repositories" {
+        [OrganizationalUnit Repository] as OrgRepo
+        [Person Repository] as PersonRepo
+        [Position Repository] as PositionRepo
+        [Report Repository] as ReportRepo
+    }
+    
+    package "Generators" {
+        [PDF Generator] as PDFGen
+        [HTML Generator] as HTMLGen
+        [Excel Generator] as ExcelGen
+        [CSV Generator] as CSVGen
+    }
+}
+
+package "Infrastructure" {
+    database "PostgreSQL + PostGIS" as DB {
+        [Organizational Units] as OrgTable
+        [Persons] as PersonTable
+        [Positions] as PositionTable
+        [Reports] as ReportTable
+        [Historical Data] as HistoryTable
+    }
+    
+    [File Storage] as FileStorage
+    [Email Provider] as EmailProvider
+    [GIS Services] as GISProvider
+}
+
+package "MCP Servers" {
+    [PostgreSQL MCP] as PostgresMCP
+    [Git MCP] as GitMCP
+    [Docker MCP] as DockerMCP
+    [Terminal MCP] as TerminalMCP
+}
+
+' Связи Frontend
+WebApp --> GraphQLClient
+MobileApp --> GraphQLClient
+DesktopApp --> GraphQLClient
+GraphQLClient --> Router
+GraphQLClient --> StateMgmt
+
+' Связи Backend
+GraphQLController --> OrgService
+GraphQLController --> PersonService
+GraphQLController --> PositionService
+GraphQLController --> ReportService
+
+RestController --> ReportService
+ReportController --> ReportService
+
+' Связи Services
+OrgService --> OrgRepo
+PersonService --> PersonRepo
+PositionService --> PositionRepo
+ReportService --> ReportRepo
+ReportService --> PDFGen
+ReportService --> HTMLGen
+ReportService --> ExcelGen
+ReportService --> CSVGen
+ReportService --> EmailService
+ReportService --> GISService
+
+' Связи Repositories
+OrgRepo --> DB
+PersonRepo --> DB
+PositionRepo --> DB
+ReportRepo --> DB
+
+' Связи Infrastructure
+PDFGen --> FileStorage
+HTMLGen --> FileStorage
+ExcelGen --> FileStorage
+CSVGen --> FileStorage
+EmailService --> EmailProvider
+GISService --> GISProvider
+
+' Связи MCP
+PostgresMCP --> DB
+GitMCP --> [Git Repository]
+DockerMCP --> [Docker Containers]
+TerminalMCP --> [System Commands]
+
+' Связи Frontend-Backend
+GraphQLClient --> GraphQLController
+GraphQLClient --> RestController
+
+@enduml
