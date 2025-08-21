@@ -1,11 +1,12 @@
-# Единый файл зависимостей для проекта Vuege
-# Установка: pip install -r requirements.txt
-
-# Основные зависимости для cursor-directory-scraper.py
-playwright>=1.40.0
-asyncio
-pathlib
-typing
-
-# Дополнительные зависимости будут добавляться по мере развития проекта
-# MCP PostgreSQL Full Access Server (установлен через npm)
+asyncio==4.0.0
+certifi==2025.8.3
+charset-normalizer==3.4.3
+greenlet==3.2.4
+idna==3.10
+pathlib==1.0.1
+playwright==1.54.0
+pyee==13.0.0
+requests==2.32.5
+typing==3.7.4.3
+typing_extensions==4.14.1
+urllib3==2.5.0

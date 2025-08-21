@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "dbhub": {
+      "command": "node",
+      "args": ["/home/alex/vuege/dbhub/dist/index.js", "--transport", "stdio", "--dsn", "postgres://testuser:testpass@localhost:5432/testdb?sslmode=disable"],
+      "env": {
+        "READONLY": "false"
+      }
+    }
+  }
+}

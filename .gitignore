@@ -96,6 +96,8 @@ docker-compose.override.yml
 *-backup-*/
 backup/
 backups/
+mcp_backup/
+dbhub/
 
 # Large files
 *.mp3

@@ -3,7 +3,7 @@
 @file: postgres-mcp-wrapper.py
 @description: Python обертка для mcp-postgres сервера
 @pager-protection: Встроенная защита от pager для предотвращения блокировки автоматизации
-@dependencies: mcp-postgres-server, subprocess
+@dependencies: docker, subprocess
 @created: 2025-08-20
 """
 
@@ -37,16 +37,8 @@ setup_pager_protection()
 def main():
     """Основная функция запуска mcp-postgres сервера"""
     
-    # Путь к установленному серверу
-    mcp_server_path = "/home/alex/.npm-global/bin/mcp-postgres"
-    
     # URL базы данных PostgreSQL
     database_url = "postgresql://testuser:testpass@localhost:5432/testdb"
-    
-    # Проверяем, что сервер существует
-    if not os.path.exists(mcp_server_path):
-        print(f"❌ MCP сервер не найден: {mcp_server_path}", file=sys.stderr)
-        sys.exit(1)
     
     # Проверяем доступность PostgreSQL
     print("🔍 Проверка доступности PostgreSQL...", file=sys.stderr)
@@ -66,14 +58,23 @@ def main():
         print(f"⚠️ Ошибка проверки PostgreSQL: {e}", file=sys.stderr)
         sys.exit(1)
     
-    # Запускаем MCP сервер
-    print(f"🚀 Запуск MCP сервера: {mcp_server_path}", file=sys.stderr)
+    # Docker команда для PostgreSQL MCP сервера
+    docker_cmd = [
+        "docker", "run", "-i", "--rm",
+        "-e", f"DATABASE_URL={database_url}",
+        "-e", "PGPASSWORD=testpass",
+        "--network", "host",
+        "ghcr.io/modelcontextprotocol/server-postgres"
+    ]
+    
+    # Запускаем MCP сервер через Docker
+    print(f"🚀 Запуск PostgreSQL MCP сервера через Docker", file=sys.stderr)
     print(f"📊 База данных: {database_url}", file=sys.stderr)
     
     try:
         # Запускаем сервер с передачей всех аргументов
         process = subprocess.Popen(
-            [mcp_server_path, database_url],
+            docker_cmd + sys.argv[1:],
             stdin=sys.stdin,
             stdout=sys.stdout,
             stderr=sys.stderr,
