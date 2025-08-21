@@ -8,3 +8,4 @@ pathlib
 typing
 
 # Дополнительные зависимости будут добавляться по мере развития проекта
+# MCP PostgreSQL Full Access Server (установлен через npm)

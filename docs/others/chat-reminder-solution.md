@@ -147,7 +147,7 @@ files_to_check = {
 4. `src/infrastructure/scripts/chat-reminder-analysis.sh` - диагностика
 
 ### Документация
-1. `docs/main/chat-reminder-solution.md` - данный документ
+1. `docs/others/chat-reminder-solution.md` - данный документ
 
 ## Инструкции по применению
 

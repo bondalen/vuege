@@ -173,7 +173,7 @@
 1. **`cursor-rules-optimizer.py`** - анализ и оптимизация правил
 2. **`.cursorrules-optimized`** - прототип оптимизированного файла
 3. **`.cursorrules-development`** - прототип модуля разработки
-4. **`cursor-rules-optimization-strategy.md`** - стратегия оптимизации
+4. **`docs/others/cursor-rules-optimization-strategy.md`** - стратегия оптимизации
 
 ### Анализ текущего состояния
 - **Размер файла**: 815 строк, 64.1KB

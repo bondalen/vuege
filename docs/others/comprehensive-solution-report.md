@@ -34,7 +34,7 @@
    - Встроенные таймауты и защита от pager
 
 3. **Стратегия превентивных мер**:
-   - `pager-prevention-strategy.md` - комплексная стратегия
+   - `docs/others/pager-prevention-strategy.md` - комплексная стратегия
    - Многоуровневая защита от pager
    - План восстановления после блокировок
 
@@ -61,7 +61,7 @@
    - `chat-reminder-analysis.sh` - диагностика проблем
 
 3. **Стратегия применения**:
-   - `chat-reminder-solution.md` - полное решение
+   - `docs/others/chat-reminder-solution.md` - полное решение
    - Готовые сообщения для новых чатов
    - Автоматическая проверка состояния
 
@@ -83,10 +83,10 @@
 3. `chat-reminder-bot.py` - бот для генерации напоминаний
 
 ### Документация
-1. `pager-prevention-strategy.md` - стратегия защиты от pager
-2. `chat-reminder-solution.md` - решение проблемы напоминаний
-3. `pager-problem-solution-report.md` - отчет о решении P250817-02
-4. `comprehensive-solution-report.md` - данный итоговый отчет
+1. `docs/others/pager-prevention-strategy.md` - стратегия защиты от pager
+2. `docs/others/chat-reminder-solution.md` - решение проблемы напоминаний
+3. `docs/others/pager-problem-solution-report.md` - отчет о решении P250817-02
+4. `docs/others/comprehensive-solution-report.md` - данный итоговый отчет
 
 ### Конфигурационные файлы
 1. `.cursorrules-critical` - критические правила для новых чатов

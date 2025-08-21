@@ -67,7 +67,7 @@
 
 ### 3. Стратегия превентивных мер
 
-#### pager-prevention-strategy.md
+#### docs/others/pager-prevention-strategy.md
 - **Назначение**: Комплексная стратегия предотвращения блокировок
 - **Содержание**:
   - Многоуровневая защита от pager
@@ -145,8 +145,8 @@ def safe_execute(self, command: List[str], timeout: int = 30) -> Tuple[bool, str
 3. `src/infrastructure/scripts/git-automation-python.py` - Python-альтернатива
 
 ### Документация
-1. `docs/main/pager-prevention-strategy.md` - стратегия превентивных мер
-2. `docs/main/pager-problem-solution-report.md` - данный отчет
+1. `docs/others/pager-prevention-strategy.md` - стратегия превентивных мер
+2. `docs/others/pager-problem-solution-report.md` - данный отчет
 
 ### Обновления
 1. `docs/main/problems.md` - обновлена проблема P250817-02

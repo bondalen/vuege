@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-@file: docker-mcp-wrapper.py
-@description: Обертка для docker-mcp сервера с защитой от pager
+@file: git-mcp-wrapper.py
+@description: Python обертка для git-mcp-server с защитой от pager
 @pager-protection: Встроенная защита от pager для предотвращения блокировки автоматизации
-@dependencies: docker-mcp
+@dependencies: @cyanheads/git-mcp-server
 @created: 2025-01-27
 """
 
@@ -34,18 +34,18 @@ def setup_pager_protection():
 setup_pager_protection()
 
 def main():
-    """Основная функция запуска docker-mcp сервера"""
+    """Основная функция запуска git-mcp-server"""
     try:
-        # Путь к docker-mcp в npm
-        npm_path = Path("/home/alex/.npm-global/bin/docker-mcp")
+        # Путь к git-mcp-server в npm
+        npm_path = Path("/home/alex/.npm-global/bin/git-mcp-server")
         
         if not npm_path.exists():
-            print(f"❌ docker-mcp не найден по пути: {npm_path}", file=sys.stderr)
-            print("💡 Установите docker-mcp: npm install -g docker-mcp", file=sys.stderr)
+            print(f"❌ git-mcp-server не найден по пути: {npm_path}", file=sys.stderr)
+            print("💡 Установите git-mcp-server: npm install -g @cyanheads/git-mcp-server", file=sys.stderr)
             sys.exit(1)
         
-        # Запуск docker-mcp сервера
-        print(f"🚀 Запуск docker-mcp сервера: {npm_path}", file=sys.stderr)
+        # Запуск git-mcp-server
+        print(f"🚀 Запуск git-mcp-server: {npm_path}", file=sys.stderr)
         
         # Передаем все аргументы командной строки
         result = subprocess.run([str(npm_path)] + sys.argv[1:], 
@@ -55,11 +55,14 @@ def main():
         sys.exit(result.returncode)
         
     except KeyboardInterrupt:
-        print("\n🛑 docker-mcp сервер остановлен пользователем", file=sys.stderr)
+        print("\n🛑 git-mcp-server остановлен пользователем", file=sys.stderr)
         sys.exit(0)
     except Exception as e:
-        print(f"❌ Ошибка запуска docker-mcp: {e}", file=sys.stderr)
+        print(f"❌ Ошибка запуска git-mcp-server: {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == "__main__":
     main()
+
+
+
