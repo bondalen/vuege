@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Включение всех changelog файлов -->
+    <include file="db/changelog/changes/001-initial-schema.xml"/>
+    <include file="db/changelog/changes/002-postgis-extension.xml"/>
+    <include file="db/changelog/changes/003-organizational-units-table.xml"/>
+    <include file="db/changelog/changes/004-positions-table.xml"/>
+    <include file="db/changelog/changes/005-persons-table.xml"/>
+    <include file="db/changelog/changes/006-person-positions-table.xml"/>
+    <include file="db/changelog/changes/007-historical-periods-table.xml"/>
+    <include file="db/changelog/changes/008-geo-points-table.xml"/>
+    <include file="db/changelog/changes/009-indexes-and-constraints.xml"/>
+
+</databaseChangeLog>

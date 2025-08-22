@@ -1,0 +1,207 @@
+# GraphQL схема для Vuege
+# CRUD веб-сервис для учета организационных единиц с исторической перспективой и ГИС-функциональностью
+
+scalar Date
+scalar GeoPoint
+
+type Query {
+    # Основные запросы для организационных единиц
+    organizationalUnits: [OrganizationalUnit!]!
+    organizationalUnit(id: ID!): OrganizationalUnit
+    
+    # Запросы для должностей
+    positions: [Position!]!
+    position(id: ID!): Position
+    
+    # Запросы для людей
+    persons: [Person!]!
+    person(id: ID!): Person
+    
+    # ГИС запросы
+    organizationsInRegion(bounds: BoundingBox!, timeRange: TimeRange!): [OrganizationalUnit!]!
+    
+    # Исторические запросы
+    historicalPeriods: [HistoricalPeriod!]!
+    historicalPeriod(id: ID!): HistoricalPeriod
+}
+
+type Mutation {
+    # Мутации для организационных единиц
+    createOrganizationalUnit(input: OrganizationalUnitInput!): OrganizationalUnit!
+    updateOrganizationalUnit(id: ID!, input: OrganizationalUnitInput!): OrganizationalUnit!
+    deleteOrganizationalUnit(id: ID!): Boolean!
+    
+    # Мутации для должностей
+    createPosition(input: PositionInput!): Position!
+    updatePosition(id: ID!, input: PositionInput!): Position!
+    deletePosition(id: ID!): Boolean!
+    
+    # Мутации для людей
+    createPerson(input: PersonInput!): Person!
+    updatePerson(id: ID!, input: PersonInput!): Person!
+    deletePerson(id: ID!): Boolean!
+    
+    # Мутации для связей человек-должность
+    assignPersonToPosition(input: PersonPositionInput!): PersonPosition!
+    removePersonFromPosition(personId: ID!, positionId: ID!): Boolean!
+}
+
+# Основные типы
+
+type OrganizationalUnit {
+    id: ID!
+    name: String!
+    type: OrganizationType!
+    foundedDate: Date!
+    dissolvedDate: Date
+    location: GeoPoint
+    isFictional: Boolean!
+    historicalPeriod: HistoricalPeriod!
+    parentUnit: OrganizationalUnit
+    childUnits: [OrganizationalUnit!]!
+    positions: [Position!]!
+}
+
+type Position {
+    id: ID!
+    title: String!
+    organization: OrganizationalUnit!
+    createdDate: Date!
+    abolishedDate: Date
+    hierarchy: PositionHierarchy!
+    responsibilities: [String!]!
+    isActive: Boolean!
+    holders: [PersonPosition!]!
+}
+
+type Person {
+    id: ID!
+    name: String!
+    birthDate: Date
+    deathDate: Date
+    nationality: String!
+    positions: [PersonPosition!]!
+    isFictional: Boolean!
+    historicalPeriod: HistoricalPeriod!
+}
+
+type PersonPosition {
+    id: ID!
+    person: Person!
+    position: Position!
+    startDate: Date!
+    endDate: Date
+    appointmentType: AppointmentType!
+    source: String!
+}
+
+type HistoricalPeriod {
+    id: ID!
+    name: String!
+    startDate: Date!
+    endDate: Date
+    era: Era!
+    description: String!
+}
+
+type GeoPoint {
+    id: ID!
+    latitude: Float!
+    longitude: Float!
+    coordinates: [Float!]!
+    elevation: Float
+    accuracy: AccuracyType!
+}
+
+# Enum типы
+
+enum OrganizationType {
+    STATE
+    GOVERNMENT
+    COMMERCIAL
+}
+
+enum PositionHierarchy {
+    EXECUTIVE
+    LEGISLATIVE
+    JUDICIAL
+    ADMINISTRATIVE
+    OPERATIONAL
+}
+
+enum AppointmentType {
+    ELECTED
+    APPOINTED
+    INHERITED
+}
+
+enum Era {
+    BCE
+    CE
+}
+
+enum AccuracyType {
+    EXACT
+    APPROXIMATE
+    UNKNOWN
+}
+
+# Input типы
+
+input OrganizationalUnitInput {
+    name: String!
+    type: OrganizationType!
+    foundedDate: Date!
+    dissolvedDate: Date
+    location: GeoPointInput
+    isFictional: Boolean!
+    historicalPeriodId: ID!
+    parentUnitId: ID
+}
+
+input PositionInput {
+    title: String!
+    organizationId: ID!
+    createdDate: Date!
+    abolishedDate: Date
+    hierarchy: PositionHierarchy!
+    responsibilities: [String!]!
+    isActive: Boolean!
+}
+
+input PersonInput {
+    name: String!
+    birthDate: Date
+    deathDate: Date
+    nationality: String!
+    isFictional: Boolean!
+    historicalPeriodId: ID!
+}
+
+input PersonPositionInput {
+    personId: ID!
+    positionId: ID!
+    startDate: Date!
+    endDate: Date
+    appointmentType: AppointmentType!
+    source: String!
+}
+
+input GeoPointInput {
+    latitude: Float!
+    longitude: Float!
+    elevation: Float
+    accuracy: AccuracyType!
+}
+
+input BoundingBox {
+    north: Float!
+    south: Float!
+    east: Float!
+    west: Float!
+}
+
+input TimeRange {
+    startDate: Date!
+    endDate: Date
+}
