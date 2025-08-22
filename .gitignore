@@ -166,6 +166,7 @@ dmypy.json
 # Cursor IDE
 .cursor/
 .cursorrules-*
+.cursor/mcp.env
 
 
 
