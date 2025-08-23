@@ -55,8 +55,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        // Не обрабатываем auth endpoints и health endpoints
-        return path.startsWith("/api/auth/") || 
+        // Не обрабатываем только публичные auth endpoints
+        return path.equals("/api/auth/test") || 
+               path.equals("/api/auth/users") || 
+               path.equals("/api/auth/login") ||
                path.startsWith("/api/actuator/health") || 
                path.startsWith("/api/actuator/info");
     }

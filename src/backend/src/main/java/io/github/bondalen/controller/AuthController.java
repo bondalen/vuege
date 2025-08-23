@@ -79,6 +79,25 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Auth endpoint доступен"));
     }
 
+    @GetMapping("/protected")
+    public ResponseEntity<?> protectedEndpoint() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Доступ к защищенному endpoint разрешен");
+        response.put("timestamp", java.time.LocalDateTime.now());
+        response.put("status", "success");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/admin-only")
+    public ResponseEntity<?> adminOnlyEndpoint() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Доступ к admin endpoint разрешен");
+        response.put("timestamp", java.time.LocalDateTime.now());
+        response.put("role", "ADMIN");
+        response.put("status", "success");
+        return ResponseEntity.ok(response);
+    }
+
     // Внутренний класс для запроса логина
     public static class LoginRequest {
         private String username;

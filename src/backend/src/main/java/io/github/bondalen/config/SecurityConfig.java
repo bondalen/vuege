@@ -50,7 +50,14 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(authorize -> authorize
-                // Разрешаем все запросы для тестирования
+                // Публичные endpoints
+                .requestMatchers("/auth/test", "/auth/users").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/test/**").permitAll()
+                // Защищенные endpoints
+                .requestMatchers("/auth/protected").authenticated()
+                .requestMatchers("/auth/admin-only").hasRole("ADMIN")
+                // Остальные запросы разрешены для тестирования
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuege - Тест авторизации</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .user-info {
+            background-color: #e2e3e5;
+            border: 1px solid #d6d8db;
+            color: #383d41;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Vuege - Тест авторизации</h1>
+        
+        <div class="user-info">
+            <strong>Доступные пользователи для тестирования:</strong><br>
+            • <strong>admin</strong> / admin123 (роли: ADMIN, USER, MONITOR)<br>
+            • <strong>user</strong> / user123 (роли: USER)<br>
+            • <strong>monitor</strong> / monitor123 (роли: MONITOR)
+        </div>
+
+        <!-- Форма авторизации -->
+        <div class="test-section">
+            <h3>📝 Форма авторизации</h3>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" placeholder="Введите имя пользователя" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+                </div>
+                <button type="submit">🔑 Войти</button>
+                <button type="button" onclick="clearResults()">🗑️ Очистить результаты</button>
+            </form>
+        </div>
+
+        <!-- Результаты авторизации -->
+        <div id="loginResult" class="result" style="display: none;"></div>
+
+        <!-- Тестирование защищенных endpoints -->
+        <div class="test-section">
+            <h3>🧪 Тестирование защищенных endpoints</h3>
+            <button onclick="testProtectedEndpoint()" id="testProtectedBtn" disabled>🔒 Тест защищенного endpoint</button>
+            <button onclick="testAdminEndpoint()" id="testAdminBtn" disabled>👑 Тест admin endpoint</button>
+            <button onclick="testUserInfo()" id="testUserInfoBtn" disabled>👤 Информация о пользователе</button>
+        </div>
+
+        <!-- Результаты тестирования -->
+        <div id="testResult" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        let currentToken = null;
+        let currentUser = null;
+
+        // Обработка формы авторизации
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    currentToken = data.accessToken;
+                    currentUser = {
+                        username: data.username,
+                        roles: data.roles
+                    };
+                    
+                    showResult('loginResult', `✅ Авторизация успешна!
+
+👤 Пользователь: ${data.username}
+🔑 Роли: ${data.roles.join(', ')}
+🎫 JWT токен: ${data.accessToken.substring(0, 50)}...
+⏰ Тип токена: ${data.tokenType}
+💬 Сообщение: ${data.message}`, 'success');
+                    
+                    // Активируем кнопки тестирования
+                    document.getElementById('testProtectedBtn').disabled = false;
+                    document.getElementById('testAdminBtn').disabled = false;
+                    document.getElementById('testUserInfoBtn').disabled = false;
+                    
+                } else {
+                    showResult('loginResult', `❌ Ошибка авторизации!
+
+Статус: ${response.status}
+Ошибка: ${data.error || 'Неизвестная ошибка'}`, 'error');
+                    
+                    // Деактивируем кнопки тестирования
+                    document.getElementById('testProtectedBtn').disabled = true;
+                    document.getElementById('testAdminBtn').disabled = true;
+                    document.getElementById('testUserInfoBtn').disabled = true;
+                }
+                
+            } catch (error) {
+                showResult('loginResult', `❌ Ошибка сети!
+
+Ошибка: ${error.message}`, 'error');
+            }
+        });
+
+        // Тест защищенного endpoint
+        async function testProtectedEndpoint() {
+            if (!currentToken) {
+                showResult('testResult', '❌ Сначала выполните авторизацию!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/auth/protected', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('testResult', `✅ Доступ к защищенному endpoint разрешен!
+
+📝 Сообщение: ${data.message}
+⏰ Время: ${data.timestamp}
+✅ Статус: ${data.status}`, 'success');
+                } else {
+                    showResult('testResult', `❌ Доступ запрещен!
+
+Статус: ${response.status}
+Ошибка: ${data.error || 'Неизвестная ошибка'}`, 'error');
+                }
+                
+            } catch (error) {
+                showResult('testResult', `❌ Ошибка сети!
+
+Ошибка: ${error.message}`, 'error');
+            }
+        }
+
+        // Тест admin endpoint
+        async function testAdminEndpoint() {
+            if (!currentToken) {
+                showResult('testResult', '❌ Сначала выполните авторизацию!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/auth/admin-only', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('testResult', `✅ Доступ к admin endpoint разрешен!
+
+👑 Роль: ${data.role}
+📝 Сообщение: ${data.message}
+⏰ Время: ${data.timestamp}
+✅ Статус: ${data.status}`, 'success');
+                } else {
+                    showResult('testResult', `❌ Доступ к admin endpoint запрещен!
+
+Статус: ${response.status}
+Ошибка: ${data.error || 'Недостаточно прав'}
+💡 Требуется роль: ADMIN`, 'error');
+                }
+                
+            } catch (error) {
+                showResult('testResult', `❌ Ошибка сети!
+
+Ошибка: ${error.message}`, 'error');
+            }
+        }
+
+        // Информация о пользователе
+        async function testUserInfo() {
+            if (!currentToken) {
+                showResult('testResult', '❌ Сначала выполните авторизацию!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/auth/users', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('testResult', `ℹ️ Информация о пользователе
+
+👤 Текущий пользователь: ${currentUser.username}
+🔑 Роли: ${currentUser.roles.join(', ')}
+👥 Доступные пользователи: ${data.users.join(', ')}
+📝 Сообщение: ${data.message}`, 'info');
+                } else {
+                    showResult('testResult', `❌ Ошибка получения информации!
+
+Статус: ${response.status}
+Ошибка: ${data.error || 'Неизвестная ошибка'}`, 'error');
+                }
+                
+            } catch (error) {
+                showResult('testResult', `❌ Ошибка сети!
+
+Ошибка: ${error.message}`, 'error');
+            }
+        }
+
+        // Показать результат
+        function showResult(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${type}`;
+            element.style.display = 'block';
+        }
+
+        // Очистить результаты
+        function clearResults() {
+            document.getElementById('loginResult').style.display = 'none';
+            document.getElementById('testResult').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            currentToken = null;
+            currentUser = null;
+            
+            // Деактивируем кнопки тестирования
+            document.getElementById('testProtectedBtn').disabled = true;
+            document.getElementById('testAdminBtn').disabled = true;
+            document.getElementById('testUserInfoBtn').disabled = true;
+        }
+    </script>
+</body>
+</html>
