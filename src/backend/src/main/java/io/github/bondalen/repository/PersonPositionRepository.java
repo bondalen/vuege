@@ -4,6 +4,7 @@ import io.github.bondalen.entity.PersonPosition;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Репозиторий для работы со связями человек-должность
@@ -35,4 +36,9 @@ public interface PersonPositionRepository extends ReactiveCrudRepository<PersonP
      * Найти назначения в заданном временном диапазоне
      */
     Flux<PersonPosition> findByStartDateBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
+    
+    /**
+     * Найти конкретное назначение человека на должность
+     */
+    Mono<PersonPosition> findByPersonIdAndPositionId(Long personId, Long positionId);
 }

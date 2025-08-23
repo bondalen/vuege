@@ -1,7 +1,7 @@
 package io.github.bondalen.controller;
 
 import io.github.bondalen.entity.OrganizationalUnit;
-import io.github.bondalen.service.OrganizationalUnitService;
+import io.github.bondalen.graphql.service.OrganizationalUnitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -73,27 +73,11 @@ public class DomainTestController {
     }
 
     /**
-     * Найти организации по типу
-     */
-    @GetMapping("/organizational-units/type/{type}")
-    public Flux<OrganizationalUnit> getOrganizationalUnitsByType(@PathVariable String type) {
-        log.info("Поиск организаций по типу: {}", type);
-        try {
-            io.github.bondalen.entity.OrganizationType orgType = 
-                io.github.bondalen.entity.OrganizationType.valueOf(type.toUpperCase());
-            return organizationalUnitService.findByType(orgType);
-        } catch (IllegalArgumentException e) {
-            log.error("Неверный тип организации: {}", type);
-            return Flux.empty();
-        }
-    }
-
-    /**
      * Получить дочерние организации
      */
     @GetMapping("/organizational-units/{id}/children")
     public Flux<OrganizationalUnit> getChildren(@PathVariable Long id) {
         log.info("Получение дочерних организаций для ID: {}", id);
-        return organizationalUnitService.findChildren(id);
+        return organizationalUnitService.findChildUnits(id);
     }
 }

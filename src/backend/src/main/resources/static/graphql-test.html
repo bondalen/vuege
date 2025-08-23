@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL API Test - Vuege</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .query-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .query-section h3 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .loading {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 GraphQL API Test - Vuege</h1>
+        
+        <div class="query-section">
+            <h3>📋 Query: Получить все организационные единицы</h3>
+            <textarea id="query1">{
+  organizationalUnits {
+    id
+    name
+    type
+    foundedDate
+    isFictional
+  }
+}</textarea>
+            <button onclick="executeQuery('query1', '/api/graphql')">Выполнить запрос</button>
+            <div id="result1" class="result"></div>
+        </div>
+
+        <div class="query-section">
+            <h3>👥 Query: Получить всех людей</h3>
+            <textarea id="query2">{
+  persons {
+    id
+    name
+    birthDate
+    deathDate
+    nationality
+    isFictional
+  }
+}</textarea>
+            <button onclick="executeQuery('query2', '/api/graphql')">Выполнить запрос</button>
+            <div id="result2" class="result"></div>
+        </div>
+
+        <div class="query-section">
+            <h3>💼 Query: Получить все должности</h3>
+            <textarea id="query3">{
+  positions {
+    id
+    title
+    hierarchy
+    isActive
+    responsibilities
+    organization {
+      id
+      name
+      type
+    }
+    holders {
+      id
+      startDate
+      endDate
+      appointmentType
+      person {
+        id
+        name
+        nationality
+      }
+    }
+  }
+}</textarea>
+            <button onclick="executeQuery('query3', '/graphql')">Выполнить запрос</button>
+            <div id="result3" class="result"></div>
+        </div>
+
+        <div class="query-section">
+            <h3>📅 Query: Получить исторические периоды</h3>
+            <textarea id="query4">{
+  historicalPeriods {
+    id
+    name
+    startDate
+    endDate
+    era
+    description
+  }
+}</textarea>
+            <button onclick="executeQuery('query4', '/graphql')">Выполнить запрос</button>
+            <div id="result4" class="result"></div>
+        </div>
+
+        <div class="query-section">
+            <h3>➕ Mutation: Создать организационную единицу</h3>
+            <textarea id="mutation1">mutation {
+  createOrganizationalUnit(input: {
+    name: "Тестовая организация"
+    type: COMMERCIAL
+    foundedDate: "2024-01-01"
+    isFictional: false
+    historicalPeriodId: 1
+  }) {
+    id
+    name
+    type
+    foundedDate
+    isFictional
+  }
+}</textarea>
+            <button onclick="executeQuery('mutation1', '/api/graphql')">Выполнить мутацию</button>
+            <div id="result5" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        async function executeQuery(queryId, endpoint) {
+            const query = document.getElementById(queryId).value;
+            const resultDiv = document.getElementById('result' + queryId.replace('query', '').replace('mutation', ''));
+            
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '⏳ Выполняется запрос...';
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.errors) {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ Ошибка:\n' + JSON.stringify(data.errors, null, 2);
+                } else {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ Результат:\n' + JSON.stringify(data.data, null, 2);
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ Ошибка сети:\n' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
