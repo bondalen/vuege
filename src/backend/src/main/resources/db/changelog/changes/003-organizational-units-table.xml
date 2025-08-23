@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003-create-organizational-units-table" author="vuege">
+        <createTable tableName="organizational_units">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="founded_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dissolved_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="location_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_fictional" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="historical_period_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_unit_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Внешние ключи -->
+        <addForeignKeyConstraint baseTableName="organizational_units" 
+                                 baseColumnNames="location_id" 
+                                 constraintName="fk_org_units_location" 
+                                 referencedTableName="geo_points" 
+                                 referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint baseTableName="organizational_units" 
+                                 baseColumnNames="historical_period_id" 
+                                 constraintName="fk_org_units_historical_period" 
+                                 referencedTableName="historical_periods" 
+                                 referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint baseTableName="organizational_units" 
+                                 baseColumnNames="parent_unit_id" 
+                                 constraintName="fk_org_units_parent" 
+                                 referencedTableName="organizational_units" 
+                                 referencedColumnNames="id"/>
+
+        <!-- Индексы -->
+        <createIndex tableName="organizational_units" indexName="idx_org_units_name">
+            <column name="name"/>
+        </createIndex>
+        
+        <createIndex tableName="organizational_units" indexName="idx_org_units_type">
+            <column name="type"/>
+        </createIndex>
+        
+        <createIndex tableName="organizational_units" indexName="idx_org_units_founded_date">
+            <column name="founded_date"/>
+        </createIndex>
+        
+        <createIndex tableName="organizational_units" indexName="idx_org_units_parent">
+            <column name="parent_unit_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

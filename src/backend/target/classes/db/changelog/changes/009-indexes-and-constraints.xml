@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="009-additional-indexes-and-constraints" author="vuege">
+        
+        <!-- Дополнительные индексы для улучшения производительности -->
+        
+        <!-- Составные индексы для организационных единиц -->
+        <createIndex tableName="organizational_units" indexName="idx_org_units_type_period">
+            <column name="type"/>
+            <column name="historical_period_id"/>
+        </createIndex>
+        
+        <createIndex tableName="organizational_units" indexName="idx_org_units_founded_dissolved">
+            <column name="founded_date"/>
+            <column name="dissolved_date"/>
+        </createIndex>
+        
+        <!-- Составные индексы для должностей -->
+        <createIndex tableName="positions" indexName="idx_positions_org_hierarchy">
+            <column name="organization_id"/>
+            <column name="hierarchy"/>
+        </createIndex>
+        
+        <createIndex tableName="positions" indexName="idx_positions_created_abolished">
+            <column name="created_date"/>
+            <column name="abolished_date"/>
+        </createIndex>
+        
+        <!-- Составные индексы для людей -->
+        <createIndex tableName="persons" indexName="idx_persons_birth_death">
+            <column name="birth_date"/>
+            <column name="death_date"/>
+        </createIndex>
+        
+        <createIndex tableName="persons" indexName="idx_persons_period_fictional">
+            <column name="historical_period_id"/>
+            <column name="is_fictional"/>
+        </createIndex>
+        
+        <!-- Составные индексы для связей человек-должность -->
+        <createIndex tableName="person_positions" indexName="idx_person_positions_date_range">
+            <column name="start_date"/>
+            <column name="end_date"/>
+        </createIndex>
+        
+        <createIndex tableName="person_positions" indexName="idx_person_positions_person_type">
+            <column name="person_id"/>
+            <column name="appointment_type"/>
+        </createIndex>
+        
+        <!-- Дополнительные проверки -->
+        <addCheckConstraint tableName="persons" 
+                           constraintName="chk_person_dates" 
+                           checkCondition="(birth_date IS NULL OR death_date IS NULL) OR (birth_date <= death_date)"/>
+        
+        <addCheckConstraint tableName="organizational_units" 
+                           constraintName="chk_org_unit_dates" 
+                           checkCondition="(dissolved_date IS NULL) OR (founded_date <= dissolved_date)"/>
+        
+        <addCheckConstraint tableName="positions" 
+                           constraintName="chk_position_dates" 
+                           checkCondition="(abolished_date IS NULL) OR (created_date <= abolished_date)"/>
+        
+        <addCheckConstraint tableName="person_positions" 
+                           constraintName="chk_person_position_dates" 
+                           checkCondition="(end_date IS NULL) OR (start_date <= end_date)"/>
+        
+        <addCheckConstraint tableName="historical_periods" 
+                           constraintName="chk_historical_period_dates" 
+                           checkCondition="(end_date IS NULL) OR (start_date <= end_date)"/>
+        
+    </changeSet>
+
+</databaseChangeLog>

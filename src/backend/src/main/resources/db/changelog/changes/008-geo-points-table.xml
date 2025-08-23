@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="008-create-geo-points-table" author="vuege">
+        <createTable tableName="geo_points">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="latitude" type="DOUBLE PRECISION">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="DOUBLE PRECISION">
+                <constraints nullable="false"/>
+            </column>
+            <column name="elevation" type="DOUBLE PRECISION">
+                <constraints nullable="true"/>
+            </column>
+            <column name="accuracy" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Проверка валидности координат -->
+        <addCheckConstraint tableName="geo_points" 
+                           constraintName="chk_latitude_range" 
+                           checkCondition="latitude >= -90 AND latitude <= 90"/>
+        
+        <addCheckConstraint tableName="geo_points" 
+                           constraintName="chk_longitude_range" 
+                           checkCondition="longitude >= -180 AND longitude <= 180"/>
+
+        <!-- Индексы -->
+        <createIndex tableName="geo_points" indexName="idx_geo_points_coordinates">
+            <column name="latitude"/>
+            <column name="longitude"/>
+        </createIndex>
+        
+        <createIndex tableName="geo_points" indexName="idx_geo_points_accuracy">
+            <column name="accuracy"/>
+        </createIndex>
+        
+        <!-- Пространственный индекс для PostGIS (пропущен для тестирования) -->
+        <comment>PostGIS spatial index skipped for testing environment</comment>
+    </changeSet>
+
+</databaseChangeLog>

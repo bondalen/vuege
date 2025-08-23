@@ -4,16 +4,18 @@ import graphql.schema.GraphQLScalarType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 /**
- * Конфигурация GraphQL для кастомных скаляров
+ * Конфигурация GraphQL для кастомных скаляров и CORS
  */
 @Configuration
-public class GraphQLConfig {
+public class GraphQLConfig implements WebMvcConfigurer {
 
     /**
      * Кастомный скаляр для Date
@@ -98,5 +100,17 @@ public class GraphQLConfig {
         return wiringBuilder -> wiringBuilder
                 .scalar(dateScalar())
                 .scalar(geoPointScalar());
+    }
+
+    /**
+     * Конфигурация CORS для разрешения кросс-доменных запросов
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(false);
     }
 }

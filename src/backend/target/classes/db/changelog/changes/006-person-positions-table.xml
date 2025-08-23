@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="006-create-person-positions-table" author="vuege">
+        <createTable tableName="person_positions">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="person_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="appointment_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="VARCHAR(500)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Внешние ключи -->
+        <addForeignKeyConstraint baseTableName="person_positions" 
+                                 baseColumnNames="person_id" 
+                                 constraintName="fk_person_positions_person" 
+                                 referencedTableName="persons" 
+                                 referencedColumnNames="id"/>
+        
+        <addForeignKeyConstraint baseTableName="person_positions" 
+                                 baseColumnNames="position_id" 
+                                 constraintName="fk_person_positions_position" 
+                                 referencedTableName="positions" 
+                                 referencedColumnNames="id"/>
+
+        <!-- Уникальный индекс для предотвращения дублирования -->
+        <addUniqueConstraint tableName="person_positions" 
+                             columnNames="person_id, position_id, start_date" 
+                             constraintName="uk_person_position_start_date"/>
+
+        <!-- Индексы -->
+        <createIndex tableName="person_positions" indexName="idx_person_positions_person">
+            <column name="person_id"/>
+        </createIndex>
+        
+        <createIndex tableName="person_positions" indexName="idx_person_positions_position">
+            <column name="position_id"/>
+        </createIndex>
+        
+        <createIndex tableName="person_positions" indexName="idx_person_positions_start_date">
+            <column name="start_date"/>
+        </createIndex>
+        
+        <createIndex tableName="person_positions" indexName="idx_person_positions_appointment_type">
+            <column name="appointment_type"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

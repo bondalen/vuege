@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="010-insert-test-data" author="vuege">
+        
+        <!-- Тестовые исторические периоды -->
+        <insert tableName="historical_periods">
+            <column name="name">Античность</column>
+            <column name="start_date">-3000-01-01</column>
+            <column name="end_date">476-12-31</column>
+            <column name="era">BCE</column>
+            <column name="description">Период античной цивилизации</column>
+        </insert>
+        
+        <insert tableName="historical_periods">
+            <column name="name">Средневековье</column>
+            <column name="start_date">476-01-01</column>
+            <column name="end_date">1492-12-31</column>
+            <column name="era">CE</column>
+            <column name="description">Период средневековой истории</column>
+        </insert>
+        
+        <insert tableName="historical_periods">
+            <column name="name">Новое время</column>
+            <column name="start_date">1492-01-01</column>
+            <column name="end_date">1789-12-31</column>
+            <column name="era">CE</column>
+            <column name="description">Период нового времени</column>
+        </insert>
+        
+        <!-- Тестовые географические точки -->
+        <insert tableName="geo_points">
+            <column name="latitude">55.7558</column>
+            <column name="longitude">37.6176</column>
+            <column name="elevation">156</column>
+            <column name="accuracy">EXACT</column>
+        </insert>
+        
+        <insert tableName="geo_points">
+            <column name="latitude">59.9311</column>
+            <column name="longitude">30.3609</column>
+            <column name="elevation">3</column>
+            <column name="accuracy">EXACT</column>
+        </insert>
+        
+        <!-- Тестовые организационные единицы -->
+        <insert tableName="organizational_units">
+            <column name="name">Римская империя</column>
+            <column name="type">STATE</column>
+            <column name="founded_date">-27-01-16</column>
+            <column name="dissolved_date">476-09-04</column>
+            <column name="location_id">1</column>
+            <column name="is_fictional">false</column>
+            <column name="historical_period_id">1</column>
+        </insert>
+        
+        <insert tableName="organizational_units">
+            <column name="name">Византийская империя</column>
+            <column name="type">STATE</column>
+            <column name="founded_date">330-05-11</column>
+            <column name="dissolved_date">1453-05-29</column>
+            <column name="location_id">1</column>
+            <column name="is_fictional">false</column>
+            <column name="historical_period_id">2</column>
+        </insert>
+        
+        <!-- Тестовые должности -->
+        <insert tableName="positions">
+            <column name="title">Император</column>
+            <column name="organization_id">1</column>
+            <column name="created_date">-27-01-16</column>
+            <column name="abolished_date">476-09-04</column>
+            <column name="hierarchy">EXECUTIVE</column>
+            <column name="responsibilities">["Верховная власть", "Командование армией", "Законодательство"]</column>
+            <column name="is_active">false</column>
+        </insert>
+        
+        <insert tableName="positions">
+            <column name="title">Консул</column>
+            <column name="organization_id">1</column>
+            <column name="created_date">-509-01-01</column>
+            <column name="abolished_date">541-12-31</column>
+            <column name="hierarchy">EXECUTIVE</column>
+            <column name="responsibilities">["Исполнительная власть", "Председательство в сенате"]</column>
+            <column name="is_active">false</column>
+        </insert>
+        
+        <!-- Тестовые люди -->
+        <insert tableName="persons">
+            <column name="name">Октавиан Август</column>
+            <column name="birth_date">-63-09-23</column>
+            <column name="death_date">14-08-19</column>
+            <column name="nationality">Римлянин</column>
+            <column name="is_fictional">false</column>
+            <column name="historical_period_id">1</column>
+        </insert>
+        
+        <insert tableName="persons">
+            <column name="name">Юлий Цезарь</column>
+            <column name="birth_date">-100-07-12</column>
+            <column name="death_date">-44-03-15</column>
+            <column name="nationality">Римлянин</column>
+            <column name="is_fictional">false</column>
+            <column name="historical_period_id">1</column>
+        </insert>
+        
+        <!-- Тестовые связи человек-должность -->
+        <insert tableName="person_positions">
+            <column name="person_id">1</column>
+            <column name="position_id">1</column>
+            <column name="start_date">-27-01-16</column>
+            <column name="end_date">14-08-19</column>
+            <column name="appointment_type">APPOINTED</column>
+            <column name="source">Исторические хроники</column>
+        </insert>
+        
+        <insert tableName="person_positions">
+            <column name="person_id">2</column>
+            <column name="position_id">2</column>
+            <column name="start_date">-59-01-01</column>
+            <column name="end_date">-44-03-15</column>
+            <column name="appointment_type">ELECTED</column>
+            <column name="source">Исторические хроники</column>
+        </insert>
+        
+    </changeSet>
+
+</databaseChangeLog>

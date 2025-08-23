@@ -45,6 +45,8 @@ logging:
     io.github.bondalen: DEBUG
     org.springframework.graphql: DEBUG
     org.springframework.r2dbc: DEBUG
+    org.springframework.liquibase: DEBUG
+    liquibase: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
