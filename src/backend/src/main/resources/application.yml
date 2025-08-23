@@ -55,7 +55,34 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,env,configprops,beans,threaddump,heapdump
+      base-path: /actuator
+      discovery:
+        enabled: true
   endpoint:
     health:
       show-details: always
+      show-components: always
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+  health:
+    r2dbc:
+      enabled: true
+    db:
+      enabled: true
+    mail:
+      enabled: false
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+  # Security Configuration for Actuator
+  security:
+    user:
+      name: admin
+      password: admin123
+    basic:
+      enabled: false
