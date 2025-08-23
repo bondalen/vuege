@@ -1,6 +1,5 @@
 package io.github.bondalen.security;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,25 +17,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Временные пользователи для тестирования
+        // Временные пользователи для тестирования (незашифрованные пароли)
         if ("admin".equals(username)) {
-            return User.builder()
-                    .username("admin")
-                    .password("admin123")
-                    .roles("ADMIN", "USER", "MONITOR")
-                    .build();
+            return UserPrincipal.create(1L, "admin", "admin@vuege.com", 
+                "admin123", 
+                List.of("ADMIN", "USER", "MONITOR"));
         } else if ("user".equals(username)) {
-            return User.builder()
-                    .username("user")
-                    .password("user123")
-                    .roles("USER")
-                    .build();
+            return UserPrincipal.create(2L, "user", "user@vuege.com", 
+                "user123", 
+                List.of("USER"));
         } else if ("monitor".equals(username)) {
-            return User.builder()
-                    .username("monitor")
-                    .password("monitor123")
-                    .roles("MONITOR")
-                    .build();
+            return UserPrincipal.create(3L, "monitor", "monitor@vuege.com", 
+                "monitor123", 
+                List.of("MONITOR"));
         }
 
         throw new UsernameNotFoundException("User not found with username: " + username);

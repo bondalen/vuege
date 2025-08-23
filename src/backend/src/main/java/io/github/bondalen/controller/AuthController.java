@@ -1,12 +1,16 @@
 package io.github.bondalen.controller;
 
 import io.github.bondalen.security.CustomUserDetailsService;
+import io.github.bondalen.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,30 +22,45 @@ import java.util.Map;
 public class AuthController {
 
     private final CustomUserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(CustomUserDetailsService userDetailsService) {
+    public AuthController(CustomUserDetailsService userDetailsService, 
+                         AuthenticationManager authenticationManager,
+                         JwtTokenProvider jwtTokenProvider) {
         this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         try {
-            // Простая проверка без JWT для тестирования
-            if ("admin".equals(loginRequest.getUsername()) && "admin123".equals(loginRequest.getPassword())) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("accessToken", "test-token-admin");
-                response.put("tokenType", "Bearer");
-                response.put("username", loginRequest.getUsername());
-                response.put("roles", List.of("ADMIN", "USER", "MONITOR"));
-                response.put("message", "Authentication successful (test mode)");
-                
-                return ResponseEntity.ok(response);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Invalid credentials"));
-            }
-        } catch (Exception e) {
+            // Реальная аутентификация через Spring Security
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginRequest.getUsername(), 
+                    loginRequest.getPassword()
+                )
+            );
+
+            // Генерация JWT токена
+            String jwt = jwtTokenProvider.generateToken(authentication);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("accessToken", jwt);
+            response.put("tokenType", "Bearer");
+            response.put("username", loginRequest.getUsername());
+            response.put("roles", jwtTokenProvider.getRolesFromJWT(jwt));
+            response.put("message", "Authentication successful");
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("error", "Invalid credentials"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("error", "Authentication failed", "message", e.getMessage()));
         }
     }
