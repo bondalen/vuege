@@ -19,19 +19,12 @@ spring:
       enabled: false
     schema:
       locations: classpath:graphql/
-  
-  # Mail Configuration
-  mail:
-    host: localhost
-    port: 587
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+
+# JWT Configuration
+app:
+  jwt:
+    secret: vuege-super-secret-jwt-key-for-production-use-change-in-production
+    expiration: 86400000 # 24 часа в миллисекундах
 
 # Server Configuration
 server:
@@ -46,6 +39,7 @@ logging:
     org.springframework.graphql: DEBUG
     org.springframework.r2dbc: DEBUG
     org.springframework.liquibase: DEBUG
+    org.springframework.security: DEBUG
     liquibase: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

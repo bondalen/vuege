@@ -20,31 +20,26 @@ public class TestController {
         Map<String, Object> status = new HashMap<>();
         status.put("application", "Vuege");
         status.put("version", "0.1.0");
-        status.put("status", "RUNNING");
         status.put("timestamp", LocalDateTime.now());
-        status.put("message", "Backend приложение Vuege успешно запущено!");
+        status.put("status", "running");
         return status;
     }
 
-    @GetMapping("/info")
-    public Map<String, Object> getInfo() {
-        Map<String, Object> info = new HashMap<>();
-        info.put("name", "Vuege");
-        info.put("description", "CRUD веб-сервис для учета организационных единиц с исторической перспективой и ГИС-функциональностью");
-        info.put("technologies", new String[]{
-            "Spring Boot 3.4.5",
-            "Java 21 LTS",
-            "GraphQL",
-            "R2DBC",
-            "PostgreSQL + PostGIS",
-            "Liquibase"
-        });
-        info.put("features", new String[]{
-            "Исторический охват от 4000 лет до н.э.",
-            "ГИС-интеграция через PostGIS",
-            "Реактивная архитектура",
-            "GraphQL API"
-        });
-        return info;
+    @GetMapping("/entities")
+    public Map<String, Object> getEntities() {
+        Map<String, Object> entities = new HashMap<>();
+        entities.put("message", "Тестовый endpoint для проверки доменной модели");
+        entities.put("timestamp", LocalDateTime.now());
+        entities.put("available", true);
+        return entities;
+    }
+
+    @GetMapping("/health")
+    public Map<String, Object> getHealth() {
+        Map<String, Object> health = new HashMap<>();
+        health.put("status", "UP");
+        health.put("timestamp", LocalDateTime.now());
+        health.put("service", "Vuege Backend");
+        return health;
     }
 }
