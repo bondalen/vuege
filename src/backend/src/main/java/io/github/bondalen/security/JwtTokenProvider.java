@@ -2,13 +2,16 @@ package io.github.bondalen.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -66,6 +69,20 @@ public class JwtTokenProvider {
                 .getPayload();
 
         return claims.get("username", String.class);
+    }
+
+    public List<String> getRolesFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        String authorities = claims.get("authorities", String.class);
+        if (authorities != null && !authorities.isEmpty()) {
+            return Arrays.asList(authorities.split(","));
+        }
+        return Arrays.asList();
     }
 
     public boolean validateToken(String authToken) {
