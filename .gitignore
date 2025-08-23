@@ -168,5 +168,22 @@ dmypy.json
 .cursorrules-*
 .cursor/mcp.env
 
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# Java
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
 
 
