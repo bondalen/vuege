@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * Сервис для работы с организационными единицами
@@ -47,6 +48,28 @@ public class OrganizationalUnitService {
         log.debug("Finding organizational unit by id: {}", id);
         return organizationalUnitRepository.findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("Organizational unit not found with id: " + id)));
+    }
+
+    /**
+     * Найти организационные единицы по списку ID (для batch loading)
+     */
+    public Flux<OrganizationalUnit> findByIds(List<Long> ids) {
+        log.debug("Finding organizational units by ids: {}", ids);
+        if (ids == null || ids.isEmpty()) {
+            return Flux.empty();
+        }
+        return organizationalUnitRepository.findByIdIn(ids);
+    }
+
+    /**
+     * Найти дочерние организационные единицы для batch loading
+     */
+    public Flux<OrganizationalUnit> findChildUnitsBatch(List<Long> parentIds) {
+        log.debug("Finding child units for parent ids: {}", parentIds);
+        if (parentIds == null || parentIds.isEmpty()) {
+            return Flux.empty();
+        }
+        return organizationalUnitRepository.findByParentUnitIdIn(parentIds);
     }
 
     /**

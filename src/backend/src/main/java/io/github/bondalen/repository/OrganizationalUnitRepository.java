@@ -40,4 +40,14 @@ public interface OrganizationalUnitRepository extends ReactiveCrudRepository<Org
      * Найти вымышленные/реальные организации
      */
     Flux<OrganizationalUnit> findByIsFictional(Boolean isFictional);
+    
+    /**
+     * Найти дочерние организации по списку родительских ID (для batch loading)
+     */
+    Flux<OrganizationalUnit> findByParentUnitIdIn(java.util.List<Long> parentUnitIds);
+    
+    /**
+     * Найти организации по списку ID (для batch loading)
+     */
+    Flux<OrganizationalUnit> findByIdIn(java.util.List<Long> ids);
 }

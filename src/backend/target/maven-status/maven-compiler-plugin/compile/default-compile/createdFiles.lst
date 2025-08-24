@@ -20,7 +20,9 @@ io/github/bondalen/entity/HistoricalPeriod$HistoricalPeriodBuilder.class
 io/github/bondalen/entity/PersonPosition$PersonPositionBuilder.class
 io/github/bondalen/entity/OrganizationType.class
 io/github/bondalen/graphql/service/PositionService$1.class
+io/github/bondalen/graphql/dataloader/OrganizationalUnitDataLoader.class
 io/github/bondalen/repository/PositionRepository.class
+io/github/bondalen/config/MetricsConfig.class
 io/github/bondalen/config/R2dbcConfig.class
 io/github/bondalen/controller/AuthController$LoginRequest.class
 io/github/bondalen/VuegeApplication.class
@@ -41,6 +43,7 @@ io/github/bondalen/graphql/resolver/MutationResolver.class
 io/github/bondalen/graphql/input/PersonPositionInput.class
 io/github/bondalen/graphql/input/PersonInput.class
 io/github/bondalen/repository/PersonRepository.class
+io/github/bondalen/config/CacheConfig.class
 io/github/bondalen/controller/DomainTestController.class
 io/github/bondalen/entity/GeoPoint$GeoPointBuilder.class
 io/github/bondalen/entity/AppointmentType.class
@@ -48,8 +51,10 @@ io/github/bondalen/graphql/input/OrganizationalUnitInput.class
 io/github/bondalen/config/GraphQLConfig$1.class
 io/github/bondalen/config/PostgisConfig.class
 io/github/bondalen/graphql/service/PersonPositionService.class
+io/github/bondalen/graphql/resolver/OptimizedOrganizationalUnitResolver.class
 io/github/bondalen/graphql/service/OrganizationalUnitService.class
 io/github/bondalen/graphql/input/PositionInput$PositionInputBuilder.class
+io/github/bondalen/config/PerformanceConfig.class
 io/github/bondalen/config/SecurityConfig.class
 io/github/bondalen/security/JwtAuthenticationFilter.class
 io/github/bondalen/config/GraphQLConfig$2.class

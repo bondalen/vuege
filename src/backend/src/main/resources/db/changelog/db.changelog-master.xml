@@ -16,5 +16,6 @@
     <include file="db/changelog/changes/008-geo-points-table.xml"/>
     <include file="db/changelog/changes/009-indexes-and-constraints.xml"/>
     <include file="db/changelog/changes/010-test-data.xml"/>
+    <include file="db/changelog/changes/007-add-performance-indexes.xml"/>
 
 </databaseChangeLog>

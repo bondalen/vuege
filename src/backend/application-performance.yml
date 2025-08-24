@@ -1,0 +1,125 @@
+# Конфигурация для оптимизации производительности
+
+spring:
+  application:
+    name: vuege
+  
+  # Оптимизированная конфигурация базы данных
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/vuege
+    username: postgres
+    password: postgres
+    pool:
+      max-size: 20
+      initial-size: 5
+      max-idle-time: 30m
+      max-life-time: 1h
+      acquire-retry: 5s
+      validation-query: "SELECT 1"
+  
+  # Оптимизированная конфигурация кэширования
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=30m,expireAfterAccess=15m
+  
+  # Оптимизированная конфигурация GraphQL
+  graphql:
+    graphiql:
+      enabled: false
+    schema:
+      locations: classpath:graphql/
+  
+  # Оптимизированная конфигурация Liquibase
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+# JWT Configuration
+app:
+  jwt:
+    secret: vuege-super-secret-jwt-key-for-production-use-change-in-production
+    expiration: 86400000 # 24 часа в миллисекундах
+
+# Оптимизированная конфигурация сервера
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+  # Оптимизация для производительности
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    connection-timeout: 20000
+    max-connections: 8192
+    accept-count: 100
+
+# Оптимизированная конфигурация логирования
+logging:
+  level:
+    io.github.bondalen: INFO
+    org.springframework.graphql: INFO
+    org.springframework.r2dbc: INFO
+    org.springframework.liquibase: INFO
+    org.springframework.security: INFO
+    liquibase: INFO
+    # Отключаем DEBUG логирование для производительности
+    org.springframework.cache: DEBUG
+    com.github.benmanes.caffeine: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Расширенная конфигурация мониторинга
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,configprops,beans,threaddump,heapdump,caches
+      base-path: /actuator
+      discovery:
+        enabled: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    caches:
+      enabled: true
+  health:
+    r2dbc:
+      enabled: true
+    db:
+      enabled: true
+    mail:
+      enabled: false
+    caches:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5, 0.95, 0.99
+    tags:
+      application: vuege
+      environment: performance
+
+  # Безопасность для Actuator
+  security:
+    user:
+      name: admin
+      password: admin123
+    basic:
+      enabled: false
+
+# Оптимизация для профилирования
+spring:
+  profiles:
+    active: performance
