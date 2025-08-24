@@ -38,7 +38,20 @@ public class GraphQLConfig implements WebMvcConfigurer {
                     @Override
                     public LocalDate parseValue(Object input) {
                         if (input instanceof String) {
-                            return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            try {
+                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            } catch (Exception e) {
+                                // Попробуем альтернативный формат для дат до нашей эры
+                                String dateStr = (String) input;
+                                if (dateStr.startsWith("-")) {
+                                    // Убираем минус и парсим как обычную дату
+                                    dateStr = dateStr.substring(1);
+                                    LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                                    // Возвращаем дату с отрицательным годом (до нашей эры)
+                                    return LocalDate.of(-date.getYear(), date.getMonth(), date.getDayOfMonth());
+                                }
+                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            }
                         }
                         return null;
                     }
@@ -46,7 +59,20 @@ public class GraphQLConfig implements WebMvcConfigurer {
                     @Override
                     public LocalDate parseLiteral(Object input) {
                         if (input instanceof String) {
-                            return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            try {
+                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            } catch (Exception e) {
+                                // Попробуем альтернативный формат для дат до нашей эры
+                                String dateStr = (String) input;
+                                if (dateStr.startsWith("-")) {
+                                    // Убираем минус и парсим как обычную дату
+                                    dateStr = dateStr.substring(1);
+                                    LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                                    // Возвращаем дату с отрицательным годом (до нашей эры)
+                                    return LocalDate.of(-date.getYear(), date.getMonth(), date.getDayOfMonth());
+                                }
+                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                            }
                         }
                         return null;
                     }

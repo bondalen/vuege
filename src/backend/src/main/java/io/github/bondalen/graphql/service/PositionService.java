@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -50,10 +51,17 @@ public class PositionService {
         
         String responsibilitiesJson = serializeResponsibilities(input.getResponsibilities());
         
+        // Используем текущую дату если createdDate не указана
+        LocalDate createdDate = input.getCreatedDate();
+        if (createdDate == null) {
+            createdDate = LocalDate.now();
+            log.debug("Using current date for createdDate: {}", createdDate);
+        }
+        
         Position position = Position.builder()
                 .title(input.getTitle())
                 .organizationId(input.getOrganizationId())
-                .createdDate(input.getCreatedDate())
+                .createdDate(createdDate)
                 .abolishedDate(input.getAbolishedDate())
                 .hierarchy(input.getHierarchy())
                 .responsibilities(responsibilitiesJson)

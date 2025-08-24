@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuege - Тест GraphQL API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background-color: #ecf0f1;
+        }
+        .test-section h2 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .success {
+            background-color: #27ae60;
+        }
+        .success:hover {
+            background-color: #229954;
+        }
+        .error {
+            background-color: #e74c3c;
+        }
+        .error:hover {
+            background-color: #c0392b;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .result.success {
+            background-color: #d5f4e6;
+            border: 1px solid #27ae60;
+            color: #27ae60;
+        }
+        .result.error {
+            background-color: #fadbd8;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+        .result.info {
+            background-color: #d6eaf8;
+            border: 1px solid #3498db;
+            color: #2980b9;
+        }
+        .status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тест GraphQL API - Vuege</h1>
+        
+        <div class="instructions">
+            <strong>📋 Инструкции:</strong><br>
+            1. Нажмите кнопку "ТЕСТ 1" для проверки чтения данных<br>
+            2. Нажмите кнопку "ТЕСТ 2" для проверки создания данных<br>
+            3. Если оба теста показывают "✅ УСПЕХ" - система работает корректно!
+        </div>
+
+        <!-- ТЕСТ 1: Чтение данных -->
+        <div class="test-section">
+            <h2>📖 ТЕСТ 1: Проверка чтения данных из базы</h2>
+            <p>Этот тест проверяет, что GraphQL API может читать данные из PostgreSQL базы данных.</p>
+            <button onclick="testReadData()">🚀 ТЕСТ 1: Чтение данных</button>
+            <div id="readResult"></div>
+        </div>
+
+        <!-- ТЕСТ 2: Создание данных -->
+        <div class="test-section">
+            <h2>✏️ ТЕСТ 2: Проверка создания данных в базе</h2>
+            <p>Этот тест проверяет, что GraphQL API может создавать новые записи в PostgreSQL базе данных.</p>
+            <button onclick="testCreateData()">🚀 ТЕСТ 2: Создание данных</button>
+            <div id="createResult"></div>
+        </div>
+
+        <!-- Общий результат -->
+        <div class="test-section">
+            <h2>📊 Общий результат</h2>
+            <div id="overallResult" class="result info">
+                Нажмите кнопки тестов выше для проверки системы...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8082/api/graphql';
+        let test1Passed = false;
+        let test2Passed = false;
+
+        async function makeGraphQLRequest(query, variables = {}) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        variables: variables
+                    })
+                });
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                throw new Error(`Ошибка запроса: ${error.message}`);
+            }
+        }
+
+        function showResult(elementId, success, message, data = null) {
+            const element = document.getElementById(elementId);
+            const status = success ? '✅ УСПЕХ' : '❌ ОШИБКА';
+            const className = success ? 'success' : 'error';
+            
+            let content = `${status}\n${message}`;
+            if (data) {
+                content += `\n\n📊 Данные:\n${JSON.stringify(data, null, 2)}`;
+            }
+            
+            element.className = `result ${className}`;
+            element.textContent = content;
+        }
+
+        async function testReadData() {
+            const resultDiv = document.getElementById('readResult');
+            resultDiv.innerHTML = '<div class="result info">⏳ Выполняется тест чтения данных...</div>';
+
+            try {
+                // Тест 1: Чтение организационных единиц
+                const orgUnitsQuery = `
+                    query {
+                        organizationalUnits {
+                            id
+                            name
+                            type
+                            foundedDate
+                        }
+                    }
+                `;
+                
+                const orgUnitsData = await makeGraphQLRequest(orgUnitsQuery);
+                
+                if (orgUnitsData.errors) {
+                    throw new Error(`GraphQL ошибка: ${orgUnitsData.errors[0].message}`);
+                }
+
+                const orgUnits = orgUnitsData.data.organizationalUnits;
+                
+                if (!orgUnits || orgUnits.length === 0) {
+                    throw new Error('Нет данных организационных единиц');
+                }
+
+                // Тест 2: Чтение людей
+                const personsQuery = `
+                    query {
+                        persons {
+                            id
+                            name
+                            nationality
+                        }
+                    }
+                `;
+                
+                const personsData = await makeGraphQLRequest(personsQuery);
+                
+                if (personsData.errors) {
+                    throw new Error(`GraphQL ошибка: ${personsData.errors[0].message}`);
+                }
+
+                const persons = personsData.data.persons;
+                
+                if (!persons || persons.length === 0) {
+                    throw new Error('Нет данных людей');
+                }
+
+                // Тест 3: Чтение должностей
+                const positionsQuery = `
+                    query {
+                        positions {
+                            id
+                            title
+                            hierarchy
+                        }
+                    }
+                `;
+                
+                const positionsData = await makeGraphQLRequest(positionsQuery);
+                
+                if (positionsData.errors) {
+                    throw new Error(`GraphQL ошибка: ${positionsData.errors[0].message}`);
+                }
+
+                const positions = positionsData.data.positions;
+                
+                if (!positions || positions.length === 0) {
+                    throw new Error('Нет данных должностей');
+                }
+
+                test1Passed = true;
+                showResult('readResult', true, 
+                    `✅ ТЕСТ 1 ПРОЙДЕН!\n\n` +
+                    `📊 Результаты:\n` +
+                    `• Организационные единицы: ${orgUnits.length} записей\n` +
+                    `• Люди: ${persons.length} записей\n` +
+                    `• Должности: ${positions.length} записей\n\n` +
+                    `🎯 GraphQL API успешно читает данные из PostgreSQL базы!`,
+                    {
+                        organizationalUnits: orgUnits.length,
+                        persons: persons.length,
+                        positions: positions.length
+                    }
+                );
+
+                updateOverallResult();
+
+            } catch (error) {
+                test1Passed = false;
+                showResult('readResult', false, 
+                    `❌ ТЕСТ 1 НЕ ПРОЙДЕН!\n\nОшибка: ${error.message}\n\n` +
+                    `🔍 Возможные причины:\n` +
+                    `• Приложение не запущено\n` +
+                    `• База данных недоступна\n` +
+                    `• GraphQL API не работает`
+                );
+                updateOverallResult();
+            }
+        }
+
+        async function testCreateData() {
+            const resultDiv = document.getElementById('createResult');
+            resultDiv.innerHTML = '<div class="result info">⏳ Выполняется тест создания данных...</div>';
+
+            try {
+                // Создание нового человека
+                const createPersonMutation = `
+                    mutation {
+                        createPerson(input: {
+                            name: "Тестовый пользователь ${Date.now()}"
+                            nationality: "Римская"
+                            isFictional: false
+                            historicalPeriodId: "1"
+                        }) {
+                            id
+                            name
+                            nationality
+                        }
+                    }
+                `;
+                
+                const personData = await makeGraphQLRequest(createPersonMutation);
+                
+                if (personData.errors) {
+                    throw new Error(`GraphQL ошибка: ${personData.errors[0].message}`);
+                }
+
+                const newPerson = personData.data.createPerson;
+                
+                if (!newPerson || !newPerson.id) {
+                    throw new Error('Не удалось создать человека');
+                }
+
+                // Создание новой должности
+                const createPositionMutation = `
+                    mutation {
+                        createPosition(input: {
+                            title: "Тестовая должность ${Date.now()}"
+                            organizationId: "1"
+                            createdDate: "2025-08-24"
+                            hierarchy: ADMINISTRATIVE
+                            responsibilities: ["Тестовая ответственность"]
+                            isActive: true
+                        }) {
+                            id
+                            title
+                            hierarchy
+                        }
+                    }
+                `;
+                
+                const positionData = await makeGraphQLRequest(createPositionMutation);
+                
+                if (positionData.errors) {
+                    throw new Error(`GraphQL ошибка: ${positionData.errors[0].message}`);
+                }
+
+                const newPosition = positionData.data.createPosition;
+                
+                if (!newPosition || !newPosition.id) {
+                    throw new Error('Не удалось создать должность');
+                }
+
+                test2Passed = true;
+                showResult('createResult', true, 
+                    `✅ ТЕСТ 2 ПРОЙДЕН!\n\n` +
+                    `📊 Созданные записи:\n` +
+                    `• Человек: ${newPerson.name} (ID: ${newPerson.id})\n` +
+                    `• Должность: ${newPosition.title} (ID: ${newPosition.id})\n\n` +
+                    `🎯 GraphQL API успешно создает данные в PostgreSQL базе!`,
+                    {
+                        newPerson: newPerson,
+                        newPosition: newPosition
+                    }
+                );
+
+                updateOverallResult();
+
+            } catch (error) {
+                test2Passed = false;
+                showResult('createResult', false, 
+                    `❌ ТЕСТ 2 НЕ ПРОЙДЕН!\n\nОшибка: ${error.message}\n\n` +
+                    `🔍 Возможные причины:\n` +
+                    `• Проблемы с парсингом дат\n` +
+                    `• Ошибки в мутациях GraphQL\n` +
+                    `• Проблемы с базой данных`
+                );
+                updateOverallResult();
+            }
+        }
+
+        function updateOverallResult() {
+            const overallDiv = document.getElementById('overallResult');
+            
+            if (test1Passed && test2Passed) {
+                overallDiv.className = 'result success';
+                overallDiv.textContent = 
+                    `🎉 ВСЕ ТЕСТЫ ПРОЙДЕНЫ!\n\n` +
+                    `✅ ТЕСТ 1: Чтение данных - ПРОЙДЕН\n` +
+                    `✅ ТЕСТ 2: Создание данных - ПРОЙДЕН\n\n` +
+                    `🚀 РЕЗУЛЬТАТ: Этап 6 успешно завершен!\n` +
+                    `GraphQL API полностью интегрирован с PostgreSQL базой данных.\n` +
+                    `Все операции (чтение и создание) работают корректно.`;
+            } else if (test1Passed || test2Passed) {
+                overallDiv.className = 'result error';
+                overallDiv.textContent = 
+                    `⚠️ ЧАСТИЧНЫЙ УСПЕХ\n\n` +
+                    `${test1Passed ? '✅ ТЕСТ 1: Чтение данных - ПРОЙДЕН\n' : '❌ ТЕСТ 1: Чтение данных - НЕ ПРОЙДЕН\n'}` +
+                    `${test2Passed ? '✅ ТЕСТ 2: Создание данных - ПРОЙДЕН\n' : '❌ ТЕСТ 2: Создание данных - НЕ ПРОЙДЕН\n'}\n\n` +
+                    `🔧 Требуется дополнительная диагностика.`;
+            } else {
+                overallDiv.className = 'result error';
+                overallDiv.textContent = 
+                    `❌ ВСЕ ТЕСТЫ НЕ ПРОЙДЕНЫ\n\n` +
+                    `❌ ТЕСТ 1: Чтение данных - НЕ ПРОЙДЕН\n` +
+                    `❌ ТЕСТ 2: Создание данных - НЕ ПРОЙДЕН\n\n` +
+                    `🔧 Система не работает. Проверьте:\n` +
+                    `• Запущено ли приложение\n` +
+                    `• Доступна ли база данных\n` +
+                    `• Работает ли GraphQL API`;
+            }
+        }
+    </script>
+</body>
+</html>

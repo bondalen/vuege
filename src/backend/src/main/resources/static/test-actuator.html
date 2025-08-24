@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuege - Тест Actuator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e67e22;
+            border-radius: 8px;
+            background-color: #fef9e7;
+        }
+        .test-section h2 {
+            color: #d68910;
+            margin-top: 0;
+        }
+        button {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #d68910;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .result.success {
+            background-color: #d5f4e6;
+            border: 1px solid #27ae60;
+            color: #27ae60;
+        }
+        .result.error {
+            background-color: #fadbd8;
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+        .result.info {
+            background-color: #d6eaf8;
+            border: 1px solid #3498db;
+            color: #2980b9;
+        }
+        .instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .summary {
+            background-color: #e8f5e8;
+            border: 2px solid #27ae60;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Тест Actuator - Vuege</h1>
+        
+        <div class="instructions">
+            <strong>📋 Инструкции:</strong><br>
+            Нажмите кнопку "Проверить Actuator" для проверки состояния приложения и базы данных.
+        </div>
+
+        <div class="test-section">
+            <h2>🔍 Проверка состояния приложения</h2>
+            <p>Этот тест проверяет состояние приложения через Spring Boot Actuator endpoints.</p>
+            <button onclick="testActuator()">🔧 Проверить Actuator</button>
+            <div id="actuatorResult"></div>
+        </div>
+
+        <div id="summary" class="summary" style="display: none;">
+            <h3>📊 Результат проверки</h3>
+            <div id="summaryContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const ACTUATOR_BASE = 'http://localhost:8082/api/actuator';
+
+        async function makeRequest(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return await response.json();
+            } catch (error) {
+                throw new Error(`Ошибка запроса: ${error.message}`);
+            }
+        }
+
+        function showResult(elementId, success, message, data = null) {
+            const element = document.getElementById(elementId);
+            const status = success ? '✅ УСПЕХ' : '❌ ОШИБКА';
+            const className = success ? 'success' : 'error';
+            
+            let content = `${status}\n${message}`;
+            if (data) {
+                content += `\n\n📊 Данные:\n${JSON.stringify(data, null, 2)}`;
+            }
+            
+            element.className = `result ${className}`;
+            element.textContent = content;
+        }
+
+        async function testActuator() {
+            const resultDiv = document.getElementById('actuatorResult');
+            resultDiv.innerHTML = '<div class="result info">⏳ Проверка Actuator endpoints...</div>';
+
+            try {
+                // Тест 1: Health endpoint
+                const healthData = await makeRequest(`${ACTUATOR_BASE}/health`);
+                
+                if (!healthData.status || healthData.status !== 'UP') {
+                    throw new Error('Приложение не работает (status не UP)');
+                }
+
+                // Проверяем компоненты
+                const components = healthData.components;
+                if (!components) {
+                    throw new Error('Нет информации о компонентах');
+                }
+
+                // Проверяем базу данных
+                if (!components.r2dbc || components.r2dbc.status !== 'UP') {
+                    throw new Error('База данных PostgreSQL недоступна');
+                }
+
+                // Тест 2: Info endpoint
+                const infoData = await makeRequest(`${ACTUATOR_BASE}/info`);
+                
+                // Тест 3: Metrics endpoint
+                const metricsData = await makeRequest(`${ACTUATOR_BASE}/metrics`);
+
+                // Формируем отчет
+                const report = {
+                    application: {
+                        status: healthData.status,
+                        database: components.r2dbc.status,
+                        diskSpace: components.diskSpace.status,
+                        ping: components.ping.status
+                    },
+                    database: {
+                        type: components.r2dbc.details?.database || 'Unknown',
+                        validation: components.r2dbc.details?.validationQuery || 'Unknown'
+                    },
+                    system: {
+                        totalDisk: components.diskSpace.details?.total || 0,
+                        freeDisk: components.diskSpace.details?.free || 0,
+                        threshold: components.diskSpace.details?.threshold || 0
+                    }
+                };
+
+                // Проверяем успешность всех тестов
+                const allComponentsUp = Object.values(components).every(comp => comp.status === 'UP');
+                
+                if (allComponentsUp) {
+                    showResult('actuatorResult', true, 
+                        `✅ ACTUATOR ТЕСТ ПРОЙДЕН!\n\n` +
+                        `📊 Состояние системы:\n` +
+                        `• Приложение: ${healthData.status}\n` +
+                        `• База данных: ${components.r2dbc.status}\n` +
+                        `• Дисковое пространство: ${components.diskSpace.status}\n` +
+                        `• Сетевая доступность: ${components.ping.status}\n\n` +
+                        `🎯 Все компоненты работают корректно!`,
+                        report
+                    );
+
+                    // Показываем сводку
+                    document.getElementById('summary').style.display = 'block';
+                    document.getElementById('summaryContent').innerHTML = 
+                        `<strong>✅ Система работает стабильно!</strong><br><br>` +
+                        `<strong>База данных:</strong> ${components.r2dbc.details?.database || 'Unknown'}<br>` +
+                        `<strong>Свободное место:</strong> ${Math.round((components.diskSpace.details?.free || 0) / 1024 / 1024 / 1024)} GB<br>` +
+                        `<strong>Все компоненты:</strong> В рабочем состоянии`;
+
+                } else {
+                    throw new Error('Не все компоненты в состоянии UP');
+                }
+
+            } catch (error) {
+                showResult('actuatorResult', false, 
+                    `❌ ACTUATOR ТЕСТ НЕ ПРОЙДЕН!\n\nОшибка: ${error.message}\n\n` +
+                    `🔍 Возможные причины:\n` +
+                    `• Приложение не запущено\n` +
+                    `• База данных недоступна\n` +
+                    `• Actuator endpoints отключены\n` +
+                    `• Проблемы с сетевым подключением`
+                );
+
+                // Показываем сводку с ошибкой
+                document.getElementById('summary').style.display = 'block';
+                document.getElementById('summaryContent').innerHTML = 
+                    `<strong>❌ Обнаружены проблемы!</strong><br><br>` +
+                    `<strong>Ошибка:</strong> ${error.message}<br>` +
+                    `<strong>Рекомендация:</strong> Проверьте состояние приложения и базы данных`;
+            }
+        }
+    </script>
+</body>
+</html>
