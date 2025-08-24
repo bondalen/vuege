@@ -5,9 +5,9 @@ import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import java.time.Duration;
 
@@ -27,12 +27,12 @@ public class PerformanceConfig {
     private String password;
 
     /**
-     * Оптимизированная конфигурация connection pool
+     * Оптимизированная конфигурация connection pool только для PostgreSQL
      */
     @Bean
-    @Primary
+    @ConditionalOnProperty(name = "spring.r2dbc.url", havingValue = "r2dbc:postgresql://.*", matchIfMissing = false)
     public ConnectionPool connectionPool() {
-        // Парсим URL для получения параметров подключения
+        // Для PostgreSQL (продакшн)
         String url = r2dbcUrl.replace("r2dbc:postgresql://", "");
         String[] parts = url.split("/");
         String hostPort = parts[0];
@@ -64,6 +64,4 @@ public class PerformanceConfig {
 
         return new ConnectionPool(poolConfig);
     }
-
-
 }

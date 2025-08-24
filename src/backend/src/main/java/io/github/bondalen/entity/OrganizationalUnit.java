@@ -46,4 +46,31 @@ public class OrganizationalUnit {
     
     @Column("parent_unit_id")
     private Long parentUnitId;
+    
+    @Column("status")
+    private StatusType status;
+    
+    @Column("metadata")
+    private String metadata; // JSON string
+    
+    @Column("tags")
+    private String[] tags;
+    
+    @Column("created_at")
+    private java.time.LocalDateTime createdAt;
+    
+    @Column("updated_at")
+    private java.time.LocalDateTime updatedAt;
+    
+    @Column("created_by")
+    private String createdBy;
+    
+    @Column("updated_by")
+    private String updatedBy;
+    
+    @Column("description")
+    private String description;
+    
+    @Column("website")
+    private String website;
 }

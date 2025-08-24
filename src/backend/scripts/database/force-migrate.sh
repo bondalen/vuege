@@ -8,4 +8,5 @@ PGPASSWORD=postgres psql -h localhost -U postgres -d vuege -c "DROP TABLE IF EXI
 
 # Запуск приложения с принудительным выполнением миграций
 echo "Запуск приложения с миграциями..."
+cd /home/alex/vuege/src/backend
 mvn spring-boot:run -Dspring.liquibase.enabled=true

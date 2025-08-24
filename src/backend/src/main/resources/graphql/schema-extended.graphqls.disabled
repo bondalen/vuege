@@ -1,0 +1,685 @@
+# ВАЖНО: Этот файл временно отключен для устранения конфликтов схем
+# Все расширенные типы и операции будут интегрированы в основную схему
+
+# Для активации расширенной функциональности:
+# 1. Удалите этот файл
+# 2. Интегрируйте нужные типы в schema.graphqls
+# 3. Обновите резолверы и сервисы
+
+type Query {
+    # Основные запросы для организационных единиц
+    organizationalUnits: [OrganizationalUnit!]!
+    organizationalUnit(id: ID!): OrganizationalUnit
+    organizationsByStatus(status: StatusType!): [OrganizationalUnit!]!
+    organizationsWithPagination(page: Int!, size: Int!, filters: OrganizationFilter, sort: SortInput): PaginatedResult!
+    
+    # Запросы для должностей
+    positions: [Position!]!
+    position(id: ID!): Position
+    positionsWithPagination(page: Int!, size: Int!, filters: PositionFilter, sort: SortInput): PaginatedResult!
+    
+    # Запросы для людей
+    persons: [Person!]!
+    person(id: ID!): Person
+    personsWithPagination(page: Int!, size: Int!, filters: PersonFilter, sort: SortInput): PaginatedResult!
+    
+    # ГИС запросы
+    organizationsInRegion(bounds: BoundingBox!, timeRange: TimeRange!): [OrganizationalUnit!]!
+    
+    # Исторические запросы
+    historicalPeriods: [HistoricalPeriod!]!
+    historicalPeriod(id: ID!): HistoricalPeriod
+    
+    # Поиск и аналитика
+    searchOrganizations(query: String!, filters: SearchFilters): SearchResult!
+    searchPersons(query: String!, filters: SearchFilters): SearchResult!
+    searchPositions(query: String!, filters: SearchFilters): SearchResult!
+    
+    # Агрегационные запросы
+    organizationStats(timeRange: TimeRange!): OrganizationStats!
+    personStats(timeRange: TimeRange!): PersonStats!
+    positionStats(timeRange: TimeRange!): PositionStats!
+    
+    # Аудит и логи
+    auditLogs(entityId: ID!, entityType: String!, page: Int!, size: Int!): PaginatedResult!
+    userActivityLogs(userId: ID!, page: Int!, size: Int!): PaginatedResult!
+    
+    # Уведомления
+    notifications(userId: ID!, page: Int!, size: Int!): PaginatedResult!
+    unreadNotificationsCount(userId: ID!): Int!
+    
+    # Webhook
+    webhooks: [Webhook!]!
+    webhook(id: ID!): Webhook
+    
+    # Внешние сервисы
+    geocodeAddress(address: String!): GeoPoint!
+    reverseGeocode(latitude: Float!, longitude: Float!): Address!
+    validateEmail(email: String!): ValidationResult!
+    validatePhone(phone: String!): ValidationResult!
+}
+
+type Mutation {
+    # Мутации для организационных единиц
+    createOrganizationalUnit(input: OrganizationalUnitInput!): OrganizationalUnit!
+    updateOrganizationalUnit(id: ID!, input: OrganizationalUnitInput!): OrganizationalUnit!
+    deleteOrganizationalUnit(id: ID!): Boolean!
+    
+    # Batch операции для организаций
+    batchCreateOrganizations(inputs: [OrganizationalUnitInput!]!): [OrganizationalUnit!]!
+    batchUpdateOrganizations(inputs: [OrganizationalUnitUpdateInput!]!): [OrganizationalUnit!]!
+    batchDeleteOrganizations(ids: [ID!]!): BatchDeleteResult!
+    
+    # Мутации для должностей
+    createPosition(input: PositionInput!): Position!
+    updatePosition(id: ID!, input: PositionInput!): Position!
+    deletePosition(id: ID!): Boolean!
+    
+    # Мутации для людей
+    createPerson(input: PersonInput!): Person!
+    updatePerson(id: ID!, input: PersonInput!): Person!
+    deletePerson(id: ID!): Boolean!
+    
+    # Мутации для связей человек-должность
+    assignPersonToPosition(input: PersonPositionInput!): PersonPosition!
+    removePersonFromPosition(personId: ID!, positionId: ID!): Boolean!
+    
+    # Аутентификация
+    login(credentials: LoginInput!): AuthResult!
+    refreshToken(token: String!): AuthResult!
+    logout(token: String!): Boolean!
+    register(user: RegisterInput!): AuthResult!
+    
+    # Уведомления
+    markNotificationAsRead(id: ID!): Boolean!
+    markAllNotificationsAsRead(userId: ID!): Boolean!
+    deleteNotification(id: ID!): Boolean!
+    
+    # Webhook
+    createWebhook(input: WebhookInput!): Webhook!
+    updateWebhook(id: ID!, input: WebhookInput!): Webhook!
+    deleteWebhook(id: ID!): Boolean!
+    testWebhook(id: ID!): WebhookTestResult!
+}
+
+type Subscription {
+    # Real-time обновления
+    organizationCreated: OrganizationalUnit!
+    organizationUpdated: OrganizationalUnit!
+    organizationDeleted: ID!
+    personAssignedToPosition: PersonPosition!
+    personRemovedFromPosition: PersonPositionRemoved!
+    notificationReceived: Notification!
+    auditLogCreated: AuditLog!
+}
+
+# Основные типы с расширенными полями
+
+type OrganizationalUnit {
+    id: ID!
+    name: String!
+    type: OrganizationType!
+    foundedDate: Date!
+    dissolvedDate: Date
+    location: GeoPoint
+    isFictional: Boolean!
+    historicalPeriod: HistoricalPeriod!
+    parentUnit: OrganizationalUnit
+    childUnits: [OrganizationalUnit!]!
+    positions: [Position!]!
+    
+    # Новые поля
+    status: StatusType!
+    metadata: JSON
+    tags: [String!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    createdBy: String!
+    updatedBy: String!
+    description: String
+    website: String
+    contactInfo: ContactInfo
+    statistics: OrganizationStatistics
+}
+
+type Position {
+    id: ID!
+    title: String!
+    organization: OrganizationalUnit!
+    createdDate: Date!
+    abolishedDate: Date
+    hierarchy: PositionHierarchy!
+    responsibilities: [String!]!
+    isActive: Boolean!
+    holders: [PersonPosition!]!
+    
+    # Новые поля
+    salary: SalaryInfo
+    requirements: [String!]!
+    benefits: [String!]!
+    reportsTo: Position
+    subordinates: [Position!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    createdBy: String!
+    updatedBy: String!
+}
+
+type Person {
+    id: ID!
+    name: String!
+    birthDate: Date
+    deathDate: Date
+    nationality: String!
+    positions: [PersonPosition!]!
+    isFictional: Boolean!
+    historicalPeriod: HistoricalPeriod!
+    
+    # Новые поля
+    email: String
+    phone: String
+    address: Address
+    biography: String
+    achievements: [String!]!
+    education: [Education!]!
+    skills: [String!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    createdBy: String!
+    updatedBy: String!
+}
+
+# Новые типы данных
+
+type AuditLog {
+    id: ID!
+    entityId: ID!
+    entityType: String!
+    action: AuditActionType!
+    oldValues: JSON
+    newValues: JSON
+    userId: String!
+    timestamp: DateTime!
+    ipAddress: String
+    userAgent: String
+}
+
+type Notification {
+    id: ID!
+    userId: String!
+    type: NotificationType!
+    title: String!
+    message: String!
+    data: JSON
+    isRead: Boolean!
+    createdAt: DateTime!
+    readAt: DateTime
+}
+
+type Webhook {
+    id: ID!
+    name: String!
+    url: String!
+    events: [WebhookEventType!]!
+    isActive: Boolean!
+    secret: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    lastTriggered: DateTime
+    successCount: Int!
+    failureCount: Int!
+}
+
+type SearchResult {
+    items: [SearchResultItem!]!
+    totalCount: Int!
+    query: String!
+    filters: SearchFilters
+    executionTime: Float!
+}
+
+type SearchResultItem {
+    id: ID!
+    type: SearchResultType!
+    title: String!
+    description: String
+    score: Float!
+    data: JSON
+}
+
+type PaginatedResult {
+    items: [JSON!]!
+    totalCount: Int!
+    page: Int!
+    size: Int!
+    totalPages: Int!
+    hasNext: Boolean!
+    hasPrevious: Boolean!
+}
+
+type OrganizationStats {
+    totalCount: Int!
+    activeCount: Int!
+    dissolvedCount: Int!
+    byType: [TypeCount!]!
+    byStatus: [StatusCount!]!
+    createdInPeriod: Int!
+    dissolvedInPeriod: Int!
+}
+
+type PersonStats {
+    totalCount: Int!
+    activeCount: Int!
+    byNationality: [NationalityCount!]!
+    byPosition: [PositionCount!]!
+    averageAge: Float
+}
+
+type PositionStats {
+    totalCount: Int!
+    activeCount: Int!
+    byHierarchy: [HierarchyCount!]!
+    byOrganization: [OrganizationCount!]!
+    averageSalary: Float
+}
+
+type Address {
+    street: String!
+    city: String!
+    state: String
+    country: String!
+    postalCode: String
+    coordinates: GeoPoint
+}
+
+type ContactInfo {
+    email: String
+    phone: String
+    website: String
+    address: Address
+}
+
+type SalaryInfo {
+    min: Float
+    max: Float
+    currency: String!
+    period: SalaryPeriod!
+}
+
+type Education {
+    institution: String!
+    degree: String!
+    field: String!
+    startDate: Date!
+    endDate: Date
+    gpa: Float
+}
+
+type ValidationResult {
+    isValid: Boolean!
+    errors: [String!]!
+    suggestions: [String!]!
+}
+
+type AuthResult {
+    token: String!
+    refreshToken: String!
+    expiresIn: Int!
+    user: User!
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    roles: [UserRole!]!
+    isActive: Boolean!
+    createdAt: DateTime!
+    lastLogin: DateTime
+}
+
+type BatchDeleteResult {
+    successCount: Int!
+    failureCount: Int!
+    errors: [String!]!
+}
+
+type WebhookTestResult {
+    success: Boolean!
+    statusCode: Int
+    response: String
+    error: String
+}
+
+type PersonPositionRemoved {
+    personId: ID!
+    positionId: ID!
+    removedAt: DateTime!
+}
+
+# Вспомогательные типы
+
+type TypeCount {
+    type: OrganizationType!
+    count: Int!
+}
+
+type StatusCount {
+    status: StatusType!
+    count: Int!
+}
+
+type NationalityCount {
+    nationality: String!
+    count: Int!
+}
+
+type PositionCount {
+    position: String!
+    count: Int!
+}
+
+type HierarchyCount {
+    hierarchy: PositionHierarchy!
+    count: Int!
+}
+
+type OrganizationCount {
+    organization: String!
+    count: Int!
+}
+
+# Enum типы
+
+enum OrganizationType {
+    STATE
+    GOVERNMENT
+    COMMERCIAL
+    NON_PROFIT
+    EDUCATIONAL
+    HEALTHCARE
+    MILITARY
+}
+
+enum StatusType {
+    ACTIVE
+    INACTIVE
+    PENDING
+    SUSPENDED
+    DISSOLVED
+}
+
+enum PositionHierarchy {
+    EXECUTIVE
+    LEGISLATIVE
+    JUDICIAL
+    ADMINISTRATIVE
+    OPERATIONAL
+    TECHNICAL
+    SUPPORT
+}
+
+enum AppointmentType {
+    ELECTED
+    APPOINTED
+    INHERITED
+    CONTRACT
+    VOLUNTEER
+}
+
+enum Era {
+    BCE
+    CE
+}
+
+enum AccuracyType {
+    EXACT
+    APPROXIMATE
+    UNKNOWN
+}
+
+enum NotificationType {
+    INFO
+    WARNING
+    ERROR
+    SUCCESS
+    SYSTEM
+}
+
+enum AuditActionType {
+    CREATE
+    UPDATE
+    DELETE
+    LOGIN
+    LOGOUT
+    ASSIGN
+    REMOVE
+}
+
+enum SearchResultType {
+    ORGANIZATION
+    PERSON
+    POSITION
+    HISTORICAL_PERIOD
+}
+
+enum WebhookEventType {
+    ORGANIZATION_CREATED
+    ORGANIZATION_UPDATED
+    ORGANIZATION_DELETED
+    PERSON_CREATED
+    PERSON_UPDATED
+    PERSON_DELETED
+    POSITION_CREATED
+    POSITION_UPDATED
+    POSITION_DELETED
+    PERSON_ASSIGNED
+    PERSON_REMOVED
+}
+
+enum UserRole {
+    ADMIN
+    USER
+    READONLY
+    MODERATOR
+}
+
+enum SalaryPeriod {
+    HOURLY
+    DAILY
+    WEEKLY
+    MONTHLY
+    YEARLY
+}
+
+# Input типы
+
+input OrganizationalUnitInput {
+    name: String!
+    type: OrganizationType!
+    foundedDate: Date!
+    dissolvedDate: Date
+    location: GeoPointInput
+    isFictional: Boolean!
+    historicalPeriodId: ID!
+    parentUnitId: ID
+    status: StatusType!
+    metadata: JSON
+    tags: [String!]!
+    description: String
+    website: String
+    contactInfo: ContactInfoInput
+}
+
+input OrganizationalUnitUpdateInput {
+    id: ID!
+    name: String
+    type: OrganizationType
+    foundedDate: Date
+    dissolvedDate: Date
+    location: GeoPointInput
+    isFictional: Boolean
+    historicalPeriodId: ID
+    parentUnitId: ID
+    status: StatusType
+    metadata: JSON
+    tags: [String!]
+    description: String
+    website: String
+    contactInfo: ContactInfoInput
+}
+
+input PositionInput {
+    title: String!
+    organizationId: ID!
+    createdDate: Date!
+    abolishedDate: Date
+    hierarchy: PositionHierarchy!
+    responsibilities: [String!]!
+    isActive: Boolean!
+    salary: SalaryInfoInput
+    requirements: [String!]!
+    benefits: [String!]!
+    reportsToId: ID
+}
+
+input PersonInput {
+    name: String!
+    birthDate: Date
+    deathDate: Date
+    nationality: String!
+    isFictional: Boolean!
+    historicalPeriodId: ID!
+    email: String
+    phone: String
+    address: AddressInput
+    biography: String
+    achievements: [String!]!
+    education: [EducationInput!]!
+    skills: [String!]!
+}
+
+input PersonPositionInput {
+    personId: ID!
+    positionId: ID!
+    startDate: Date!
+    endDate: Date
+    appointmentType: AppointmentType!
+    source: String!
+}
+
+input GeoPointInput {
+    latitude: Float!
+    longitude: Float!
+    elevation: Float
+    accuracy: AccuracyType!
+}
+
+input BoundingBox {
+    north: Float!
+    south: Float!
+    east: Float!
+    west: Float!
+}
+
+input TimeRange {
+    startDate: Date!
+    endDate: Date
+}
+
+input OrganizationFilter {
+    type: OrganizationType
+    status: StatusType
+    foundedDateRange: TimeRange
+    dissolvedDateRange: TimeRange
+    hasLocation: Boolean
+    isFictional: Boolean
+    historicalPeriodId: ID
+    parentUnitId: ID
+    tags: [String!]
+}
+
+input PositionFilter {
+    hierarchy: PositionHierarchy
+    isActive: Boolean
+    organizationId: ID
+    createdDateRange: TimeRange
+    abolishedDateRange: TimeRange
+    hasSalary: Boolean
+}
+
+input PersonFilter {
+    nationality: String
+    isFictional: Boolean
+    historicalPeriodId: ID
+    birthDateRange: TimeRange
+    deathDateRange: TimeRange
+    hasEmail: Boolean
+    hasPhone: Boolean
+}
+
+input SearchFilters {
+    type: SearchResultType
+    dateRange: TimeRange
+    location: BoundingBox
+    tags: [String!]
+    status: StatusType
+}
+
+input SortInput {
+    field: String!
+    order: SortOrder!
+}
+
+input ContactInfoInput {
+    email: String
+    phone: String
+    website: String
+    address: AddressInput
+}
+
+input AddressInput {
+    street: String!
+    city: String!
+    state: String
+    country: String!
+    postalCode: String
+    coordinates: GeoPointInput
+}
+
+input SalaryInfoInput {
+    min: Float
+    max: Float
+    currency: String!
+    period: SalaryPeriod!
+}
+
+input EducationInput {
+    institution: String!
+    degree: String!
+    field: String!
+    startDate: Date!
+    endDate: Date
+    gpa: Float
+}
+
+input LoginInput {
+    username: String!
+    password: String!
+}
+
+input RegisterInput {
+    username: String!
+    email: String!
+    password: String!
+    firstName: String!
+    lastName: String!
+}
+
+input WebhookInput {
+    name: String!
+    url: String!
+    events: [WebhookEventType!]!
+    isActive: Boolean!
+    secret: String!
+}

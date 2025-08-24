@@ -120,13 +120,41 @@ public class GraphQLConfig implements WebMvcConfigurer {
     }
 
     /**
+     * Кастомный скаляр для Any
+     */
+    @Bean
+    public GraphQLScalarType anyScalar() {
+        return GraphQLScalarType.newScalar()
+                .name("Any")
+                .description("Any type as scalar")
+                .coercing(new graphql.schema.Coercing<Object, Object>() {
+                    @Override
+                    public Object serialize(Object dataFetcherResult) {
+                        return dataFetcherResult;
+                    }
+
+                    @Override
+                    public Object parseValue(Object input) {
+                        return input;
+                    }
+
+                    @Override
+                    public Object parseLiteral(Object input) {
+                        return input;
+                    }
+                })
+                .build();
+    }
+
+    /**
      * Конфигурация RuntimeWiring для регистрации кастомных скаляров
      */
     @Bean
     public RuntimeWiringConfigurer runtimeWiringConfigurer() {
         return wiringBuilder -> wiringBuilder
                 .scalar(dateScalar())
-                .scalar(geoPointScalar());
+                .scalar(geoPointScalar())
+                .scalar(anyScalar());
     }
 
     /**

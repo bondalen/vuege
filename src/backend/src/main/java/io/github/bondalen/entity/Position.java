@@ -43,4 +43,37 @@ public class Position {
     
     @Column("is_active")
     private Boolean isActive;
+    
+    @Column("salary_min")
+    private java.math.BigDecimal salaryMin;
+    
+    @Column("salary_max")
+    private java.math.BigDecimal salaryMax;
+    
+    @Column("salary_currency")
+    private String salaryCurrency;
+    
+    @Column("salary_period")
+    private String salaryPeriod;
+    
+    @Column("requirements")
+    private String[] requirements;
+    
+    @Column("benefits")
+    private String[] benefits;
+    
+    @Column("reports_to_id")
+    private Long reportsToId;
+    
+    @Column("created_at")
+    private java.time.LocalDateTime createdAt;
+    
+    @Column("updated_at")
+    private java.time.LocalDateTime updatedAt;
+    
+    @Column("created_by")
+    private String createdBy;
+    
+    @Column("updated_by")
+    private String updatedBy;
 }

@@ -40,4 +40,31 @@ public class Person {
     
     @Column("historical_period_id")
     private Long historicalPeriodId;
+    
+    @Column("email")
+    private String email;
+    
+    @Column("phone")
+    private String phone;
+    
+    @Column("biography")
+    private String biography;
+    
+    @Column("achievements")
+    private String[] achievements;
+    
+    @Column("skills")
+    private String[] skills;
+    
+    @Column("created_at")
+    private java.time.LocalDateTime createdAt;
+    
+    @Column("updated_at")
+    private java.time.LocalDateTime updatedAt;
+    
+    @Column("created_by")
+    private String createdBy;
+    
+    @Column("updated_by")
+    private String updatedBy;
 }

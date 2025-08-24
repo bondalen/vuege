@@ -1,5 +1,7 @@
 package io.github.bondalen.config;
 
+import io.r2dbc.h2.H2ConnectionConfiguration;
+import io.r2dbc.h2.H2ConnectionFactory;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
@@ -30,24 +32,35 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
     @Bean
     @NonNull
     public ConnectionFactory connectionFactory() {
-        // Парсим URL для извлечения параметров подключения
-        String cleanUrl = r2dbcUrl.replace("r2dbc:postgresql://", "");
-        String[] parts = cleanUrl.split("/");
-        String hostPort = parts[0];
-        String database = parts[1].split("\\?")[0];
-        
-        String[] hostPortParts = hostPort.split(":");
-        String host = hostPortParts[0];
-        int port = hostPortParts.length > 1 ? Integer.parseInt(hostPortParts[1]) : 5432;
+        if (r2dbcUrl.startsWith("r2dbc:h2:")) {
+            // Конфигурация для H2 (тесты)
+            return new H2ConnectionFactory(
+                H2ConnectionConfiguration.builder()
+                    .inMemory("testdb")
+                    .build()
+            );
+        } else if (r2dbcUrl.startsWith("r2dbc:postgresql://")) {
+            // Конфигурация для PostgreSQL (продакшн)
+            String cleanUrl = r2dbcUrl.replace("r2dbc:postgresql://", "");
+            String[] parts = cleanUrl.split("/");
+            String hostPort = parts[0];
+            String database = parts[1].split("\\?")[0];
+            
+            String[] hostPortParts = hostPort.split(":");
+            String host = hostPortParts[0];
+            int port = hostPortParts.length > 1 ? Integer.parseInt(hostPortParts[1]) : 5432;
 
-        return new PostgresqlConnectionFactory(
-            PostgresqlConnectionConfiguration.builder()
-                .host(host)
-                .port(port)
-                .database(database)
-                .username(username)
-                .password(password)
-                .build()
-        );
+            return new PostgresqlConnectionFactory(
+                PostgresqlConnectionConfiguration.builder()
+                    .host(host)
+                    .port(port)
+                    .database(database)
+                    .username(username)
+                    .password(password)
+                    .build()
+            );
+        } else {
+            throw new IllegalArgumentException("Unsupported R2DBC URL: " + r2dbcUrl);
+        }
     }
 }

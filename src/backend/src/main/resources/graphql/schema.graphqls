@@ -8,14 +8,18 @@ type Query {
     # Основные запросы для организационных единиц
     organizationalUnits: [OrganizationalUnit!]!
     organizationalUnit(id: ID!): OrganizationalUnit
+    organizationsByStatus(status: StatusType!): [OrganizationalUnit!]!
+    organizationsWithPagination(page: Int!, size: Int!, filters: OrganizationFilter, sort: SortInput): PaginatedResult!
     
     # Запросы для должностей
     positions: [Position!]!
     position(id: ID!): Position
+    positionsWithPagination(page: Int!, size: Int!, filters: PositionFilter, sort: SortInput): PaginatedResult!
     
     # Запросы для людей
     persons: [Person!]!
     person(id: ID!): Person
+    personsWithPagination(page: Int!, size: Int!, filters: PersonFilter, sort: SortInput): PaginatedResult!
     
     # ГИС запросы
     organizationsInRegion(bounds: BoundingBox!, timeRange: TimeRange!): [OrganizationalUnit!]!
@@ -23,6 +27,16 @@ type Query {
     # Исторические запросы
     historicalPeriods: [HistoricalPeriod!]!
     historicalPeriod(id: ID!): HistoricalPeriod
+    
+    # Поиск и аналитика
+    searchOrganizations(query: String!, filters: SearchFilters): SearchResult!
+    searchPersons(query: String!, filters: SearchFilters): SearchResult!
+    searchPositions(query: String!, filters: SearchFilters): SearchResult!
+    
+    # Агрегационные запросы
+    organizationStats(timeRange: TimeRange!): OrganizationStats!
+    personStats(timeRange: TimeRange!): PersonStats!
+    positionStats(timeRange: TimeRange!): PositionStats!
 }
 
 type Mutation {
@@ -52,6 +66,7 @@ type OrganizationalUnit {
     id: ID!
     name: String!
     type: OrganizationType!
+    status: StatusType!
     foundedDate: Date!
     dissolvedDate: Date
     location: GeoPoint
@@ -205,3 +220,124 @@ input TimeRange {
     startDate: Date!
     endDate: Date
 }
+
+type TimeRangeOutput {
+    startDate: Date!
+    endDate: Date
+}
+
+# Расширенные типы для пагинации и фильтрации
+type PaginatedResult {
+    items: [Any!]!
+    totalCount: Int!
+    page: Int!
+    size: Int!
+    totalPages: Int!
+    hasNext: Boolean!
+    hasPrevious: Boolean!
+}
+
+type SearchResult {
+    items: [Any!]!
+    totalCount: Int!
+    query: String!
+    filters: SearchFiltersOutput
+    executionTime: Int!
+}
+
+type OrganizationStats {
+    totalCount: Int!
+    activeCount: Int!
+    dissolvedCount: Int!
+    byType: [TypeStats!]!
+    byStatus: [StatusStats!]!
+    createdInPeriod: Int!
+    dissolvedInPeriod: Int!
+}
+
+type PersonStats {
+    totalCount: Int!
+    activeCount: Int!
+    byNationality: [NationalityStats!]!
+    byPosition: [PositionStats!]!
+    averageAge: Float!
+}
+
+type PositionStats {
+    totalCount: Int!
+    activeCount: Int!
+    byHierarchy: [HierarchyStats!]!
+    byOrganization: [OrganizationStats!]!
+    averageSalary: Float!
+}
+
+type TypeStats {
+    type: OrganizationType!
+    count: Int!
+}
+
+type StatusStats {
+    status: StatusType!
+    count: Int!
+}
+
+type NationalityStats {
+    nationality: String!
+    count: Int!
+}
+
+type HierarchyStats {
+    hierarchy: PositionHierarchy!
+    count: Int!
+}
+
+# Вспомогательные типы
+input OrganizationFilter {
+    name: String
+    type: OrganizationType
+    status: StatusType
+    foundedDate: Date
+    dissolvedDate: Date
+}
+
+input PositionFilter {
+    title: String
+    hierarchy: PositionHierarchy
+    isActive: Boolean
+}
+
+input PersonFilter {
+    name: String
+    nationality: String
+    isFictional: Boolean
+}
+
+input SearchFilters {
+    type: String
+    status: String
+    dateRange: TimeRange
+}
+
+type SearchFiltersOutput {
+    type: String
+    status: String
+    dateRange: TimeRangeOutput
+}
+
+input SortInput {
+    field: String!
+    order: SortOrder!
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+enum StatusType {
+    ACTIVE
+    DISSOLVED
+    SUSPENDED
+}
+
+scalar Any
