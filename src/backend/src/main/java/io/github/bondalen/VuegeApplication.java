@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * CRUD веб-сервис для учета организационных единиц с исторической перспективой 
  * и ГИС-функциональностью
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "io.github.bondalen")
 public class VuegeApplication {
 
     public static void main(String[] args) {

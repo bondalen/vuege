@@ -37,6 +37,20 @@ type Query {
     organizationStats(timeRange: TimeRange!): OrganizationStats!
     personStats(timeRange: TimeRange!): PersonStats!
     positionStats(timeRange: TimeRange!): PositionStats!
+    
+    # Внешние API запросы
+    geocodeAddress(address: String!): GeocodingResult!
+    reverseGeocode(latitude: Float!, longitude: Float!): GeocodingResult!
+    validateEmail(email: String!): ValidationResult!
+    validatePhone(phone: String!): ValidationResult!
+    validateAddress(address: String!): ValidationResult!
+    enrichCompanyData(companyName: String!): EnrichmentResult!
+    enrichByInn(inn: String!): EnrichmentResult!
+    checkGeocodingApi: ApiMonitoringResult!
+    checkValidationApi: ApiMonitoringResult!
+    checkEnrichmentApi: ApiMonitoringResult!
+    checkAllApis: [ApiMonitoringResult!]!
+    getApiStatistics: ApiStatistics!
 }
 
 type Mutation {
@@ -128,6 +142,85 @@ type GeoPoint {
     accuracy: AccuracyType!
 }
 
+# Типы для внешних API
+
+type GeocodingResult {
+    originalAddress: String
+    latitude: Float
+    longitude: Float
+    formattedAddress: String
+    country: String
+    region: String
+    city: String
+    postalCode: String
+    street: String
+    houseNumber: String
+    accuracy: String
+    responseTime: Int
+    createdAt: Date
+    source: String
+    status: String
+    errorMessage: String
+}
+
+type ValidationResult {
+    originalData: String
+    validationType: String
+    status: ValidationStatus!
+    isValid: Boolean!
+    confidence: Int
+    formattedData: String
+    errors: [String!]
+    suggestions: [String!]
+    additionalInfo: String
+    responseTime: Int
+    createdAt: Date
+    source: String
+}
+
+type EnrichmentResult {
+    originalData: String
+    enrichmentType: String
+    status: EnrichmentStatus!
+    enrichedData: [EnrichmentData!]
+    confidence: Int
+    dataSource: String
+    lastUpdated: Date
+    responseTime: Int
+    createdAt: Date
+    errorMessage: String
+}
+
+type EnrichmentData {
+    key: String!
+    value: String
+}
+
+type ApiMonitoringResult {
+    apiName: String!
+    endpoint: String
+    status: ApiStatus!
+    responseTime: Int
+    httpStatusCode: Int
+    lastChecked: Date
+    successCount: Int
+    errorCount: Int
+    successRate: Float
+    errorMessage: String
+}
+
+type ApiStatistics {
+    geocoding: ApiStats
+    validation: ApiStats
+    enrichment: ApiStats
+}
+
+type ApiStats {
+    successCount: Int!
+    errorCount: Int!
+    successRate: Float!
+}
+
 # Enum типы
 
 enum OrganizationType {
@@ -158,6 +251,27 @@ enum Era {
 enum AccuracyType {
     EXACT
     APPROXIMATE
+    UNKNOWN
+}
+
+enum ValidationStatus {
+    VALID
+    INVALID
+    UNKNOWN
+    ERROR
+}
+
+enum EnrichmentStatus {
+    SUCCESS
+    PARTIAL
+    NOT_FOUND
+    ERROR
+}
+
+enum ApiStatus {
+    UP
+    DOWN
+    DEGRADED
     UNKNOWN
 }
 
