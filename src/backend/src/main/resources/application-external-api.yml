@@ -1,0 +1,148 @@
+# Конфигурация внешних API для Vuege
+# Этап 9: Интеграция с внешними API
+
+external:
+  api:
+    # Геокодирование - OpenCage Data API
+    geocoding:
+      base-url: https://api.opencagedata.com
+      api-key: ${OPENCAGE_API_KEY:}  # Установить через переменную окружения
+      rate-limit: 2500  # Запросов в день (бесплатный план)
+      timeout: 10000    # 10 секунд
+    
+    # Валидация - Abstract API
+    validation:
+      base-url: https://emailvalidation.abstractapi.com
+      api-key: ${ABSTRACT_API_KEY:}  # Установить через переменную окружения
+      rate-limit: 100   # Запросов в месяц (бесплатный план)
+      timeout: 10000    # 10 секунд
+    
+    # Обогащение данных - OpenCorporates API
+    enrichment:
+      base-url: https://api.opencorporates.com
+      api-key: ${OPENCORPORATES_API_KEY:}  # Установить через переменную окружения
+      rate-limit: 1000  # Запросов в день (бесплатный план)
+      timeout: 15000    # 15 секунд
+
+# Resilience4j конфигурация
+resilience4j:
+  circuitbreaker:
+    instances:
+      geocodingCircuitBreaker:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 60s
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - java.lang.Exception
+      
+      validationCircuitBreaker:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 60s
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - java.lang.Exception
+      
+      enrichmentCircuitBreaker:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 60s
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        recordExceptions:
+          - java.lang.Exception
+  
+  ratelimiter:
+    instances:
+      geocodingRateLimiter:
+        limitForPeriod: 100
+        limitRefreshPeriod: 1m
+        timeoutDuration: 5s
+      
+      validationRateLimiter:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1m
+        timeoutDuration: 5s
+      
+      enrichmentRateLimiter:
+        limitForPeriod: 50
+        limitRefreshPeriod: 1m
+        timeoutDuration: 5s
+  
+  retry:
+    instances:
+      geocodingRetry:
+        maxAttempts: 3
+        waitDuration: 1s
+        retryExceptions:
+          - java.lang.Exception
+        ignoreExceptions:
+          - java.lang.IllegalArgumentException
+      
+      validationRetry:
+        maxAttempts: 3
+        waitDuration: 1s
+        retryExceptions:
+          - java.lang.Exception
+        ignoreExceptions:
+          - java.lang.IllegalArgumentException
+      
+      enrichmentRetry:
+        maxAttempts: 3
+        waitDuration: 1s
+        retryExceptions:
+          - java.lang.Exception
+        ignoreExceptions:
+          - java.lang.IllegalArgumentException
+  
+  timelimiter:
+    instances:
+      geocodingTimeLimiter:
+        timeoutDuration: 10s
+        cancelRunningFuture: true
+      
+      validationTimeLimiter:
+        timeoutDuration: 10s
+        cancelRunningFuture: true
+      
+      enrichmentTimeLimiter:
+        timeoutDuration: 15s
+        cancelRunningFuture: true
+
+# Redis конфигурация для кэширования
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password: ${REDIS_PASSWORD:}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
+# Кэширование
+cache:
+  geocoding:
+    ttl: 24h  # 24 часа
+  validation:
+    ttl: 1h   # 1 час
+  enrichment:
+    ttl: 12h  # 12 часов
+  api-monitoring:
+    ttl: 5m   # 5 минут
+
+# Логирование для внешних API
+logging:
+  level:
+    io.github.bondalen.service.external: DEBUG
+    io.github.bondalen.config: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
