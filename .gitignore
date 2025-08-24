@@ -99,6 +99,27 @@ backups/
 mcp_backup/
 dbhub/
 
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Spring Boot
+*.pid
+*.log
+*.out
+
+# IDE specific files
+*.iml
+*.ipr
+*.iws
+.settings/
+.project
+.classpath
+
 # Large files
 *.mp3
 *.mp4
