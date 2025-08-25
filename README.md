@@ -83,7 +83,7 @@ vuege/
 
 2. **Компиляция и запуск:**
    ```bash
-   cd src/backend
+   cd src/app
    mvn clean compile
    mvn spring-boot:run
    ```
@@ -95,7 +95,7 @@ vuege/
 ### Запуск Frontend (в разработке)
 
 ```bash
-cd src/frontend
+cd src/app/frontend
 npm install
 npm run dev
 ```
@@ -142,7 +142,7 @@ npm run dev
 - **history** - исторические данные
 
 ### Миграции
-Миграции управляются через Liquibase в папке `src/backend/src/main/resources/db/changelog/`.
+Миграции управляются через Liquibase в папке `src/app/backend/src/main/resources/db/changelog/`.
 
 ### PostGIS
 Расширение PostGIS установлено для поддержки геопространственных данных.
@@ -151,7 +151,7 @@ npm run dev
 
 ### Backend разработка
 
-Подробная информация в [src/backend/README.md](src/backend/README.md)
+Подробная информация в [src/app/README.md](src/app/README.md)
 
 ### Frontend разработка
 
