@@ -1,0 +1,32 @@
+// Экспорт всех менеджеров
+
+// Основные утилиты
+export { formatters } from './formatters'
+export { validators } from './validators'
+export { storage } from './storage'
+export { errors } from './errors'
+export { api } from './api'
+export { dates } from './dates'
+export { helpers } from './helpers'
+export { colors } from './colors'
+export { files } from './files'
+export { browser } from './browser'
+export { network } from './network'
+export { crypto } from './crypto'
+export { validation } from './validation'
+export { forms } from './forms'
+export { notifications } from './notifications'
+export { dialogs } from './dialogs'
+export { loading } from './loading'
+export { cache } from './cache'
+export { events } from './events'
+export { i18nManager } from './i18n'
+export { themeManager } from './themes'
+export { settingsManager } from './settings'
+
+// Специализированные утилиты
+export { router } from './router'
+export { state } from './state'
+export { apiClient } from './api-client'
+export { componentManager } from './components'
+export { modalManager } from './modals'

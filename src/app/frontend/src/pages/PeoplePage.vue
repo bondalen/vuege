@@ -12,7 +12,7 @@
           color="primary"
           icon="add"
           label="Добавить человека"
-          @click="showCreateDialog = true"
+          @click="openCreateDialog"
         />
       </div>
     </div>
@@ -106,7 +106,7 @@
               color="negative"
               icon="delete"
               size="sm"
-              @click="deletePerson(props.row)"
+              @click="handleDeletePerson(props.row)"
             />
           </q-td>
         </template>
@@ -215,13 +215,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import type { Person, Organization } from '../types/graphql'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useQuery, useMutation } from '@vue/apollo-composable'
+import { useQuasar } from 'quasar'
+import type { Person, Organization, SearchInput } from '../types/graphql'
+import { GET_PEOPLE, GET_ORGANIZATIONS } from '../graphql/queries'
+import { CREATE_PERSON, UPDATE_PERSON, DELETE_PERSON } from '../graphql/mutations'
+
+const $q = useQuasar()
 
 // Состояние
-const loading = ref(false)
-const people = ref<Person[]>([])
-const organizations = ref<Organization[]>([])
 const searchQuery = ref('')
 const birthYearRange = ref('')
 const selectedOrganization = ref<Organization | null>(null)
@@ -240,34 +243,58 @@ const form = reactive({
   biography: ''
 })
 
+// Вычисляемые параметры поиска
+const searchParams = computed<SearchInput>(() => ({
+  query: searchQuery.value,
+  filters: {
+    birthYearRange: birthYearRange.value,
+    organizationId: selectedOrganization.value?.id
+  },
+  pagination: {
+    page: 1,
+    size: 50
+  }
+}))
+
+// GraphQL запросы
+const { result: peopleResult, loading, error, refetch } = useQuery(
+  GET_PEOPLE,
+  { search: searchParams },
+  { fetchPolicy: 'cache-and-network' }
+)
+
+const { result: organizationsResult } = useQuery(
+  GET_ORGANIZATIONS,
+  { search: { query: '', pagination: { page: 1, size: 100 } } },
+  { fetchPolicy: 'cache-and-network' }
+)
+
+// Мутации
+const { mutate: createPerson, loading: creating } = useMutation(CREATE_PERSON)
+const { mutate: updatePerson, loading: updating } = useMutation(UPDATE_PERSON)
+const { mutate: deletePerson, loading: deleting } = useMutation(DELETE_PERSON)
+
+// Вычисляемые данные
+const people = computed(() => peopleResult.value?.people || [])
+const organizations = computed(() => organizationsResult.value?.organizations || [])
+
 // Колонки таблицы
 const columns = [
-  { name: 'fullName', label: 'ФИО', field: 'fullName', sortable: false },
-  { name: 'birthDeath', label: 'Годы жизни', field: 'birthDeath', sortable: false },
-  { name: 'positions', label: 'Должности', field: row => row.positions?.length || 0, sortable: true },
-  { name: 'actions', label: 'Действия', field: 'actions', sortable: false }
+  { name: 'fullName', label: 'ФИО', field: 'fullName', sortable: false, align: 'left' },
+  { name: 'birthDeath', label: 'Годы жизни', field: 'birthDeath', sortable: false, align: 'center' },
+  { name: 'positions', label: 'Должности', field: row => row.positions?.length || 0, sortable: true, align: 'center' },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
 ]
 
 // Методы
-const loadPeople = async () => {
-  loading.value = true
-  try {
-    // TODO: Загрузка через GraphQL
-    people.value = []
-  } catch (error) {
-    console.error('Ошибка загрузки людей:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-const loadOrganizations = async () => {
-  try {
-    // TODO: Загрузка организаций для фильтра
-    organizations.value = []
-  } catch (error) {
-    console.error('Ошибка загрузки организаций:', error)
-  }
+const resetForm = () => {
+  form.firstName = ''
+  form.lastName = ''
+  form.middleName = ''
+  form.birthDate = ''
+  form.deathDate = ''
+  form.biography = ''
+  editingPerson.value = null
 }
 
 const formatYear = (date: string | undefined) => {
@@ -291,25 +318,83 @@ const showPositions = (person: Person) => {
   showPositionsDialog.value = true
 }
 
-const deletePerson = async (person: Person) => {
-  // TODO: Удаление через GraphQL
-  console.log('Удаление человека:', person.id)
+const handleDeletePerson = async (person: Person) => {
+  try {
+    await $q.dialog({
+      title: 'Подтверждение удаления',
+      message: `Вы уверены, что хотите удалить "${person.firstName} ${person.lastName}"?`,
+      cancel: true,
+      persistent: true
+    })
+
+    await deletePerson({ id: person.id })
+    
+    $q.notify({
+      type: 'positive',
+      message: 'Человек успешно удален'
+    })
+    
+    await refetch()
+  } catch (error) {
+    console.error('Ошибка удаления человека:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при удалении человека'
+    })
+  }
 }
 
 const savePerson = async () => {
   try {
-    // TODO: Сохранение через GraphQL
-    console.log('Сохранение человека:', form)
+    const input = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      middleName: form.middleName || null,
+      birthDate: form.birthDate || null,
+      deathDate: form.deathDate || null,
+      biography: form.biography || null
+    }
+
+    if (editingPerson.value) {
+      await updatePerson({ 
+        id: editingPerson.value.id, 
+        input 
+      })
+      $q.notify({
+        type: 'positive',
+        message: 'Человек успешно обновлен'
+      })
+    } else {
+      await createPerson({ input })
+      $q.notify({
+        type: 'positive',
+        message: 'Человек успешно создан'
+      })
+    }
+
     showCreateDialog.value = false
-    await loadPeople()
+    resetForm()
+    await refetch()
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
+    console.error('Ошибка сохранения человека:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при сохранении человека'
+    })
   }
 }
 
-// Инициализация
-onMounted(() => {
-  loadPeople()
-  loadOrganizations()
-})
+const openCreateDialog = () => {
+  resetForm()
+  showCreateDialog.value = true
+}
+
+// Обработка ошибок
+if (error.value) {
+  console.error('Ошибка загрузки людей:', error.value)
+  $q.notify({
+    type: 'negative',
+    message: 'Ошибка при загрузке людей'
+  })
+}
 </script>

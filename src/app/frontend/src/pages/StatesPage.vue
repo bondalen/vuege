@@ -12,7 +12,7 @@
           color="primary"
           icon="add"
           label="Добавить государство"
-          @click="showCreateDialog = true"
+          @click="openCreateDialog"
         />
       </div>
     </div>
@@ -88,7 +88,7 @@
               color="negative"
               icon="delete"
               size="sm"
-              @click="deleteState(props.row)"
+              @click="handleDeleteState(props.row)"
             />
           </q-td>
         </template>
@@ -180,11 +180,47 @@
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         
+        <q-card-section class="q-pa-none">
+          <div style="height: 70vh;">
+            <VuegeMap 
+              :center="mapCenter"
+              :zoom="mapZoom"
+              :markers="mapMarkers"
+              :polygons="mapPolygons"
+            />
+          </div>
+        </q-card-section>
+        
         <q-card-section>
-          <div class="text-center q-pa-lg">
-            <q-icon name="map" size="100px" color="grey-4" />
-            <div class="text-h6 q-mt-md">Карта будет добавлена позже</div>
-            <p class="text-grey-6">Интеграция с Leaflet для отображения территорий</p>
+          <div class="row q-gutter-md">
+            <div class="col-12 col-md-6">
+              <h6 class="q-mb-sm">Информация о государстве</h6>
+              <div v-if="selectedState">
+                <p><strong>Название:</strong> {{ selectedState.name }}</p>
+                <p v-if="selectedState.code"><strong>Код:</strong> {{ selectedState.code }}</p>
+                <p><strong>Тип:</strong> {{ getStateTypeLabel(selectedState.type) }}</p>
+                <p v-if="selectedState.foundedDate"><strong>Основано:</strong> {{ selectedState.foundedDate }}</p>
+                <p v-if="selectedState.dissolvedDate"><strong>Распалось:</strong> {{ selectedState.dissolvedDate }}</p>
+                <p v-if="selectedState.capital"><strong>Столица:</strong> {{ selectedState.capital.name }}</p>
+                <p v-if="selectedState.description"><strong>Описание:</strong> {{ selectedState.description }}</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <h6 class="q-mb-sm">Территории</h6>
+              <div v-if="selectedState?.territory?.length">
+                <q-list>
+                  <q-item v-for="territory in selectedState.territory" :key="territory.id">
+                    <q-item-section>
+                      <q-item-label>{{ territory.name }}</q-item-label>
+                      <q-item-label caption>{{ getLocationTypeLabel(territory.type) }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div v-else class="text-grey-6">
+                Территории не указаны
+              </div>
+            </div>
           </div>
         </q-card-section>
       </q-card>
@@ -193,12 +229,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import type { State, StateType } from '../types/graphql'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useQuery, useMutation } from '@vue/apollo-composable'
+import { useQuasar } from 'quasar'
+import type { State, StateType, SearchInput, LocationType } from '../types/graphql'
+import { GET_STATES } from '../graphql/queries'
+import { CREATE_STATE, UPDATE_STATE, DELETE_STATE } from '../graphql/mutations'
+import VuegeMap from '../components/VuegeMap.vue'
+
+const $q = useQuasar()
 
 // Состояние
-const loading = ref(false)
-const states = ref<State[]>([])
 const searchQuery = ref('')
 const selectedType = ref<StateType | null>(null)
 const dateRange = ref('')
@@ -214,7 +255,8 @@ const form = reactive({
   type: StateType.REPUBLIC,
   description: '',
   foundedDate: '',
-  dissolvedDate: ''
+  dissolvedDate: '',
+  capitalId: ''
 })
 
 // Опции
@@ -227,28 +269,83 @@ const stateTypes = [
   { label: 'Другое', value: StateType.OTHER }
 ]
 
+// Вычисляемые параметры поиска
+const searchParams = computed<SearchInput>(() => ({
+  query: searchQuery.value,
+  filters: {
+    type: selectedType.value,
+    dateRange: dateRange.value
+  },
+  pagination: {
+    page: 1,
+    size: 50
+  }
+}))
+
+// GraphQL запросы
+const { result, loading, error, refetch } = useQuery(
+  GET_STATES,
+  { search: searchParams },
+  { fetchPolicy: 'cache-and-network' }
+)
+
+// Мутации
+const { mutate: createState, loading: creating } = useMutation(CREATE_STATE)
+const { mutate: updateState, loading: updating } = useMutation(UPDATE_STATE)
+const { mutate: deleteState, loading: deleting } = useMutation(DELETE_STATE)
+
+// Вычисляемые данные
+const states = computed(() => result.value?.states || [])
+
+// Вычисляемые свойства для карты
+const mapCenter = computed(() => {
+  if (selectedState.value?.capital?.latitude && selectedState.value?.capital?.longitude) {
+    return [selectedState.value.capital.latitude, selectedState.value.capital.longitude] as [number, number]
+  }
+  return [55.7558, 37.6176] as [number, number] // Москва по умолчанию
+})
+
+const mapZoom = computed(() => {
+  if (selectedState.value?.territory?.length) return 6
+  return 10
+})
+
+const mapMarkers = computed(() => {
+  if (!selectedState.value?.capital) return []
+  
+  return [{
+    position: [selectedState.value.capital.latitude!, selectedState.value.capital.longitude!] as [number, number],
+    title: selectedState.value.capital.name,
+    description: 'Столица'
+  }]
+})
+
+const mapPolygons = computed(() => {
+  // Здесь можно добавить полигоны территорий, если они есть в данных
+  return []
+})
+
 // Колонки таблицы
 const columns = [
-  { name: 'name', label: 'Название', field: 'name', sortable: true },
-  { name: 'code', label: 'Код', field: 'code', sortable: true },
-  { name: 'type', label: 'Тип', field: 'type', sortable: true },
-  { name: 'foundedDate', label: 'Основано', field: 'foundedDate', sortable: true },
-  { name: 'dissolvedDate', label: 'Распалось', field: 'dissolvedDate', sortable: true },
-  { name: 'capital', label: 'Столица', field: row => row.capital?.name || '-', sortable: false },
-  { name: 'actions', label: 'Действия', field: 'actions', sortable: false }
+  { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' },
+  { name: 'code', label: 'Код', field: 'code', sortable: true, align: 'center' },
+  { name: 'type', label: 'Тип', field: 'type', sortable: true, align: 'left' },
+  { name: 'foundedDate', label: 'Основано', field: 'foundedDate', sortable: true, align: 'center' },
+  { name: 'dissolvedDate', label: 'Распалось', field: 'dissolvedDate', sortable: true, align: 'center' },
+  { name: 'capital', label: 'Столица', field: row => row.capital?.name || '-', sortable: false, align: 'left' },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
 ]
 
 // Методы
-const loadStates = async () => {
-  loading.value = true
-  try {
-    // TODO: Загрузка через GraphQL
-    states.value = []
-  } catch (error) {
-    console.error('Ошибка загрузки государств:', error)
-  } finally {
-    loading.value = false
-  }
+const resetForm = () => {
+  form.name = ''
+  form.code = ''
+  form.type = StateType.REPUBLIC
+  form.description = ''
+  form.foundedDate = ''
+  form.dissolvedDate = ''
+  form.capitalId = ''
+  editingState.value = null
 }
 
 const editState = (state: State) => {
@@ -259,6 +356,7 @@ const editState = (state: State) => {
   form.description = state.description || ''
   form.foundedDate = state.foundedDate || ''
   form.dissolvedDate = state.dissolvedDate || ''
+  form.capitalId = state.capital?.id || ''
   showCreateDialog.value = true
 }
 
@@ -267,24 +365,102 @@ const showMap = (state: State) => {
   showMapDialog.value = true
 }
 
-const deleteState = async (state: State) => {
-  // TODO: Удаление через GraphQL
-  console.log('Удаление государства:', state.id)
+const handleDeleteState = async (state: State) => {
+  try {
+    await $q.dialog({
+      title: 'Подтверждение удаления',
+      message: `Вы уверены, что хотите удалить государство "${state.name}"?`,
+      cancel: true,
+      persistent: true
+    })
+
+    await deleteState({ id: state.id })
+    
+    $q.notify({
+      type: 'positive',
+      message: 'Государство успешно удалено'
+    })
+    
+    await refetch()
+  } catch (error) {
+    console.error('Ошибка удаления государства:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при удалении государства'
+    })
+  }
 }
 
 const saveState = async () => {
   try {
-    // TODO: Сохранение через GraphQL
-    console.log('Сохранение государства:', form)
+    const input = {
+      name: form.name,
+      code: form.code || null,
+      type: form.type,
+      description: form.description || null,
+      foundedDate: form.foundedDate || null,
+      dissolvedDate: form.dissolvedDate || null,
+      capitalId: form.capitalId || null
+    }
+
+    if (editingState.value) {
+      await updateState({ 
+        id: editingState.value.id, 
+        input 
+      })
+      $q.notify({
+        type: 'positive',
+        message: 'Государство успешно обновлено'
+      })
+    } else {
+      await createState({ input })
+      $q.notify({
+        type: 'positive',
+        message: 'Государство успешно создано'
+      })
+    }
+
     showCreateDialog.value = false
-    await loadStates()
+    resetForm()
+    await refetch()
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
+    console.error('Ошибка сохранения государства:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при сохранении государства'
+    })
   }
 }
 
-// Инициализация
-onMounted(() => {
-  loadStates()
-})
+const openCreateDialog = () => {
+  resetForm()
+  showCreateDialog.value = true
+}
+
+// Вспомогательные методы
+const getStateTypeLabel = (type: StateType): string => {
+  const typeOption = stateTypes.find(t => t.value === type)
+  return typeOption ? typeOption.label : type
+}
+
+const getLocationTypeLabel = (type: LocationType): string => {
+  const locationTypes = {
+    [LocationType.COUNTRY]: 'Страна',
+    [LocationType.REGION]: 'Регион',
+    [LocationType.CITY]: 'Город',
+    [LocationType.DISTRICT]: 'Район',
+    [LocationType.ADDRESS]: 'Адрес',
+    [LocationType.COORDINATES]: 'Координаты'
+  }
+  return locationTypes[type] || type
+}
+
+// Обработка ошибок
+if (error.value) {
+  console.error('Ошибка загрузки государств:', error.value)
+  $q.notify({
+    type: 'negative',
+    message: 'Ошибка при загрузке государств'
+  })
+}
 </script>

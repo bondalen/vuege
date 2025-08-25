@@ -12,7 +12,7 @@
           color="primary"
           icon="add"
           label="Добавить организацию"
-          @click="showCreateDialog = true"
+          @click="openCreateDialog"
         />
       </div>
     </div>
@@ -81,7 +81,7 @@
               color="negative"
               icon="delete"
               size="sm"
-              @click="deleteOrganization(props.row)"
+              @click="handleDeleteOrganization(props.row)"
             />
           </q-td>
         </template>
@@ -98,40 +98,70 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-input
-            v-model="form.name"
-            label="Название"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-select
-            v-model="form.type"
-            :options="organizationTypes"
-            label="Тип организации"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-input
-            v-model="form.description"
-            label="Описание"
-            type="textarea"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-input
-            v-model="form.foundedDate"
-            label="Дата основания"
-            type="date"
-            outlined
-            dense
-            class="q-mb-md"
-          />
+          <div class="row q-gutter-md">
+            <q-input
+              v-model="form.name"
+              label="Название *"
+              outlined
+              dense
+              class="col-12"
+              :rules="[val => !!val || 'Название обязательно']"
+            />
+            
+            <q-select
+              v-model="form.type"
+              :options="organizationTypes"
+              label="Тип организации *"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+              :rules="[val => !!val || 'Тип обязателен']"
+            />
+            
+            <q-input
+              v-model="form.foundedDate"
+              label="Дата основания"
+              type="date"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+            />
+            
+            <q-input
+              v-model="form.dissolvedDate"
+              label="Дата ликвидации"
+              type="date"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+            />
+            
+            <q-input
+              v-model="form.locationId"
+              label="ID местоположения"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+            />
+            
+            <q-input
+              v-model="form.parentOrganizationId"
+              label="ID родительской организации"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+            />
+            
+            <q-input
+              v-model="form.description"
+              label="Описание"
+              type="textarea"
+              outlined
+              dense
+              class="col-12"
+              rows="3"
+            />
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -148,12 +178,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
-import type { Organization, OrganizationType } from '../types/graphql'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useQuery, useMutation } from '@vue/apollo-composable'
+import { useQuasar } from 'quasar'
+import type { Organization, OrganizationType, SearchInput } from '../types/graphql'
+import { GET_ORGANIZATIONS } from '../graphql/queries'
+import { CREATE_ORGANIZATION, UPDATE_ORGANIZATION, DELETE_ORGANIZATION } from '../graphql/mutations'
+
+const $q = useQuasar()
 
 // Состояние
-const loading = ref(false)
-const organizations = ref<Organization[]>([])
 const searchQuery = ref('')
 const selectedType = ref<OrganizationType | null>(null)
 const selectedStatus = ref<string | null>(null)
@@ -165,7 +199,10 @@ const form = reactive({
   name: '',
   type: OrganizationType.COMMERCIAL,
   description: '',
-  foundedDate: ''
+  foundedDate: '',
+  dissolvedDate: '',
+  locationId: '',
+  parentOrganizationId: ''
 })
 
 // Опции
@@ -185,26 +222,53 @@ const statusOptions = [
   { label: 'Ликвидированная', value: 'dissolved' }
 ]
 
+// Вычисляемые параметры поиска
+const searchParams = computed<SearchInput>(() => ({
+  query: searchQuery.value,
+  filters: {
+    type: selectedType.value,
+    status: selectedStatus.value
+  },
+  pagination: {
+    page: 1,
+    size: 50
+  }
+}))
+
+// GraphQL запросы
+const { result, loading, error, refetch } = useQuery(
+  GET_ORGANIZATIONS,
+  { search: searchParams },
+  { fetchPolicy: 'cache-and-network' }
+)
+
+// Мутации
+const { mutate: createOrganization, loading: creating } = useMutation(CREATE_ORGANIZATION)
+const { mutate: updateOrganization, loading: updating } = useMutation(UPDATE_ORGANIZATION)
+const { mutate: deleteOrganization, loading: deleting } = useMutation(DELETE_ORGANIZATION)
+
+// Вычисляемые данные
+const organizations = computed(() => result.value?.organizations || [])
+
 // Колонки таблицы
 const columns = [
-  { name: 'name', label: 'Название', field: 'name', sortable: true },
-  { name: 'type', label: 'Тип', field: 'type', sortable: true },
-  { name: 'foundedDate', label: 'Дата основания', field: 'foundedDate', sortable: true },
-  { name: 'location', label: 'Местоположение', field: row => row.location?.name || '-', sortable: false },
-  { name: 'actions', label: 'Действия', field: 'actions', sortable: false }
+  { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' },
+  { name: 'type', label: 'Тип', field: 'type', sortable: true, align: 'left' },
+  { name: 'foundedDate', label: 'Дата основания', field: 'foundedDate', sortable: true, align: 'center' },
+  { name: 'location', label: 'Местоположение', field: row => row.location?.name || '-', sortable: false, align: 'left' },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
 ]
 
 // Методы
-const loadOrganizations = async () => {
-  loading.value = true
-  try {
-    // TODO: Загрузка через GraphQL
-    organizations.value = []
-  } catch (error) {
-    console.error('Ошибка загрузки организаций:', error)
-  } finally {
-    loading.value = false
-  }
+const resetForm = () => {
+  form.name = ''
+  form.type = OrganizationType.COMMERCIAL
+  form.description = ''
+  form.foundedDate = ''
+  form.dissolvedDate = ''
+  form.locationId = ''
+  form.parentOrganizationId = ''
+  editingOrganization.value = null
 }
 
 const editOrganization = (org: Organization) => {
@@ -213,27 +277,90 @@ const editOrganization = (org: Organization) => {
   form.type = org.type
   form.description = org.description || ''
   form.foundedDate = org.foundedDate || ''
+  form.dissolvedDate = org.dissolvedDate || ''
+  form.locationId = org.location?.id || ''
+  form.parentOrganizationId = org.parentOrganization?.id || ''
   showCreateDialog.value = true
 }
 
-const deleteOrganization = async (org: Organization) => {
-  // TODO: Удаление через GraphQL
-  console.log('Удаление организации:', org.id)
+const handleDeleteOrganization = async (org: Organization) => {
+  try {
+    await $q.dialog({
+      title: 'Подтверждение удаления',
+      message: `Вы уверены, что хотите удалить организацию "${org.name}"?`,
+      cancel: true,
+      persistent: true
+    })
+
+    await deleteOrganization({ id: org.id })
+    
+    $q.notify({
+      type: 'positive',
+      message: 'Организация успешно удалена'
+    })
+    
+    await refetch()
+  } catch (error) {
+    console.error('Ошибка удаления организации:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при удалении организации'
+    })
+  }
 }
 
 const saveOrganization = async () => {
   try {
-    // TODO: Сохранение через GraphQL
-    console.log('Сохранение организации:', form)
+    const input = {
+      name: form.name,
+      type: form.type,
+      description: form.description || null,
+      foundedDate: form.foundedDate || null,
+      dissolvedDate: form.dissolvedDate || null,
+      locationId: form.locationId || null,
+      parentOrganizationId: form.parentOrganizationId || null
+    }
+
+    if (editingOrganization.value) {
+      await updateOrganization({ 
+        id: editingOrganization.value.id, 
+        input 
+      })
+      $q.notify({
+        type: 'positive',
+        message: 'Организация успешно обновлена'
+      })
+    } else {
+      await createOrganization({ input })
+      $q.notify({
+        type: 'positive',
+        message: 'Организация успешно создана'
+      })
+    }
+
     showCreateDialog.value = false
-    await loadOrganizations()
+    resetForm()
+    await refetch()
   } catch (error) {
-    console.error('Ошибка сохранения:', error)
+    console.error('Ошибка сохранения организации:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при сохранении организации'
+    })
   }
 }
 
-// Инициализация
-onMounted(() => {
-  loadOrganizations()
-})
+const openCreateDialog = () => {
+  resetForm()
+  showCreateDialog.value = true
+}
+
+// Обработка ошибок
+if (error.value) {
+  console.error('Ошибка загрузки организаций:', error.value)
+  $q.notify({
+    type: 'negative',
+    message: 'Ошибка при загрузке организаций'
+  })
+}
 </script>
