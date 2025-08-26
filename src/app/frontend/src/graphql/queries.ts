@@ -121,12 +121,17 @@ export const GET_PEOPLE = gql`
   query GetPeople($search: SearchInput) {
     people(search: $search) {
       id
-      firstName
-      lastName
-      middleName
+      name
       birthDate
       deathDate
-      biography
+      nationality
+      isFictional
+      historicalPeriod {
+        id
+        name
+        startDate
+        endDate
+      }
       positions {
         id
         title

@@ -205,3 +205,30 @@ export function containsOnlyDigits(value: string): boolean {
 export function containsOnlyLettersAndDigits(value: string): boolean {
   return /^[а-яёa-z0-9\s]+$/i.test(value)
 }
+
+/**
+ * Composable функция для использования всех валидаторов
+ */
+export function useValidators() {
+  return {
+    isValidEmail,
+    isValidInn,
+    isValidOgrn,
+    isValidPhone,
+    isValidDate,
+    isFutureDate,
+    isPastDate,
+    isValidCoordinates,
+    isNotEmpty,
+    hasMinLength,
+    hasMaxLength,
+    isPositive,
+    isNonNegative,
+    isInRange,
+    isValidUrl,
+    isValidIpAddress,
+    containsOnlyLetters,
+    containsOnlyDigits,
+    containsOnlyLettersAndDigits
+  }
+}

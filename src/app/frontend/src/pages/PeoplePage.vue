@@ -66,9 +66,9 @@
       >
         <template v-slot:body-cell-fullName="props">
           <q-td :props="props">
-            <div class="text-weight-medium">{{ props.row.firstName }} {{ props.row.lastName }}</div>
-            <div class="text-caption text-grey-6" v-if="props.row.middleName">
-              {{ props.row.middleName }}
+            <div class="text-weight-medium">{{ props.row.name }}</div>
+            <div class="text-caption text-grey-6" v-if="props.row.nationality">
+              {{ props.row.nationality }}
             </div>
           </q-td>
         </template>
@@ -123,27 +123,17 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <div class="row q-gutter-md">
-            <q-input
-              v-model="form.firstName"
-              label="Имя"
-              outlined
-              dense
-              class="col"
-            />
-            
-            <q-input
-              v-model="form.lastName"
-              label="Фамилия"
-              outlined
-              dense
-              class="col"
-            />
-          </div>
+          <q-input
+            v-model="form.name"
+            label="Имя"
+            outlined
+            dense
+            class="q-mt-md"
+          />
           
           <q-input
-            v-model="form.middleName"
-            label="Отчество"
+            v-model="form.nationality"
+            label="Национальность"
             outlined
             dense
             class="q-mt-md"
@@ -205,7 +195,7 @@
         <q-card-section>
           <div class="text-center q-pa-lg">
             <q-icon name="work" size="100px" color="grey-4" />
-            <div class="text-h6 q-mt-md">Должности будут добавлены позже</div>
+            <div class="text-h6 q-mt-md">Должности: {{ selectedPerson?.name }}</div>
             <p class="text-grey-6">Интеграция с системой должностей</p>
           </div>
         </q-card-section>
@@ -235,11 +225,10 @@ const selectedPerson = ref<Person | null>(null)
 
 // Форма
 const form = reactive({
-  firstName: '',
-  lastName: '',
-  middleName: '',
+  name: '',
   birthDate: '',
   deathDate: '',
+  nationality: '',
   biography: ''
 })
 
@@ -288,11 +277,10 @@ const columns = [
 
 // Методы
 const resetForm = () => {
-  form.firstName = ''
-  form.lastName = ''
-  form.middleName = ''
+  form.name = ''
   form.birthDate = ''
   form.deathDate = ''
+  form.nationality = ''
   form.biography = ''
   editingPerson.value = null
 }
@@ -304,11 +292,10 @@ const formatYear = (date: string | undefined) => {
 
 const editPerson = (person: Person) => {
   editingPerson.value = person
-  form.firstName = person.firstName
-  form.lastName = person.lastName
-  form.middleName = person.middleName || ''
+  form.name = person.name
   form.birthDate = person.birthDate || ''
   form.deathDate = person.deathDate || ''
+  form.nationality = person.nationality || ''
   form.biography = person.biography || ''
   showCreateDialog.value = true
 }
@@ -322,7 +309,7 @@ const handleDeletePerson = async (person: Person) => {
   try {
     await $q.dialog({
       title: 'Подтверждение удаления',
-      message: `Вы уверены, что хотите удалить "${person.firstName} ${person.lastName}"?`,
+      message: `Вы уверены, что хотите удалить "${person.name}"?`,
       cancel: true,
       persistent: true
     })
@@ -347,11 +334,10 @@ const handleDeletePerson = async (person: Person) => {
 const savePerson = async () => {
   try {
     const input = {
-      firstName: form.firstName,
-      lastName: form.lastName,
-      middleName: form.middleName || null,
+      name: form.name,
       birthDate: form.birthDate || null,
       deathDate: form.deathDate || null,
+      nationality: form.nationality || null,
       biography: form.biography || null
     }
 

@@ -6,6 +6,7 @@ import PeoplePage from '../pages/PeoplePage.vue'
 import LocationsPage from '../pages/LocationsPage.vue'
 import ReportsPage from '../pages/ReportsPage.vue'
 import SettingsPage from '../pages/SettingsPage.vue'
+import TestPage from '../pages/TestPage.vue'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -42,5 +43,10 @@ export const routes: RouteRecordRaw[] = [
     path: '/settings',
     name: 'settings',
     component: SettingsPage
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: TestPage
   }
 ]

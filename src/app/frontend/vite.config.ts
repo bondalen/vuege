@@ -19,11 +19,11 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/graphql': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8082',
         changeOrigin: true
       },
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8082',
         changeOrigin: true
       }
     }

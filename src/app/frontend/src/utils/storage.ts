@@ -206,3 +206,30 @@ export function isSessionStorageSupported(): boolean {
     return false
   }
 }
+
+/**
+ * Composable функция для использования всех функций хранилища
+ */
+export function useStorage() {
+  return {
+    saveToStorage,
+    loadFromStorage,
+    removeFromStorage,
+    clearStorage,
+    hasStorageKey,
+    getStorageSize,
+    saveSettings,
+    loadSettings,
+    saveAuthToken,
+    loadAuthToken,
+    removeAuthToken,
+    saveUserPreferences,
+    loadUserPreferences,
+    saveToSessionStorage,
+    loadFromSessionStorage,
+    removeFromSessionStorage,
+    clearSessionStorage,
+    isLocalStorageSupported,
+    isSessionStorageSupported
+  }
+}

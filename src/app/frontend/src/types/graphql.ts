@@ -30,15 +30,22 @@ export interface Position {
 
 export interface Person {
   id: string
-  firstName: string
-  lastName: string
-  middleName?: string
+  name: string
   birthDate?: string
   deathDate?: string
-  biography?: string
+  nationality?: string
+  isFictional?: boolean
+  historicalPeriod?: HistoricalPeriod
   positions?: Position[]
   createdAt: string
   updatedAt: string
+}
+
+export interface HistoricalPeriod {
+  id: string
+  name: string
+  startDate?: string
+  endDate?: string
 }
 
 export interface Location {

@@ -151,3 +151,21 @@ export function formatOgrn(ogrn: string): string {
   
   return ogrn
 }
+
+/**
+ * Composable функция для использования всех форматировщиков
+ */
+export function useFormatters() {
+  return {
+    formatDate,
+    formatYear,
+    formatCoordinates,
+    formatFullName,
+    formatNameWithType,
+    truncateText,
+    formatFileSize,
+    formatPhoneNumber,
+    formatInn,
+    formatOgrn
+  }
+}
