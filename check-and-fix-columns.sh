@@ -1,3 +1,29 @@
+#!/bin/bash
+
+echo "🔍 ПРОВЕРКА СУЩЕСТВУЮЩИХ КОЛОНОК В ТАБЛИЦАХ"
+echo "=========================================="
+
+cd /home/alex/vuege
+
+echo "=== Колонки organizational_units ==="
+psql -h localhost -U postgres -d vuege -c "\d organizational_units" | cat
+
+echo ""
+echo "=== Колонки persons ==="
+psql -h localhost -U postgres -d vuege -c "\d persons" | cat
+
+echo ""
+echo "=== Колонки positions ==="
+psql -h localhost -U postgres -d vuege -c "\d positions" | cat
+
+echo ""
+echo "🔧 СОЗДАНИЕ ИСПРАВЛЕННОГО ФАЙЛА 012-add-extended-functionality.xml"
+echo "=================================================================="
+
+cd /home/alex/vuege/src/app
+
+# Создаем исправленный файл только с новыми колонками
+cat > backend/src/main/resources/db/changelog/changes/012-add-extended-functionality.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
@@ -5,34 +31,20 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="008-001-add-status-to-organizations" author="vuege">
+    <changeSet id="012-001-add-status-to-organizations" author="vuege">
         <addColumn tableName="organizational_units">
             <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
                 <constraints nullable="false"/>
             </column>
             <column name="metadata" type="JSONB"/>
             <column name="tags" type="TEXT[]"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
             <column name="description" type="TEXT"/>
             <column name="website" type="VARCHAR(255)"/>
         </addColumn>
         
         <sql>
             UPDATE organizational_units SET 
-                status = 'ACTIVE',
-                created_by = 'system',
-                updated_by = 'system'
+                status = 'ACTIVE'
             WHERE status IS NULL;
         </sql>
     </changeSet>
@@ -44,26 +56,7 @@
             <column name="biography" type="TEXT"/>
             <column name="achievements" type="TEXT[]"/>
             <column name="skills" type="TEXT[]"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
         </addColumn>
-        
-        <sql>
-            UPDATE persons SET 
-                created_by = 'system',
-                updated_by = 'system'
-            WHERE created_by IS NULL;
-        </sql>
     </changeSet>
 
     <changeSet id="008-003-add-extended-fields-to-positions" author="vuege">
@@ -75,30 +68,11 @@
             <column name="requirements" type="TEXT[]"/>
             <column name="benefits" type="TEXT[]"/>
             <column name="reports_to_id" type="BIGINT"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="updated_by" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
         </addColumn>
         
         <addForeignKeyConstraint baseTableName="positions" baseColumnNames="reports_to_id"
                                 constraintName="fk_positions_reports_to"
                                 referencedTableName="positions" referencedColumnNames="id"/>
-        
-        <sql>
-            UPDATE positions SET 
-                created_by = 'system',
-                updated_by = 'system'
-            WHERE created_by IS NULL;
-        </sql>
     </changeSet>
 
     <changeSet id="008-004-create-users-table" author="vuege">
@@ -332,10 +306,6 @@
             <column name="status"/>
         </createIndex>
         
-        <createIndex tableName="organizational_units" indexName="idx_org_created_at">
-            <column name="created_at"/>
-        </createIndex>
-        
         <createIndex tableName="organizational_units" indexName="idx_org_tags">
             <column name="tags" type="GIN"/>
         </createIndex>
@@ -343,10 +313,6 @@
         <!-- Индексы для людей -->
         <createIndex tableName="persons" indexName="idx_person_email">
             <column name="email"/>
-        </createIndex>
-        
-        <createIndex tableName="persons" indexName="idx_person_created_at">
-            <column name="created_at"/>
         </createIndex>
         
         <createIndex tableName="persons" indexName="idx_person_skills">
@@ -359,13 +325,24 @@
             <column name="salary_max"/>
         </createIndex>
         
-        <createIndex tableName="positions" indexName="idx_position_created_at">
-            <column name="created_at"/>
-        </createIndex>
-        
         <createIndex tableName="positions" indexName="idx_position_requirements">
             <column name="requirements" type="GIN"/>
         </createIndex>
     </changeSet>
 
 </databaseChangeLog>
+EOF
+
+echo "✅ Файл исправлен - удалены все дублирующиеся колонки"
+echo ""
+
+echo "🚀 Запуск Liquibase для применения исправлений..."
+mvn liquibase:update \
+    -Dliquibase.changeLogFile="backend/src/main/resources/db/changelog/db.changelog-master.xml" \
+    -Dliquibase.url="jdbc:postgresql://localhost:5432/vuege" \
+    -Dliquibase.username="postgres" \
+    -Dliquibase.password="postgres" \
+    -Dliquibase.clearCheckSums="true"
+
+echo ""
+echo "✅ Проверка и исправление завершено!"

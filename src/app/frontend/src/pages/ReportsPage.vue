@@ -153,7 +153,7 @@
         
         <template v-slot:body-cell-createdAt="props">
           <q-td :props="props">
-            {{ formatDateTime(props.value) }}
+            {{ formatDate(props.value, 'DD.MM.YYYY HH:mm') }}
           </q-td>
         </template>
         
@@ -281,8 +281,8 @@ import {
   useModalManager,
   useApiClient,
   formatDate,
-  formatDateTime,
-  formatNumber
+  formatYear,
+  formatFileSize
 } from '@/utils'
 import { GET_ORGANIZATIONS, GET_STATES, GET_PEOPLE, GET_LOCATIONS } from '@/graphql/queries'
 

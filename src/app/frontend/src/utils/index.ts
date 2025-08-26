@@ -110,31 +110,12 @@ export {
 
 // Экспортируем все менеджеры
 export {
-  formatters,
-  validators,
-  storage,
-  errors,
-  api,
-  dates,
-  helpers,
-  colors,
-  files,
-  browser,
-  network,
-  crypto,
-  validation,
-  forms,
-  notifications,
-  dialogs,
-  loading,
-  cache,
-  events,
   i18nManager,
   themeManager,
   settingsManager,
-  router,
-  state,
-  apiClient,
-  componentManager,
-  modalManager
+  modalManager,
+  componentManager
 } from './index-managers'
+
+// Экспортируем функции форматирования
+export { formatDate, formatYear, formatCoordinates, formatFullName, formatNameWithType, formatFileSize, formatPhoneNumber, formatInn, formatOgrn } from './formatters'

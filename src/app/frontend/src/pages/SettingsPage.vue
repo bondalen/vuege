@@ -279,7 +279,7 @@
             </div>
             <div class="col-6">
               <div class="text-caption text-grey-6">Размер кэша</div>
-              <div class="text-h6">{{ formatNumber(cacheStats.size) }} байт</div>
+              <div class="text-h6">{{ formatFileSize(cacheStats.size) }}</div>
             </div>
             <div class="col-6">
               <div class="text-caption text-grey-6">Элементов в кэше</div>
@@ -369,8 +369,8 @@ import {
   useThemeManager,
   useI18nManager,
   formatDate,
-  formatDateTime,
-  formatNumber
+  formatYear,
+  formatFileSize
 } from '@/utils'
 
 // Quasar

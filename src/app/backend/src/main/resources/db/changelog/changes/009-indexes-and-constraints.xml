@@ -5,8 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="009-additional-indexes-and-constraints" author="vuege">
-        
+    <changeSet id="009-additional-indexes" author="vuege">
         <!-- Дополнительные индексы для улучшения производительности -->
         
         <!-- Составные индексы для организационных единиц -->
@@ -52,28 +51,31 @@
             <column name="person_id"/>
             <column name="appointment_type"/>
         </createIndex>
-        
+    </changeSet>
+
+    <changeSet id="009-additional-constraints" author="vuege">
         <!-- Дополнительные проверки -->
-        <addCheckConstraint tableName="persons" 
-                           constraintName="chk_person_dates" 
-                           checkCondition="(birth_date IS NULL OR death_date IS NULL) OR (birth_date <= death_date)"/>
-        
-        <addCheckConstraint tableName="organizational_units" 
-                           constraintName="chk_org_unit_dates" 
-                           checkCondition="(dissolved_date IS NULL) OR (founded_date <= dissolved_date)"/>
-        
-        <addCheckConstraint tableName="positions" 
-                           constraintName="chk_position_dates" 
-                           checkCondition="(abolished_date IS NULL) OR (created_date <= abolished_date)"/>
-        
-        <addCheckConstraint tableName="person_positions" 
-                           constraintName="chk_person_position_dates" 
-                           checkCondition="(end_date IS NULL) OR (start_date <= end_date)"/>
-        
-        <addCheckConstraint tableName="historical_periods" 
-                           constraintName="chk_historical_period_dates" 
-                           checkCondition="(end_date IS NULL) OR (start_date <= end_date)"/>
-        
+        <sql><![CDATA[
+            ALTER TABLE persons 
+            ADD CONSTRAINT chk_person_dates 
+            CHECK ((birth_date IS NULL OR death_date IS NULL) OR (birth_date <= death_date));
+            
+            ALTER TABLE organizational_units 
+            ADD CONSTRAINT chk_org_unit_dates 
+            CHECK ((dissolved_date IS NULL) OR (founded_date <= dissolved_date));
+            
+            ALTER TABLE positions 
+            ADD CONSTRAINT chk_position_dates 
+            CHECK ((abolished_date IS NULL) OR (created_date <= abolished_date));
+            
+            ALTER TABLE person_positions 
+            ADD CONSTRAINT chk_person_position_dates 
+            CHECK ((end_date IS NULL) OR (start_date <= end_date));
+            
+            ALTER TABLE historical_periods 
+            ADD CONSTRAINT chk_historical_period_dates 
+            CHECK ((end_date IS NULL) OR (start_date <= end_date));
+        ]]></sql>
     </changeSet>
 
 </databaseChangeLog>
