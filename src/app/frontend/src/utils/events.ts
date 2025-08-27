@@ -431,9 +431,9 @@ export function setGlobalEventManager(manager: EventManager): void {
 }
 
 /**
- * Глобальные функции для быстрого доступа
+ * Объект со всеми функциями для работы с событиями
  */
-export const eventManager = {
+export const events = {
   on: (event: string, handler: Function, config?: EventConfig) => getGlobalEventManager().on(event, handler, config),
   once: (event: string, handler: Function, config?: EventConfig) => getGlobalEventManager().once(event, handler, config),
   off: (event: string, handlerOrId: Function | string) => getGlobalEventManager().off(event, handlerOrId),
@@ -452,6 +452,11 @@ export const eventManager = {
   createEmitter: () => getGlobalEventManager().createEmitter(),
   getStats: () => getGlobalEventManager().getStats()
 }
+
+/**
+ * Алиас для useEventManager
+ */
+export const useEvents = useEventManager
 
 /**
  * Хук для использования менеджера событий в Vue компонентах

@@ -169,3 +169,19 @@ export function useFormatters() {
     formatOgrn
   }
 }
+
+/**
+ * Объект со всеми форматировщиками для совместимости
+ */
+export const formatters = {
+  formatDate,
+  formatYear,
+  formatCoordinates,
+  formatFullName,
+  formatNameWithType,
+  truncateText,
+  formatFileSize,
+  formatPhoneNumber,
+  formatInn,
+  formatOgrn
+}

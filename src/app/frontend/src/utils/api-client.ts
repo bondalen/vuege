@@ -83,17 +83,15 @@ export class ApiClientManager {
 
   constructor(config: ApiClientConfig) {
     this.config = {
-      uri: '/graphql',
       timeout: 30000,
       retries: 3,
-      batchSize: 10,
-      batchDelay: 10,
       enableBatching: true,
       enableRetries: true,
       enableErrorHandling: true,
       enableAuth: true,
       authTokenKey: 'authToken',
-      ...config
+      ...config,
+      uri: config.uri || '/graphql'
     }
 
     this.requestQueue = new Map()
@@ -112,8 +110,6 @@ export class ApiClientManager {
     const httpLink = this.config.enableBatching
       ? new BatchHttpLink({
           uri: this.config.uri,
-          batchSize: this.config.batchSize,
-          batchDelay: this.config.batchDelay,
           headers: this.config.headers
         })
       : createHttpLink({
@@ -158,7 +154,7 @@ export class ApiClientManager {
 
     // Error handling линк
     if (this.config.enableErrorHandling) {
-      const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+      const errorLink = onError(({ graphQLErrors, networkError, operation: _operation, forward: _forward }) => {
         if (graphQLErrors) {
           graphQLErrors.forEach(({ message, locations, path }) => {
             console.error(
@@ -188,22 +184,22 @@ export class ApiClientManager {
             fields: {
               // Настройки кэширования для различных типов
               organizations: {
-                merge(existing = [], incoming) {
+                merge(_existing = [], incoming) {
                   return incoming
                 }
               },
               states: {
-                merge(existing = [], incoming) {
+                merge(_existing = [], incoming) {
                   return incoming
                 }
               },
               people: {
-                merge(existing = [], incoming) {
+                merge(_existing = [], incoming) {
                   return incoming
                 }
               },
               locations: {
-                merge(existing = [], incoming) {
+                merge(_existing = [], incoming) {
                   return incoming
                 }
               }

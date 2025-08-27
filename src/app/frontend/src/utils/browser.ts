@@ -386,3 +386,85 @@ export function showDirectoryDialog(): Promise<FileList | null> {
     input.click()
   })
 }
+
+/**
+ * Хук для работы с браузером
+ */
+export function useBrowser() {
+  return {
+    // Проверки поддержки
+    isLocalStorageSupported,
+    isSessionStorageSupported,
+    isIndexedDBSupported,
+    isWebWorkerSupported,
+    isServiceWorkerSupported,
+    isPushAPISupported,
+    isNotificationsSupported,
+    isGeolocationSupported,
+    isCameraSupported,
+    isFileAPISupported,
+    isDragAndDropSupported,
+    
+    // Информация о браузере
+    getBrowserInfo,
+    getScreenSize,
+    getWindowSize,
+    
+    // Буфер обмена
+    copyToClipboard,
+    readFromClipboard,
+    
+    // Навигация
+    openInNewTab,
+    openInSameWindow,
+    reloadPage,
+    goBack,
+    goForward,
+    
+    // Диалоги
+    showConfirmDialog,
+    showPromptDialog,
+    showFileDialog,
+    showDirectoryDialog
+  }
+}
+
+/**
+ * Объект со всеми функциями для работы с браузером
+ */
+export const browser = {
+  // Проверки поддержки
+  isLocalStorageSupported,
+  isSessionStorageSupported,
+  isIndexedDBSupported,
+  isWebWorkerSupported,
+  isServiceWorkerSupported,
+  isPushAPISupported,
+  isNotificationsSupported,
+  isGeolocationSupported,
+  isCameraSupported,
+  isFileAPISupported,
+  isDragAndDropSupported,
+  
+  // Информация о браузере
+  getBrowserInfo,
+  getScreenSize,
+  getWindowSize,
+  
+  // Буфер обмена
+  copyToClipboard,
+  readFromClipboard,
+  
+  // Навигация
+  openInNewTab,
+  openInSameWindow,
+  reloadPage,
+  goBack,
+  goForward,
+  
+  // Диалоги
+  showConfirmDialog,
+  showPromptDialog,
+  showFileDialog,
+  showDirectoryDialog
+}

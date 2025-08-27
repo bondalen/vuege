@@ -346,3 +346,71 @@ export async function verifyJWT(token: string, secret: string): Promise<any> {
     throw new Error(`Ошибка проверки JWT: ${error}`)
   }
 }
+
+/**
+ * Хук для работы с криптографией
+ */
+export function useCrypto() {
+  return {
+    // Генерация
+    generateRandomString,
+    generateUUID,
+    
+    // Хеширование
+    sha256,
+    sha1,
+    md5,
+    
+    // Кодирование
+    encodeBase64,
+    decodeBase64,
+    encodeBase64Url,
+    decodeBase64Url,
+    
+    // Шифрование
+    encryptAES,
+    decryptAES,
+    createHMAC,
+    verifyHMAC,
+    
+    // Пароли
+    checkPasswordStrength,
+    
+    // JWT
+    createJWT,
+    verifyJWT
+  }
+}
+
+/**
+ * Объект со всеми функциями для работы с криптографией
+ */
+export const cryptoUtils = {
+  // Генерация
+  generateRandomString,
+  generateUUID,
+  
+  // Хеширование
+  sha256,
+  sha1,
+  md5,
+  
+  // Кодирование
+  encodeBase64,
+  decodeBase64,
+  encodeBase64Url,
+  decodeBase64Url,
+  
+  // Шифрование
+  encryptAES,
+  decryptAES,
+  createHMAC,
+  verifyHMAC,
+  
+  // Пароли
+  checkPasswordStrength,
+  
+  // JWT
+  createJWT,
+  verifyJWT
+}

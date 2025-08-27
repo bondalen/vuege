@@ -1,6 +1,6 @@
 // Утилиты для работы с формами
 
-import { ref, reactive, computed, watch, Ref } from 'vue'
+import { ref, Ref } from 'vue'
 
 /**
  * Интерфейс для поля формы
@@ -67,9 +67,9 @@ export interface FormState<T = Record<string, any>> {
 /**
  * Класс для управления формами
  */
-export class FormManager<T = Record<string, any>> {
+export class FormManager<T extends Record<string, any> = Record<string, any>> {
   private fields: Map<string, FormField>
-  private state: Ref<FormState<T>>
+  private state: Ref<any>
   private initialValues: T
   private validators: Map<string, FormValidation[]>
 
@@ -78,7 +78,7 @@ export class FormManager<T = Record<string, any>> {
     this.validators = new Map()
     this.initialValues = { ...initialValues }
 
-    this.state = ref<FormState<T>>({
+    this.state = ref({
       values: { ...initialValues },
       errors: {},
       touched: {},
@@ -86,10 +86,10 @@ export class FormManager<T = Record<string, any>> {
       loading: false,
       submitted: false,
       valid: true
-    })
+    } as FormState<T>)
 
     if (fields) {
-      fields.forEach(field => this.addField(field))
+      fields.forEach((field, index) => this.addField(`field_${index}`, field))
     }
   }
 
@@ -141,7 +141,7 @@ export class FormManager<T = Record<string, any>> {
   /**
    * Получает состояние формы
    */
-  getState(): Ref<FormState<T>> {
+  getState(): Ref<any> {
     return this.state
   }
 
@@ -484,7 +484,7 @@ export class FormManager<T = Record<string, any>> {
   /**
    * Приватные методы
    */
-  private validateValue(value: any, validation: FormValidation, field?: FormField): string | null {
+  private validateValue(value: any, validation: FormValidation, _field?: FormField): string | null {
     switch (validation.type) {
       case 'required':
         if (!value || (typeof value === 'string' && value.trim() === '')) {
@@ -570,7 +570,7 @@ export class FormManager<T = Record<string, any>> {
 /**
  * Хук для использования менеджера форм в Vue компонентах
  */
-export function useFormManager<T = Record<string, any>>(
+export function useFormManager<T extends Record<string, any> = Record<string, any>>(
   initialValues: T,
   fields?: FormField[]
 ) {
@@ -612,3 +612,13 @@ export function useFormManager<T = Record<string, any>>(
     removeField: manager.removeField.bind(manager)
   }
 }
+
+export const forms = { 
+  FormManager,
+  useFormManager 
+}
+
+/**
+ * Алиас для useFormManager
+ */
+export const useForms = useFormManager

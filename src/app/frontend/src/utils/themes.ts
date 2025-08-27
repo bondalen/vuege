@@ -190,7 +190,6 @@ export class ThemeManager {
    * Переключает тему
    */
   toggleTheme(): string {
-    const currentTheme = this.getCurrentTheme()
     const availableThemes = Object.keys(this.themes)
     
     if (availableThemes.length < 2) {
@@ -459,3 +458,4 @@ export function useThemeManager() {
     getStats: manager.getStats.bind(manager)
   }
 }
+

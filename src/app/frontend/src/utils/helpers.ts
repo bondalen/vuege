@@ -398,3 +398,76 @@ export function toBoolean(value: any, defaultValue: boolean = false): boolean {
   
   return defaultValue
 }
+
+/**
+ * Хук для работы с вспомогательными функциями
+ */
+export function useHelpers() {
+  return {
+    // Объекты
+    deepClone,
+    deepEqual,
+    get,
+    set,
+    merge,
+    pick,
+    omit,
+    
+    // Массивы
+    chunk,
+    unique,
+    groupBy,
+    sortBy,
+    range,
+    
+    // Утилиты
+    delay,
+    generateId,
+    generateUUID,
+    
+    // Проверки
+    isEmpty,
+    isNumber,
+    isString,
+    isBoolean,
+    isFunction,
+    isObject,
+    isArray,
+    
+    // Преобразования
+    toNumber,
+    toString,
+    toBoolean
+  }
+}
+
+/**
+ * Объект со всеми вспомогательными функциями для совместимости
+ */
+export const helpers = {
+  deepClone,
+  deepEqual,
+  get,
+  set,
+  merge,
+  pick,
+  omit,
+  groupBy,
+  sortBy,
+  unique,
+  chunk,
+  range,
+  delay,
+  generateId,
+  generateUUID,
+  isEmpty,
+  isNumber,
+  isString,
+  isBoolean,
+  isFunction,
+  isObject,
+  isArray,
+  toNumber,
+  toString,
+  toBoolean
+}

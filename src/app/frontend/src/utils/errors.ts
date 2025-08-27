@@ -76,7 +76,7 @@ export function logError(error: any, context?: string): void {
   console.error('Vuege Error:', errorInfo)
   
   // В продакшене можно отправлять ошибки в систему мониторинга
-  if (import.meta.env.PROD) {
+  if (process.env.NODE_ENV === 'production') {
     // sendErrorToMonitoring(errorInfo)
   }
 }
@@ -196,4 +196,53 @@ export function formatError(error: any): {
     message,
     details: error.stack
   }
+}
+
+/**
+ * Хук для работы с ошибками
+ */
+export function useErrors() {
+  return {
+    // Классы ошибок
+    VuegeError,
+    
+    // Обработчики ошибок
+    handleGraphQLError,
+    handleHttpError,
+    logError,
+    
+    // Создание ошибок
+    createValidationError,
+    createAuthError,
+    createForbiddenError,
+    createNotFoundError,
+    
+    // Проверки типов ошибок
+    isNetworkError,
+    isAuthError,
+    isValidationError,
+    
+    // Утилиты
+    getUserFriendlyMessage,
+    formatError
+  }
+}
+
+/**
+ * Объект со всеми функциями ошибок для совместимости
+ */
+export const errors = {
+  VuegeError,
+  handleGraphQLError,
+  handleHttpError,
+  logError,
+  createValidationError,
+  createAuthError,
+  createForbiddenError,
+  createNotFoundError,
+  isNetworkError,
+  isAuthError,
+  isValidationError,
+  getUserFriendlyMessage,
+  formatError
 }

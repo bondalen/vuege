@@ -415,3 +415,23 @@ export const dialog = {
   hideLoading: () => getGlobalDialogManager().hideLoading(),
   custom: (component: any, props?: Record<string, any>) => getGlobalDialogManager().custom(component, props)
 }
+
+/**
+ * Объект со всеми функциями для работы с диалогами
+ */
+export const dialogs = {
+  confirm: (options: ConfirmDialogOptions) => getGlobalDialogManager().confirm(options),
+  prompt: (options: PromptDialogOptions) => getGlobalDialogManager().prompt(options),
+  select: (options: SelectDialogOptions) => getGlobalDialogManager().select(options),
+  confirmDelete: (resourceName: string, options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().confirmDelete(resourceName, options),
+  confirmSave: (options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().confirmSave(options),
+  confirmCancel: (options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().confirmCancel(options),
+  confirmExit: (options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().confirmExit(options),
+  info: (title: string, message: string, options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().info(title, message, options),
+  warning: (title: string, message: string, options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().warning(title, message, options),
+  error: (title: string, message: string, options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().error(title, message, options),
+  success: (title: string, message: string, options?: Partial<ConfirmDialogOptions>) => getGlobalDialogManager().success(title, message, options),
+  loading: (message?: string) => getGlobalDialogManager().loading(message),
+  hideLoading: () => getGlobalDialogManager().hideLoading(),
+  custom: (component: any, props?: Record<string, any>) => getGlobalDialogManager().custom(component, props)
+}

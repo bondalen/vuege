@@ -388,3 +388,75 @@ export function isValidFileType(filename: string, allowedTypes: string[]): boole
   const extension = filename.split('.').pop()?.toLowerCase()
   return extension ? allowedTypes.includes(extension) : false
 }
+
+/**
+ * Хук для работы с валидацией
+ */
+export function useValidation() {
+  return {
+    // Основные функции
+    validate,
+    validateObject,
+    validateField: (value: any, rules: ValidationRule) => validate(value, rules),
+    
+    // Проверки типов
+    isValidEmail,
+    isValidUrl,
+    isNumber,
+    isInteger,
+    isPositive,
+    isNotEmpty,
+    
+    // Проверки длины
+    hasMinLength,
+    hasMaxLength,
+    
+    // Проверки содержимого
+    containsOnlyLetters,
+    containsOnlyDigits,
+    containsOnlyLettersAndDigits,
+    
+    // Специальные проверки
+    isValidIpAddress,
+    isValidPassword,
+    isValidUsername,
+    isValidFilename,
+    isValidFileSize,
+    isValidFileType
+  }
+}
+
+/**
+ * Объект со всеми функциями для валидации
+ */
+export const validation = {
+  // Основные функции
+  validate,
+  validateObject,
+  validateField: (value: any, rules: ValidationRule) => validate(value, rules),
+  
+  // Проверки типов
+  isValidEmail,
+  isValidUrl,
+  isNumber,
+  isInteger,
+  isPositive,
+  isNotEmpty,
+  
+  // Проверки длины
+  hasMinLength,
+  hasMaxLength,
+  
+  // Проверки содержимого
+  containsOnlyLetters,
+  containsOnlyDigits,
+  containsOnlyLettersAndDigits,
+  
+  // Специальные проверки
+  isValidIpAddress,
+  isValidPassword,
+  isValidUsername,
+  isValidFilename,
+  isValidFileSize,
+  isValidFileType
+}

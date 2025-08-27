@@ -413,3 +413,4 @@ export function useI18nManager() {
     getStats: manager.getStats.bind(manager)
   }
 }
+

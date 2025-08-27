@@ -34,7 +34,7 @@ export class CacheManager {
     deletes: number
     evictions: number
   }
-  private cleanupTimer: number | null
+  private cleanupTimer: ReturnType<typeof setInterval> | null
 
   constructor(config?: Partial<CacheConfig>) {
     this.config = {
@@ -400,9 +400,9 @@ export function setGlobalCacheManager(manager: CacheManager): void {
 }
 
 /**
- * Глобальные функции для быстрого доступа
+ * Объект со всеми функциями для работы с кэшем
  */
-export const cacheManager = {
+export const cache = {
   set: <T>(key: string, value: T, ttl?: number) => getGlobalCacheManager().set(key, value, ttl),
   get: <T>(key: string) => getGlobalCacheManager().get<T>(key),
   has: (key: string) => getGlobalCacheManager().has(key),
@@ -422,6 +422,11 @@ export const cacheManager = {
   import: (data: Record<string, any>) => getGlobalCacheManager().import(data),
   destroy: () => getGlobalCacheManager().destroy()
 }
+
+/**
+ * Алиас для useCacheManager
+ */
+export const useCache = useCacheManager
 
 /**
  * Хук для использования менеджера кэша в Vue компонентах

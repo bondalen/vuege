@@ -1,6 +1,8 @@
 <template>
   <div class="home-page">
-    <q-page class="flex flex-center">
+    <q-layout view="hHh lpR fFf">
+      <q-page-container>
+        <q-page class="flex flex-center">
       <div class="text-center q-pa-lg">
         <div class="q-mb-xl">
           <h1 class="text-h1 text-primary q-mb-md">
@@ -12,6 +14,32 @@
           <p class="text-body1 text-grey-6">
             Комплексная платформа для управления данными о государствах, организациях, людях и местах
           </p>
+        </div>
+        
+        <!-- Тестовая секция интеграции -->
+        <div class="row q-gutter-md justify-center q-mb-xl">
+          <q-card class="col-12 col-md-8">
+            <q-card-section>
+              <div class="text-h6 q-mb-md">Тест интеграции с Backend</div>
+              <div class="row q-gutter-sm q-mb-md">
+                <q-btn color="primary" icon="api" label="Тест GraphQL" 
+                       @click="testGraphQL" :loading="loading" />
+                <q-btn color="secondary" icon="health_and_safety" label="Тест Health" 
+                       @click="testHealth" :loading="healthLoading" />
+                <q-btn color="accent" icon="refresh" label="Очистить" 
+                       @click="clearResults" />
+              </div>
+              
+              <div v-if="testResults" class="q-mt-md">
+                <q-card flat bordered>
+                  <q-card-section>
+                    <div class="text-subtitle2 q-mb-sm">Результаты тестов:</div>
+                    <pre class="text-caption bg-grey-1 q-pa-sm rounded">{{ testResults }}</pre>
+                  </q-card-section>
+                </q-card>
+              </div>
+            </q-card-section>
+          </q-card>
         </div>
         
         <div class="row q-gutter-lg justify-center q-mb-xl">
@@ -99,13 +127,67 @@
         </div>
       </div>
     </q-page>
+        </q-page-container>
+    </q-layout>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useApi, useErrors } from '@/utils'
 
 const router = useRouter()
+const { apiGet, graphqlQuery } = useApi()
+const { logError } = useErrors()
+
+const loading = ref(false)
+const healthLoading = ref(false)
+const testResults = ref('')
+
+const testGraphQL = async () => {
+  loading.value = true
+  testResults.value = ''
+  
+  try {
+    const query = `
+      query {
+        persons {
+          id
+          name
+          birthDate
+        }
+      }
+    `
+    
+    const result = await graphqlQuery(query)
+    testResults.value = `✅ GraphQL запрос успешен:\n${JSON.stringify(result, null, 2)}`
+  } catch (error) {
+    logError(error, 'GraphQL Test')
+    testResults.value = `❌ Ошибка GraphQL:\n${error.message}`
+  } finally {
+    loading.value = false
+  }
+}
+
+const testHealth = async () => {
+  healthLoading.value = true
+  testResults.value = ''
+  
+  try {
+    const result = await apiGet('/actuator/health')
+    testResults.value = `✅ Health check успешен:\n${JSON.stringify(result, null, 2)}`
+  } catch (error) {
+    logError(error, 'Health Test')
+    testResults.value = `❌ Ошибка Health check:\n${error.message}`
+  } finally {
+    healthLoading.value = false
+  }
+}
+
+const clearResults = () => {
+  testResults.value = ''
+}
 </script>
 
 <style scoped>

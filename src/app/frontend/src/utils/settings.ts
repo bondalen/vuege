@@ -172,7 +172,7 @@ export class SettingsManager {
    * Получает все категории
    */
   getCategories(): string[] {
-    const categories = new Set(this.settings.values().map(setting => setting.category))
+    const categories = new Set(Array.from(this.settings.values()).map(setting => setting.category))
     return Array.from(categories).sort()
   }
 
@@ -238,7 +238,7 @@ export class SettingsManager {
    * Сохраняет настройки в localStorage
    */
   saveSettings(): void {
-    this.settings.forEach((setting, key) => {
+    this.settings.forEach((_setting, key) => {
       const value = this.getValue(key)
       if (value !== null) {
         localStorage.setItem(`${this.config.storageKey}_${key}`, JSON.stringify(value))

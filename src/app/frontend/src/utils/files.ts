@@ -304,3 +304,81 @@ export function formatFileName(filename: string, maxLength: number = 30): string
   const truncatedName = nameWithoutExt.substring(0, maxNameLength)
   return `${truncatedName}...${extension ? '.' + extension : ''}`
 }
+
+/**
+ * Хук для работы с файлами
+ */
+export function useFiles() {
+  return {
+    // Информация о файлах
+    getFileExtension,
+    getFileNameWithoutExtension,
+    formatFileSize,
+    getMimeType,
+    getFileIcon,
+    formatFileName,
+    
+    // Проверки типов файлов
+    isImageFile,
+    isDocumentFile,
+    isSpreadsheetFile,
+    isPresentationFile,
+    isArchiveFile,
+    isVideoFile,
+    isAudioFile,
+    
+    // Чтение файлов
+    readFileAsText,
+    readFileAsDataUrl,
+    readFileAsArrayBuffer,
+    
+    // Скачивание
+    downloadFile,
+    downloadBlob,
+    
+    // Создание файлов
+    createFileFromString,
+    
+    // Валидация
+    validateFileSize,
+    validateFileType
+  }
+}
+
+/**
+ * Объект со всеми функциями для работы с файлами
+ */
+export const files = {
+  // Информация о файлах
+  getFileExtension,
+  getFileNameWithoutExtension,
+  formatFileSize,
+  getMimeType,
+  getFileIcon,
+  formatFileName,
+  
+  // Проверки типов файлов
+  isImageFile,
+  isDocumentFile,
+  isSpreadsheetFile,
+  isPresentationFile,
+  isArchiveFile,
+  isVideoFile,
+  isAudioFile,
+  
+  // Чтение файлов
+  readFileAsText,
+  readFileAsDataUrl,
+  readFileAsArrayBuffer,
+  
+  // Скачивание
+  downloadFile,
+  downloadBlob,
+  
+  // Создание файлов
+  createFileFromString,
+  
+  // Валидация
+  validateFileSize,
+  validateFileType
+}

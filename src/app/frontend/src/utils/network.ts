@@ -370,3 +370,61 @@ export function makeRelativeUrl(absoluteUrl: string, baseUrl: string): string {
     return absoluteUrl
   }
 }
+
+/**
+ * Хук для работы с сетью
+ */
+export function useNetwork() {
+  return {
+    // Проверки соединения
+    isOnline,
+    getConnectionInfo,
+    checkUrlAvailability,
+    ping,
+    
+    // Загрузка ресурсов
+    loadImage,
+    loadScript,
+    loadCSS,
+    
+    // URL утилиты
+    createUrl,
+    parseUrlParams,
+    encodeUrlParams,
+    decodeUrlParams,
+    isValidUrl,
+    getDomain,
+    getProtocol,
+    getPath,
+    makeAbsoluteUrl,
+    makeRelativeUrl
+  }
+}
+
+/**
+ * Объект со всеми функциями для работы с сетью
+ */
+export const network = {
+  // Проверки соединения
+  isOnline,
+  getConnectionInfo,
+  checkUrlAvailability,
+  ping,
+  
+  // Загрузка ресурсов
+  loadImage,
+  loadScript,
+  loadCSS,
+  
+  // URL утилиты
+  createUrl,
+  parseUrlParams,
+  encodeUrlParams,
+  decodeUrlParams,
+  isValidUrl,
+  getDomain,
+  getProtocol,
+  getPath,
+  makeAbsoluteUrl,
+  makeRelativeUrl
+}

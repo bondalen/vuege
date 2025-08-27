@@ -1,7 +1,6 @@
 // Утилиты для работы с компонентами
 
-import { defineComponent, h, VNode, Component, PropType } from 'vue'
-import type { ComponentPublicInstance, ComponentOptions } from 'vue'
+import { h, VNode, Component } from 'vue'
 
 /**
  * Интерфейс для пропсов компонента
@@ -403,7 +402,7 @@ export class ComponentManager {
     events?: ComponentEvents,
     slots?: ComponentSlots
   ): VNode {
-    let timeoutId: number | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     return h('div', {
       onUpdate: () => {
@@ -501,7 +500,7 @@ export const componentManager = {
     getGlobalComponentManager().createWithPagination(items, page, pageSize, component, getProps, paginationComponent),
   createWithFilter: <T>(items: T[], filter: (item: T) => boolean, component: Component | string, getProps: (item: T, index: number) => ComponentProps) => 
     getGlobalComponentManager().createWithFilter(items, filter, component, getProps),
-  createWithSort: <T>(items: T[], sortFn: (a: T, b: number) => number, component: Component | string, getProps: (item: T, index: number) => ComponentProps) => 
+  createWithSort: <T>(items: T[], sortFn: (a: T, b: T) => number, component: Component | string, getProps: (item: T, index: number) => ComponentProps) => 
     getGlobalComponentManager().createWithSort(items, sortFn, component, getProps),
   createWithGroup: <T>(items: T[], groupBy: (item: T) => string, component: Component | string, getProps: (item: T, index: number) => ComponentProps, groupComponent?: Component | string) => 
     getGlobalComponentManager().createWithGroup(items, groupBy, component, getProps, groupComponent),

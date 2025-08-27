@@ -290,3 +290,46 @@ export async function checkApiHealth(): Promise<boolean> {
     return false
   }
 }
+
+/**
+ * Хук для работы с API
+ */
+export function useApi() {
+  return {
+    // Заголовки
+    getDefaultHeaders,
+    
+    // HTTP методы
+    apiGet,
+    apiPost,
+    apiPut,
+    apiDelete,
+    
+    // GraphQL
+    graphqlQuery,
+    graphqlMutation,
+    
+    // Файлы
+    downloadFile,
+    uploadFile,
+    
+    // Утилиты
+    checkApiHealth
+  }
+}
+
+/**
+ * Объект со всеми API функциями для совместимости
+ */
+export const api = {
+  getDefaultHeaders,
+  apiGet,
+  apiPost,
+  apiPut,
+  apiDelete,
+  graphqlQuery,
+  graphqlMutation,
+  downloadFile,
+  uploadFile,
+  checkApiHealth
+}

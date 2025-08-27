@@ -21,6 +21,7 @@ export interface NotificationConfig {
   spinner?: boolean
   spinnerColor?: string
   spinnerSize?: string
+  persistent?: boolean
   classes?: string
   style?: string
   attrs?: Record<string, any>
@@ -150,7 +151,7 @@ export class NotificationManager {
       icon: 'check_circle',
       color: 'positive',
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -163,7 +164,7 @@ export class NotificationManager {
       color: 'negative',
       timeout: 8000,
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -175,7 +176,7 @@ export class NotificationManager {
       icon: 'warning',
       color: 'warning',
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -187,7 +188,7 @@ export class NotificationManager {
       icon: 'info',
       color: 'info',
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -202,13 +203,13 @@ export class NotificationManager {
       timeout: 0,
       persistent: true,
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
    * Показывает уведомление с прогрессом
    */
-  progress(message: string, progress: number, config?: Partial<NotificationConfig>): string {
+  progress(message: string, _progress: number, config?: Partial<NotificationConfig>): string {
     return this.show({
       message,
       icon: 'trending_up',
@@ -217,7 +218,7 @@ export class NotificationManager {
       timeout: 0,
       persistent: true,
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -234,7 +235,7 @@ export class NotificationManager {
       timeout: 0,
       persistent: true,
       ...config
-    })
+    } as NotificationConfig)
   }
 
   /**
@@ -276,7 +277,7 @@ export class NotificationManager {
    */
   prompt(
     message: string,
-    placeholder: string = 'Введите значение',
+    _placeholder: string = 'Введите значение',
     onConfirm?: (value: string) => void,
     onCancel?: () => void,
     config?: Partial<NotificationConfig>
@@ -376,7 +377,7 @@ export class NotificationManager {
       this.notifications.delete(id)
 
       // Создаем новое с обновленной конфигурацией
-      const newId = this.show(updates)
+      const newId = this.show(updates as NotificationConfig)
       this.notifications.set(id, this.notifications.get(newId))
       this.notifications.delete(newId)
     }
@@ -637,3 +638,16 @@ export function useNotificationManager() {
     getStats: manager.getStats.bind(manager)
   }
 }
+
+export const notifications = { 
+  NotificationManager,
+  getGlobalNotificationManager,
+  setGlobalNotificationManager,
+  notificationManager,
+  useNotificationManager
+}
+
+/**
+ * Алиас для useNotificationManager
+ */
+export const useNotifications = useNotificationManager

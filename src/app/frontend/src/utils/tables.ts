@@ -77,7 +77,7 @@ export interface TableState<T = any> {
  * Класс для управления таблицами
  */
 export class TableManager<T = any> {
-  private state: Ref<TableState<T>>
+  private state: Ref<any>
   private originalData: T[]
   private rowKey: string | ((item: T) => string | number)
 
@@ -89,7 +89,7 @@ export class TableManager<T = any> {
     this.originalData = [...data]
     this.rowKey = rowKey
 
-    this.state = ref<TableState<T>>({
+    this.state = ref({
       data: [...data],
       columns,
       sort: null,
@@ -108,13 +108,13 @@ export class TableManager<T = any> {
       error: null,
       search: '',
       expandedRows: new Set()
-    })
+    } as TableState<T>)
   }
 
   /**
    * Получает состояние таблицы
    */
-  getState(): Ref<TableState<T>> {
+  getState(): Ref<any> {
     return this.state
   }
 
@@ -224,7 +224,7 @@ export class TableManager<T = any> {
    * Удаляет фильтр
    */
   removeFilter(key: string): void {
-    this.state.value.filters = this.state.value.filters.filter(f => f.key !== key)
+    this.state.value.filters = this.state.value.filters.filter((f: any) => f.key !== key)
     this.resetPagination()
   }
 
@@ -487,7 +487,7 @@ export class TableManager<T = any> {
   private filterBySearch(data: T[], search: string): T[] {
     const searchLower = search.toLowerCase()
     return data.filter(item => {
-      return this.state.value.columns.some(column => {
+      return this.state.value.columns.some((column: any) => {
         if (column.field) {
           const value = typeof column.field === 'function' 
             ? column.field(item) 
@@ -509,7 +509,7 @@ export class TableManager<T = any> {
   }
 
   private getValueByKey(item: T, key: string): any {
-    const column = this.state.value.columns.find(col => col.key === key)
+    const column = this.state.value.columns.find((col: any) => col.key === key)
     if (column?.field) {
       return typeof column.field === 'function' 
         ? column.field(item) 
@@ -571,14 +571,14 @@ export class TableManager<T = any> {
 
   private exportToCSV(data: T[]): string {
     const headers = this.state.value.columns
-      .filter(col => !col.hidden)
-      .map(col => col.label)
+      .filter((col: any) => !col.hidden)
+      .map((col: any) => col.label)
       .join(',')
 
     const rows = data.map(item => {
       return this.state.value.columns
-        .filter(col => !col.hidden)
-        .map(col => {
+        .filter((col: any) => !col.hidden)
+        .map((col: any) => {
           const value = col.field 
             ? (typeof col.field === 'function' ? col.field(item) : (item as any)[col.field])
             : (item as any)[col.key]

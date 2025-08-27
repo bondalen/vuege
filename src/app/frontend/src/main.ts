@@ -172,10 +172,10 @@ const initializeManagers = () => {
   }
 }
 
+import App from './App.vue'
+
 // Create app
-const app = createApp({
-  name: 'VuegeApp'
-})
+const app = createApp(App)
 
 // Use plugins
 app.use(Quasar, {

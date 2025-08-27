@@ -233,3 +233,29 @@ export function useStorage() {
     isSessionStorageSupported
   }
 }
+
+/**
+ * Объект со всеми функциями хранилища для совместимости
+ */
+export const storage = {
+  saveToLocalStorage: saveToStorage,
+  loadFromLocalStorage: loadFromStorage,
+  removeFromLocalStorage: removeFromStorage,
+  clearLocalStorage: clearStorage,
+  saveToSessionStorage,
+  loadFromSessionStorage,
+  removeFromSessionStorage,
+  clearSessionStorage,
+  saveAuthToken,
+  loadAuthToken,
+  removeAuthToken,
+  isAuthenticated: () => loadAuthToken() !== null,
+  saveSettings,
+  loadSettings,
+  resetSettings: clearStorage,
+  saveToCache: saveToStorage,
+  loadFromCache: loadFromStorage,
+  removeFromCache: removeFromStorage,
+  clearCache: clearStorage,
+  isCacheValid: hasStorageKey
+}

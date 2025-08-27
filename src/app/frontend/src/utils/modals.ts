@@ -1,7 +1,6 @@
 // Утилиты для работы с модальными окнами
 
-import { ref, reactive, computed, Ref } from 'vue'
-import { useQuasar } from 'quasar'
+
 
 /**
  * Интерфейс для конфигурации модального окна
@@ -104,45 +103,6 @@ export interface ModalConfig {
   noDragleave?: boolean
   noDrop?: boolean
   noDragexit?: boolean
-  noKeydown?: boolean
-  noKeyup?: boolean
-  noKeypress?: boolean
-  noMousewheel?: boolean
-  noTouchstart?: boolean
-  noTouchmove?: boolean
-  noTouchend?: boolean
-  noPointerdown?: boolean
-  noPointermove?: boolean
-  noPointerup?: boolean
-  noPointerenter?: boolean
-  noPointerleave?: boolean
-  noPointerover?: boolean
-  noPointerout?: boolean
-  noPointercancel?: boolean
-  noGotpointercapture?: boolean
-  noLostpointercapture?: boolean
-  noContextmenu?: boolean
-  noAuxclick?: boolean
-  noCompositionstart?: boolean
-  noCompositionupdate?: boolean
-  noCompositionend?: boolean
-  noBeforeinput?: boolean
-  noInput?: boolean
-  noChange?: boolean
-  noSelect?: boolean
-  noSelectstart?: boolean
-  noSelectionchange?: boolean
-  noCut?: boolean
-  noCopy?: boolean
-  noPaste?: boolean
-  noDrag?: boolean
-  noDragstart?: boolean
-  noDragend?: boolean
-  noDragenter?: boolean
-  noDragover?: boolean
-  noDragleave?: boolean
-  noDrop?: boolean
-  noDragexit?: boolean
 }
 
 /**
@@ -161,7 +121,6 @@ export interface ModalState {
  */
 export class ModalManager {
   private modals: Map<string, ModalState>
-  private $q: any
   private zIndexCounter: number
 
   constructor() {
@@ -172,15 +131,15 @@ export class ModalManager {
   /**
    * Инициализирует менеджер с Quasar
    */
-  init($q: any): void {
-    this.$q = $q
+  init(_$q: any): void {
+    // Инициализация с Quasar (пока не используется)
   }
 
   /**
    * Открывает модальное окно
    */
   open(config: ModalConfig): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       const modalState: ModalState = {
         id: config.id,
         visible: true,
@@ -303,7 +262,7 @@ export class ModalManager {
    * Закрывает все модальные окна
    */
   closeAll(): void {
-    this.modals.forEach((modal, id) => {
+    this.modals.forEach((_modal, id) => {
       this.close(id)
     })
   }
@@ -645,41 +604,14 @@ export function setGlobalModalManager(manager: ModalManager): void {
 }
 
 /**
- * Глобальные функции для быстрого доступа
- */
-export const modalManager = {
-  init: ($q: any) => getGlobalModalManager().init($q),
-  open: (config: ModalConfig) => getGlobalModalManager().open(config),
-  close: (id: string, data?: any) => getGlobalModalManager().close(id, data),
-  get: (id: string) => getGlobalModalManager().get(id),
-  isOpen: (id: string) => getGlobalModalManager().isOpen(id),
-  getAll: () => getGlobalModalManager().getAll(),
-  closeAll: () => getGlobalModalManager().closeAll(),
-  setData: (id: string, data: any) => getGlobalModalManager().setData(id, data),
-  getData: (id: string) => getGlobalModalManager().getData(id),
-  setLoading: (id: string, loading: boolean) => getGlobalModalManager().setLoading(id, loading),
-  updateConfig: (id: string, updates: Partial<ModalConfig>) => getGlobalModalManager().updateConfig(id, updates),
-  confirm: (config: Partial<ModalConfig>) => getGlobalModalManager().confirm(config),
-  alert: (config: Partial<ModalConfig>) => getGlobalModalManager().alert(config),
-  prompt: (config: Partial<ModalConfig>) => getGlobalModalManager().prompt(config),
-  select: <T = any>(config: Partial<ModalConfig>) => getGlobalModalManager().select<T>(config),
-  form: <T = any>(config: Partial<ModalConfig>) => getGlobalModalManager().form<T>(config),
-  image: (config: Partial<ModalConfig>) => getGlobalModalManager().image(config),
-  video: (config: Partial<ModalConfig>) => getGlobalModalManager().video(config),
-  pdf: (config: Partial<ModalConfig>) => getGlobalModalManager().pdf(config),
-  map: (config: Partial<ModalConfig>) => getGlobalModalManager().map(config),
-  getStats: () => getGlobalModalManager().getStats()
-}
-
-/**
  * Хук для использования менеджера модальных окон в Vue компонентах
  */
 export function useModalManager() {
-  const $q = useQuasar()
+  // const $q = useQuasar() // Пока не используется
   const manager = getGlobalModalManager()
   
-  // Инициализируем с Quasar
-  manager.init($q)
+  // Инициализируем с Quasar (пока не используется)
+  // manager.init($q)
   
   return {
     open: manager.open.bind(manager),
@@ -704,3 +636,14 @@ export function useModalManager() {
     getStats: manager.getStats.bind(manager)
   }
 }
+
+/**
+ * Объект со всеми функциями модальных окон для совместимости
+ */
+export const modalManager = {
+  ModalManager,
+  getGlobalModalManager,
+  setGlobalModalManager,
+  useModalManager
+}
+

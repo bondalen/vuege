@@ -232,3 +232,21 @@ export function useValidators() {
     containsOnlyLettersAndDigits
   }
 }
+
+/**
+ * Объект со всеми валидаторами для совместимости
+ */
+export const validators = {
+  validateEmail: isValidEmail,
+  validatePhone: isValidPhone,
+  validateInn: isValidInn,
+  validateOgrn: isValidOgrn,
+  validateDate: isValidDate,
+  validateCoordinates: isValidCoordinates,
+  validateRequired: isNotEmpty,
+  validateMinLength: hasMinLength,
+  validateMaxLength: hasMaxLength,
+  validatePattern: (value: string, pattern: RegExp) => pattern.test(value),
+  validateRange: isInRange,
+  validateCustom: (value: any, validator: (value: any) => boolean) => validator(value)
+}

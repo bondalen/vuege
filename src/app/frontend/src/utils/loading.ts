@@ -181,9 +181,9 @@ export function setGlobalLoadingManager(manager: LoadingManager): void {
 }
 
 /**
- * Глобальные функции для быстрого доступа
+ * Объект со всеми функциями для работы с загрузкой
  */
-export const loadingManager = {
+export const loading = {
   init: ($q: any) => getGlobalLoadingManager().init($q),
   show: (config?: LoadingConfig) => getGlobalLoadingManager().show(config),
   hide: (id?: string) => getGlobalLoadingManager().hide(id),
@@ -194,6 +194,11 @@ export const loadingManager = {
   showWithProgress: (message: string, progress: number, config?: LoadingConfig) => getGlobalLoadingManager().showWithProgress(message, progress, config),
   getStats: () => getGlobalLoadingManager().getStats()
 }
+
+/**
+ * Алиас для useLoadingManager
+ */
+export const useLoading = useLoadingManager
 
 /**
  * Хук для использования менеджера загрузки в Vue компонентах

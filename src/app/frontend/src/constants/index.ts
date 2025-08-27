@@ -5,7 +5,7 @@ export const APP_VERSION = '0.1.0'
 export const APP_DESCRIPTION = 'Система учета организационных единиц с исторической перспективой'
 
 // API константы
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8082/api'
 export const GRAPHQL_ENDPOINT = '/graphql'
 
 // Пагинация

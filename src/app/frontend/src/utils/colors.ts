@@ -303,3 +303,81 @@ export function normalizeHexColor(hex: string): string {
   }
   return `#${hex}`
 }
+
+/**
+ * Хук для работы с цветами
+ */
+export function useColors() {
+  return {
+    // Преобразования
+    hexToRgb,
+    rgbToHex,
+    hexToHsl,
+    rgbToHsl,
+    hslToRgb,
+    hslToHex,
+    hexToRgba,
+    
+    // Манипуляции
+    lighten,
+    darken,
+    saturate,
+    desaturate,
+    grayscale,
+    invert,
+    mix,
+    
+    // Анализ
+    isLight,
+    isDark,
+    getContrastColor,
+    getContrastRatio,
+    getLuminance,
+    
+    // Генерация
+    generateRandomColor,
+    generateColorPalette,
+    
+    // Утилиты
+    isValidHexColor,
+    normalizeHexColor
+  }
+}
+
+/**
+ * Объект со всеми функциями для работы с цветами
+ */
+export const colors = {
+  // Преобразования
+  hexToRgb,
+  rgbToHex,
+  hexToHsl,
+  rgbToHsl,
+  hslToRgb,
+  hslToHex,
+  hexToRgba,
+  
+  // Манипуляции
+  lighten,
+  darken,
+  saturate,
+  desaturate,
+  grayscale,
+  invert,
+  mix,
+  
+  // Анализ
+  isLight,
+  isDark,
+  getContrastColor,
+  getContrastRatio,
+  getLuminance,
+  
+  // Генерация
+  generateRandomColor,
+  generateColorPalette,
+  
+  // Утилиты
+  isValidHexColor,
+  normalizeHexColor
+}

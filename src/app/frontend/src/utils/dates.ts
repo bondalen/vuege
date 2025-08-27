@@ -288,3 +288,56 @@ export function getShortDayName(day: number): string {
   const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
   return days[day]
 }
+
+/**
+ * Хук для работы с датами
+ */
+export function useDates() {
+  return {
+    // Форматирование
+    formatDate,
+    getRelativeTime,
+    
+    // Проверки
+    isToday,
+    isYesterday,
+    isLeapYear,
+    
+    // Манипуляции с датами
+    addDays,
+    addMonths,
+    addYears,
+    getDaysDifference,
+    
+    // Возраст
+    getAge,
+    
+    // Календарь
+    getDaysInMonth,
+    getMonthName,
+    getShortMonthName,
+    getDayName,
+    getShortDayName
+  }
+}
+
+/**
+ * Объект со всеми функциями дат для совместимости
+ */
+export const dates = {
+  formatDate,
+  getRelativeTime,
+  isToday,
+  isYesterday,
+  isLeapYear,
+  addDays,
+  addMonths,
+  addYears,
+  getDaysDifference,
+  getAge,
+  getDaysInMonth,
+  getMonthName,
+  getShortMonthName,
+  getDayName,
+  getShortDayName
+}
