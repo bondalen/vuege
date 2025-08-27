@@ -42,7 +42,10 @@ public class PositionResolver {
     @SchemaMapping(typeName = "Position", field = "responsibilities")
     public List<String> getResponsibilities(Position position) {
         log.debug("Getting responsibilities for position: {}", position.getId());
-        return positionService.deserializeResponsibilities(position.getResponsibilities());
+        if (position.getResponsibilities() == null) {
+            return List.of();
+        }
+        return List.of(position.getResponsibilities());
     }
 
     /**

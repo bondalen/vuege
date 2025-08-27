@@ -49,7 +49,8 @@ public class PositionService {
     public Mono<Position> create(PositionInput input) {
         log.debug("Creating position with input: {}", input);
         
-        String responsibilitiesJson = serializeResponsibilities(input.getResponsibilities());
+        // Преобразуем List<String> в String[]
+        String[] responsibilitiesArray = input.getResponsibilities().toArray(new String[0]);
         
         // Используем текущую дату если createdDate не указана
         LocalDate createdDate = input.getCreatedDate();
@@ -64,7 +65,7 @@ public class PositionService {
                 .createdDate(createdDate)
                 .abolishedDate(input.getAbolishedDate())
                 .hierarchy(input.getHierarchy())
-                .responsibilities(responsibilitiesJson)
+                .responsibilities(responsibilitiesArray)
                 .isActive(input.getIsActive())
                 .build();
         
@@ -80,14 +81,15 @@ public class PositionService {
         return positionRepository.findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("Position not found with id: " + id)))
                 .flatMap(existingPosition -> {
-                    String responsibilitiesJson = serializeResponsibilities(input.getResponsibilities());
+                    // Преобразуем List<String> в String[]
+                    String[] responsibilitiesArray = input.getResponsibilities().toArray(new String[0]);
                     
                     existingPosition.setTitle(input.getTitle());
                     existingPosition.setOrganizationId(input.getOrganizationId());
                     existingPosition.setCreatedDate(input.getCreatedDate());
                     existingPosition.setAbolishedDate(input.getAbolishedDate());
                     existingPosition.setHierarchy(input.getHierarchy());
-                    existingPosition.setResponsibilities(responsibilitiesJson);
+                    existingPosition.setResponsibilities(responsibilitiesArray);
                     existingPosition.setIsActive(input.getIsActive());
                     
                     return positionRepository.save(existingPosition);
@@ -106,29 +108,7 @@ public class PositionService {
                 .then(Mono.just(true));
     }
 
-    /**
-     * Сериализовать список обязанностей в JSON
-     */
-    private String serializeResponsibilities(List<String> responsibilities) {
-        try {
-            return objectMapper.writeValueAsString(responsibilities);
-        } catch (JsonProcessingException e) {
-            log.error("Error serializing responsibilities: {}", e.getMessage());
-            throw new RuntimeException("Error serializing responsibilities", e);
-        }
-    }
 
-    /**
-     * Десериализовать JSON в список обязанностей
-     */
-    public List<String> deserializeResponsibilities(String responsibilitiesJson) {
-        try {
-            return objectMapper.readValue(responsibilitiesJson, new TypeReference<List<String>>() {});
-        } catch (JsonProcessingException e) {
-            log.error("Error deserializing responsibilities: {}", e.getMessage());
-            throw new RuntimeException("Error deserializing responsibilities", e);
-        }
-    }
 
     /**
      * Найти должности по организации

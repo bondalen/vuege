@@ -39,7 +39,7 @@ public class Position {
     private PositionHierarchy hierarchy;
     
     @Column("responsibilities")
-    private String responsibilities; // JSON array as string
+    private String[] responsibilities; // Array of strings
     
     @Column("is_active")
     private Boolean isActive;
