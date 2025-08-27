@@ -7,6 +7,11 @@
 - `update-node-maven.sh` - Обновление Node.js в Maven конфигурации
 - `test-graphql-api.sh` - Тестирование GraphQL API
 
+### Тестирование GraphQL API
+- `test-date-parsing.sh` - Тестирование парсинга дат в GraphQL
+- `test-full-crud.sh` - Полное тестирование CRUD операций
+- `test-graphql-mutations.sh` - Тестирование GraphQL мутаций
+
 ### Запуск сервисов
 - `start-backend.sh` - Запуск Spring Boot приложения
 - `start-postgresql.sh` - Запуск PostgreSQL контейнера
