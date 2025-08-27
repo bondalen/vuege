@@ -227,6 +227,7 @@ enum OrganizationType {
     STATE
     GOVERNMENT
     COMMERCIAL
+    EMPIRE
 }
 
 enum PositionHierarchy {

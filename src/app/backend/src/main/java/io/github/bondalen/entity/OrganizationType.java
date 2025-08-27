@@ -6,5 +6,6 @@ package io.github.bondalen.entity;
 public enum OrganizationType {
     STATE,      // Государственная
     GOVERNMENT, // Правительственная
-    COMMERCIAL  // Коммерческая
+    COMMERCIAL, // Коммерческая
+    EMPIRE      // Империя
 }
