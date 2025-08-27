@@ -37,10 +37,12 @@ public class GraphQLConfig implements WebMvcConfigurer {
 
                     @Override
                     public LocalDate parseValue(Object input) {
+                        System.out.println("parseValue called with: " + input + " (type: " + (input != null ? input.getClass().getName() : "null") + ")");
                         if (input instanceof String) {
                             try {
                                 return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
                             } catch (Exception e) {
+                                System.out.println("Error parsing date: " + e.getMessage());
                                 // Попробуем альтернативный формат для дат до нашей эры
                                 String dateStr = (String) input;
                                 if (dateStr.startsWith("-")) {
@@ -53,27 +55,31 @@ public class GraphQLConfig implements WebMvcConfigurer {
                                 return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
                             }
                         }
+                        System.out.println("parseValue returning null for input: " + input);
                         return null;
                     }
 
                     @Override
                     public LocalDate parseLiteral(Object input) {
-                        if (input instanceof String) {
+                        System.out.println("parseLiteral called with: " + input + " (type: " + (input != null ? input.getClass().getName() : "null") + ")");
+                        if (input instanceof graphql.language.StringValue) {
+                            String value = ((graphql.language.StringValue) input).getValue();
                             try {
-                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                                return LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE);
                             } catch (Exception e) {
+                                System.out.println("Error parsing literal date: " + e.getMessage());
                                 // Попробуем альтернативный формат для дат до нашей эры
-                                String dateStr = (String) input;
-                                if (dateStr.startsWith("-")) {
+                                if (value.startsWith("-")) {
                                     // Убираем минус и парсим как обычную дату
-                                    dateStr = dateStr.substring(1);
+                                    String dateStr = value.substring(1);
                                     LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
                                     // Возвращаем дату с отрицательным годом (до нашей эры)
                                     return LocalDate.of(-date.getYear(), date.getMonth(), date.getDayOfMonth());
                                 }
-                                return LocalDate.parse((String) input, DateTimeFormatter.ISO_LOCAL_DATE);
+                                return LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE);
                             }
                         }
+                        System.out.println("parseLiteral returning null for input: " + input);
                         return null;
                     }
                 })

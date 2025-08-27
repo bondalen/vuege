@@ -75,8 +75,6 @@ public class BatchService {
                 .historicalPeriodId(input.getHistoricalPeriodId())
                 .parentUnitId(input.getParentUnitId())
                 .status(io.github.bondalen.entity.StatusType.ACTIVE)
-                .createdBy("system")
-                .updatedBy("system")
                 .build();
     }
 

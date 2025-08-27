@@ -51,7 +51,7 @@ public class OrganizationalUnit {
     private StatusType status;
     
     @Column("metadata")
-    private String metadata; // JSON string
+    private Object metadata; // JSONB object
     
     @Column("tags")
     private String[] tags;
@@ -62,11 +62,11 @@ public class OrganizationalUnit {
     @Column("updated_at")
     private java.time.LocalDateTime updatedAt;
     
-    @Column("created_by")
-    private String createdBy;
+    // @Column("created_by")
+    // private String createdBy;
     
-    @Column("updated_by")
-    private String updatedBy;
+    // @Column("updated_by")
+    // private String updatedBy;
     
     @Column("description")
     private String description;

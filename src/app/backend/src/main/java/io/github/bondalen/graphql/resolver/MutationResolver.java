@@ -29,7 +29,20 @@ public class MutationResolver {
     public Mono<OrganizationalUnit> createOrganizationalUnit(
             @Argument OrganizationalUnitInput input) {
         log.info("GraphQL Mutation: createOrganizationalUnit with input={}", input);
-        return organizationalUnitService.create(input);
+        
+        // Детальное логирование входных данных
+        if (input != null) {
+            log.info("Input details - name: '{}', type: {}, foundedDate: {}, dissolvedDate: {}, isFictional: {}, historicalPeriodId: {}, parentUnitId: {}", 
+                    input.getName(), input.getType(), input.getFoundedDate(), input.getDissolvedDate(), 
+                    input.getIsFictional(), input.getHistoricalPeriodId(), input.getParentUnitId());
+        } else {
+            log.error("Input is null!");
+            return Mono.error(new IllegalArgumentException("Input cannot be null"));
+        }
+        
+        return organizationalUnitService.create(input)
+                .doOnSuccess(result -> log.info("Successfully created organizational unit: {}", result))
+                .doOnError(error -> log.error("Error creating organizational unit: {}", error.getMessage(), error));
     }
 
     @MutationMapping

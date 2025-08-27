@@ -76,63 +76,90 @@ public class OrganizationalUnitService {
      * Создать новую организационную единицу
      */
     public Mono<OrganizationalUnit> create(OrganizationalUnitInput input) {
-        log.debug("Creating organizational unit with input: {}", input);
-        validateGeoPointService();
+        log.info("Creating organizational unit with input: {}", input);
         
-        // Создаем GeoPoint если указан
-        Mono<Long> locationIdMono;
-        if (input.getLocation() != null) {
-            locationIdMono = geoPointService.createGeoPoint(input.getLocation()).map(GeoPoint::getId);
-        } else {
-            locationIdMono = Mono.just(null);
-        }
-        
-        return locationIdMono.flatMap(locationId -> {
+        try {
+            log.info("Input validation - name: {}, type: {}, foundedDate: {}, isFictional: {}, historicalPeriodId: {}", 
+                    input.getName(), input.getType(), input.getFoundedDate(), input.getIsFictional(), input.getHistoricalPeriodId());
+            
+            // Валидация обязательных полей
+            if (input.getName() == null || input.getName().trim().isEmpty()) {
+                log.error("Name is required for organizational unit");
+                return Mono.error(new IllegalArgumentException("Name is required"));
+            }
+            
+            if (input.getType() == null) {
+                log.error("Type is required for organizational unit");
+                return Mono.error(new IllegalArgumentException("Type is required"));
+            }
+            
+            if (input.getFoundedDate() == null) {
+                log.error("FoundedDate is required for organizational unit");
+                return Mono.error(new IllegalArgumentException("FoundedDate is required"));
+            }
+            
+            if (input.getHistoricalPeriodId() == null) {
+                log.error("HistoricalPeriodId is required for organizational unit");
+                return Mono.error(new IllegalArgumentException("HistoricalPeriodId is required"));
+            }
+            
+            // Упрощенная логика без GeoPoint
+            log.info("Building OrganizationalUnit without location");
+            
             OrganizationalUnit unit = OrganizationalUnit.builder()
-                    .name(input.getName())
+                    .name(input.getName().trim())
                     .type(input.getType())
                     .foundedDate(input.getFoundedDate())
                     .dissolvedDate(input.getDissolvedDate())
-                    .locationId(locationId)
-                    .isFictional(input.getIsFictional())
+                    .locationId(null) // Всегда null для упрощения
+                    .isFictional(input.getIsFictional() != null ? input.getIsFictional() : false)
                     .historicalPeriodId(input.getHistoricalPeriodId())
                     .parentUnitId(input.getParentUnitId())
+                    .status(io.github.bondalen.entity.StatusType.ACTIVE)
+                    .createdAt(java.time.LocalDateTime.now())
+                    .updatedAt(java.time.LocalDateTime.now())
                     .build();
             
-            return organizationalUnitRepository.save(unit);
-        });
+            log.info("Built OrganizationalUnit: {}", unit);
+            log.info("Saving to repository...");
+            
+            return organizationalUnitRepository.save(unit)
+                    .doOnSuccess(savedUnit -> log.info("Successfully saved organizational unit: {}", savedUnit))
+                    .doOnError(error -> log.error("Error saving organizational unit: {}", error.getMessage(), error));
+        } catch (Exception e) {
+            log.error("Error creating organizational unit: {}", e.getMessage(), e);
+            return Mono.error(new RuntimeException("Failed to create organizational unit: " + e.getMessage()));
+        }
     }
 
     /**
      * Обновить организационную единицу
      */
     public Mono<OrganizationalUnit> update(Long id, OrganizationalUnitInput input) {
-        log.debug("Updating organizational unit with id: {} and input: {}", id, input);
-        validateGeoPointService();
+        log.info("Updating organizational unit with id: {} and input: {}", id, input);
         
+        log.info("Looking for organizational unit with id: {}", id);
         return organizationalUnitRepository.findById(id)
+                .doOnNext(unit -> log.info("Found organizational unit: {}", unit))
+                .doOnError(error -> log.error("Error finding organizational unit: {}", error.getMessage()))
                 .switchIfEmpty(Mono.error(new RuntimeException("Organizational unit not found with id: " + id)))
                 .flatMap(existingUnit -> {
-                    // Обновляем GeoPoint если указан
-                    Mono<Long> locationIdMono;
-                    if (input.getLocation() != null) {
-                        locationIdMono = geoPointService.createGeoPoint(input.getLocation()).map(GeoPoint::getId);
-                    } else {
-                        locationIdMono = Mono.just(existingUnit.getLocationId());
-                    }
+                    log.info("Updating existing unit: {}", existingUnit);
                     
-                    return locationIdMono.flatMap(locationId -> {
-                        existingUnit.setLocationId(locationId);
-                        existingUnit.setName(input.getName());
-                        existingUnit.setType(input.getType());
-                        existingUnit.setFoundedDate(input.getFoundedDate());
-                        existingUnit.setDissolvedDate(input.getDissolvedDate());
-                        existingUnit.setIsFictional(input.getIsFictional());
-                        existingUnit.setHistoricalPeriodId(input.getHistoricalPeriodId());
-                        existingUnit.setParentUnitId(input.getParentUnitId());
-                        
-                        return organizationalUnitRepository.save(existingUnit);
-                    });
+                    // Упрощенная логика обновления без GeoPoint
+                    existingUnit.setName(input.getName());
+                    existingUnit.setType(input.getType());
+                    existingUnit.setFoundedDate(input.getFoundedDate());
+                    existingUnit.setDissolvedDate(input.getDissolvedDate());
+                    existingUnit.setIsFictional(input.getIsFictional());
+                    existingUnit.setHistoricalPeriodId(input.getHistoricalPeriodId());
+                    existingUnit.setParentUnitId(input.getParentUnitId());
+                    existingUnit.setUpdatedAt(java.time.LocalDateTime.now());
+                    
+                    log.info("Updated unit before save: {}", existingUnit);
+                    return organizationalUnitRepository.save(existingUnit)
+                            .doOnSuccess(savedUnit -> log.info("Successfully updated organizational unit: {}", savedUnit))
+                            .doOnError(error -> log.error("Error updating organizational unit: {}", error.getMessage(), error));
                 });
     }
 
