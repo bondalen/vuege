@@ -2,53 +2,32 @@ import { gql } from '@apollo/client/core'
 
 // Мутации для организаций
 export const CREATE_ORGANIZATION = gql`
-  mutation CreateOrganization($input: CreateOrganizationInput!) {
-    createOrganization(input: $input) {
+  mutation CreateOrganizationalUnit($input: OrganizationalUnitInput!) {
+    createOrganizationalUnit(input: $input) {
       id
       name
       type
-      description
       foundedDate
       dissolvedDate
-      location {
-        id
-        name
-      }
-      parentOrganization {
-        id
-        name
-      }
-      createdAt
-      updatedAt
     }
   }
 `
 
 export const UPDATE_ORGANIZATION = gql`
-  mutation UpdateOrganization($id: ID!, $input: UpdateOrganizationInput!) {
-    updateOrganization(id: $id, input: $input) {
+  mutation UpdateOrganizationalUnit($id: ID!, $input: OrganizationalUnitInput!) {
+    updateOrganizationalUnit(id: $id, input: $input) {
       id
       name
       type
-      description
       foundedDate
       dissolvedDate
-      location {
-        id
-        name
-      }
-      parentOrganization {
-        id
-        name
-      }
-      updatedAt
     }
   }
 `
 
 export const DELETE_ORGANIZATION = gql`
-  mutation DeleteOrganization($id: ID!) {
-    deleteOrganization(id: $id) {
+  mutation DeleteOrganizationalUnit($id: ID!) {
+    deleteOrganizationalUnit(id: $id) {
       id
       name
     }

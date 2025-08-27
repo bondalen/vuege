@@ -151,22 +151,80 @@ GraphQL мутации (CREATE, UPDATE, DELETE) возвращают INTERNAL_ER
 
 ---
 
-## [P250825-02] - Проблема с TypeScript ошибками в Frontend
+## [P250825-02] - Проблема отображения опций в q-select компоненте
 
 **Статус**: Решена
 **Дата выявления**: 2025-08-25
-**Дата решения**: 2025-08-26
+**Дата решения**: 2025-08-27
 **Приоритет**: Высокий
 
 ### Описание
-Множественные TypeScript ошибки в Frontend компонентах блокировали компиляцию.
+В компоненте StatesPage.vue выпадающий список "Тип государства" (q-select) не отображал все доступные опции. При открытии выпадающего списка показывалась только одна опция (текущее выбранное значение) вместо всех 4 опций из массива stateTypes.
+
+### Полезные ссылки
+- [Quasar q-select Documentation](https://quasar.dev/vue-components/select)
+- [Vue 3 Reactivity](https://vuejs.org/guide/extras/reactivity-in-depth.html)
+- [Quasar Virtual Scrolling](https://quasar.dev/vue-components/select#virtual-scrolling)
 
 ### История решения
-#### Чат 1: "ЭТАП 7.8: ЗАВЕРШЕНИЕ ИСПРАВЛЕНИЙ FRONTEND"
-##### Попытка 1 (2025-08-26)
-**Действия**: Исправлены все TypeScript ошибки в 10 файлах
-**Результат**: Frontend компилируется без ошибок
+#### Чат 1: "ЭТАП 10: ФИНАЛЬНОЕ ТЕСТИРОВАНИЕ И РАЗВЕРТЫВАНИЕ VUEGE"
+##### Попытка 1 (2025-08-27)
+**Действия**: Добавлены параметры option-value="value", option-label="label", emit-value, map-options
+**Результат**: Проблема не решена
+**Причина неудачи**: Неправильная структура данных
+
+##### Попытка 2 (2025-08-27)
+**Действия**: Сделан массив stateTypes реактивным (ref())
+**Результат**: Проблема не решена
+**Причина неудачи**: Проблема не в реактивности
+
+##### Попытка 3 (2025-08-27)
+**Действия**: Использован computed для stateTypes, исправлены функции getStateTypeLabel и editState
+**Результат**: Проблема решена
 **Статус**: Решена
+
+### Техническое решение
+1. **Использован computed для stateTypes**:
+   ```javascript
+   const stateTypes = computed(() => [
+     { label: 'Государство', value: 'STATE' },
+     { label: 'Правительство', value: 'GOVERNMENT' },
+     { label: 'Коммерческая', value: 'COMMERCIAL' },
+     { label: 'Империя', value: 'EMPIRE' }
+   ])
+   ```
+
+2. **Правильно настроены параметры q-select**:
+   ```html
+   <q-select
+     v-model="form.type"
+     :options="stateTypes"
+     label="Тип государства"
+     outlined
+     dense
+     class="q-mb-md"
+     option-value="value"
+     option-label="label"
+     emit-value
+     map-options
+     clearable
+   />
+   ```
+
+3. **Исправлены функции**:
+   - `getStateTypeLabel` - использует `stateTypes.value`
+   - `editState` - использует `stateTypes.value`
+
+### Созданные тестовые страницы
+- `/minimal-test` - минимальный тест q-select
+- `/force-render-test` - тест принудительного рендеринга
+- `/virtual-scroll-test` - тест отключения виртуального скроллинга
+- `/string-test` - тест со строками
+- `/qselect-test` - комплексный тест различных конфигураций
+
+### Инциденты
+#### Инцидент 1 (2025-08-27)
+q-select отображал только одну опцию вместо всех четырех в выпадающем списке
 
 ---
 

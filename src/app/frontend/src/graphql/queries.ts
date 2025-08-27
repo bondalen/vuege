@@ -2,38 +2,14 @@ import { gql } from '@apollo/client/core'
 
 // Запросы для организаций
 export const GET_ORGANIZATIONS = gql`
-  query GetOrganizations($search: SearchInput) {
-    organizations(search: $search) {
+  query GetOrganizations {
+    organizationalUnits {
       id
       name
       type
-      description
       foundedDate
       dissolvedDate
-      location {
-        id
-        name
-        type
-      }
-      parentOrganization {
-        id
-        name
-      }
-      childOrganizations {
-        id
-        name
-      }
-      positions {
-        id
-        title
-        person {
-          id
-          firstName
-          lastName
-        }
-      }
-      createdAt
-      updatedAt
+      isFictional
     }
   }
 `

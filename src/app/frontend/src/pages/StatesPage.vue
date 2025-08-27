@@ -33,15 +33,25 @@
             </template>
           </q-input>
           
-          <q-select
-            v-model="selectedType"
-            :options="stateTypes"
-            label="Тип государства"
-            outlined
-            dense
-            class="col-12 col-sm-6 col-md-4"
-            clearable
-          />
+          <!-- Временное решение: обычный HTML select -->
+          <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6 col-md-4">
+            <div class="q-field__control">
+              <div class="q-field__control-container">
+                <select
+                  v-model="selectedType"
+                  class="q-field__native q-placeholder"
+                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                >
+                  <option value="">Все типы</option>
+                  <option value="STATE">Государство</option>
+                  <option value="GOVERNMENT">Правительство</option>
+                  <option value="COMMERCIAL">Коммерческая</option>
+                  <option value="EMPIRE">Империя</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-field__label">Тип государства</div>
+          </div>
           
           <q-input
             v-model="dateRange"
@@ -113,51 +123,49 @@
             class="q-mb-md"
           />
           
-          <q-input
-            v-model="form.code"
-            label="Код"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-select
-            v-model="form.type"
-            :options="stateTypes"
-            label="Тип государства"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-input
-            v-model="form.description"
-            label="Описание"
-            type="textarea"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <div class="row q-gutter-md">
-            <q-input
-              v-model="form.foundedDate"
-              label="Дата основания"
-              type="date"
-              outlined
-              dense
-              class="col"
-            />
-            
-            <q-input
-              v-model="form.dissolvedDate"
-              label="Дата распада"
-              type="date"
-              outlined
-              dense
-              class="col"
-            />
+          <!-- Временное решение: обычный HTML select -->
+          <div class="q-field q-field--outlined q-field--dense q-mb-md">
+            <div class="q-field__control">
+              <div class="q-field__control-container">
+                <select
+                  v-model="form.type"
+                  class="q-field__native q-placeholder"
+                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                >
+                  <option value="">Выберите тип государства</option>
+                  <option value="STATE">Государство</option>
+                  <option value="GOVERNMENT">Правительство</option>
+                  <option value="COMMERCIAL">Коммерческая</option>
+                  <option value="EMPIRE">Империя</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-field__label">Тип государства</div>
           </div>
+          
+          <q-input
+            v-model="form.foundedDate"
+            label="Дата основания"
+            type="date"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-input
+            v-model="form.dissolvedDate"
+            label="Дата распада"
+            type="date"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-checkbox
+            v-model="form.isFictional"
+            label="Вымышленное государство"
+            class="q-mb-md"
+          />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -229,44 +237,55 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, computed, nextTick } from 'vue'
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import { useQuasar } from 'quasar'
-import type { State, StateType, SearchInput, LocationType } from '../types/graphql'
-import { GET_STATES } from '../graphql/queries'
-import { CREATE_STATE, UPDATE_STATE, DELETE_STATE } from '../graphql/mutations'
+import type { Organization, SearchInput } from '../types/graphql'
+import { OrganizationType } from '../types/graphql'
+import { GET_ORGANIZATIONS } from '../graphql/queries'
+import { CREATE_ORGANIZATION, UPDATE_ORGANIZATION, DELETE_ORGANIZATION } from '../graphql/mutations'
 import VuegeMap from '../components/VuegeMap.vue'
 
 const $q = useQuasar()
 
 // Состояние
 const searchQuery = ref('')
-const selectedType = ref<StateType | null>(null)
+const selectedType = ref<OrganizationType | null>(null)
 const dateRange = ref('')
 const showCreateDialog = ref(false)
 const showMapDialog = ref(false)
-const editingState = ref<State | null>(null)
-const selectedState = ref<State | null>(null)
+const editingState = ref<Organization | null>(null)
+const selectedState = ref<Organization | null>(null)
 
 // Форма
 const form = reactive({
   name: '',
-  code: '',
-  type: StateType.REPUBLIC,
-  description: '',
+  type: 'GOVERNMENT',
   foundedDate: '',
   dissolvedDate: '',
-  capitalId: ''
+  isFictional: false
 })
 
-// Опции
-const stateTypes = [
-  { label: 'Империя', value: StateType.EMPIRE },
-  { label: 'Королевство', value: StateType.KINGDOM },
-  { label: 'Республика', value: StateType.REPUBLIC },
-  { label: 'Федерация', value: StateType.FEDERATION },
-  { label: 'Конфедерация', value: StateType.CONFEDERATION },
-  { label: 'Другое', value: StateType.OTHER }
+// Опции - используем computed
+const stateTypes = computed(() => [
+  { label: 'Государство', value: 'STATE' },
+  { label: 'Правительство', value: 'GOVERNMENT' },
+  { label: 'Коммерческая', value: 'COMMERCIAL' },
+  { label: 'Империя', value: 'EMPIRE' }
+])
+
+console.log('stateTypes array:', stateTypes.value)
+console.log('stateTypes length:', stateTypes.value.length)
+stateTypes.value.forEach((type, index) => {
+  console.log(`stateTypes[${index}]:`, type)
+})
+
+const historicalPeriods = [
+  { label: 'Раннее Средневековье (476-1000)', value: '1' },
+  { label: 'Высокое Средневековье (1000-1300)', value: '2' },
+  { label: 'Позднее Средневековье (1300-1492)', value: '3' },
+  { label: 'Новое время (1492-1789)', value: '4' },
+  { label: 'Новейшее время (1789-2025)', value: '5' }
 ]
 
 // Вычисляемые параметры поиска
@@ -284,39 +303,61 @@ const searchParams = computed<SearchInput>(() => ({
 
 // GraphQL запросы
 const { result, loading, error, refetch } = useQuery(
-  GET_STATES,
-  { search: searchParams },
+  GET_ORGANIZATIONS,
+  {},
   { fetchPolicy: 'cache-and-network' }
 )
 
+// Отладочное логирование
+console.log('StatesPage - result:', result.value)
+console.log('StatesPage - loading:', loading.value)
+console.log('StatesPage - error:', error.value)
+
 // Мутации
-const { mutate: createState, loading: creating } = useMutation(CREATE_STATE)
-const { mutate: updateState, loading: updating } = useMutation(UPDATE_STATE)
-const { mutate: deleteState, loading: deleting } = useMutation(DELETE_STATE)
+const { mutate: createOrganization, loading: creating } = useMutation(CREATE_ORGANIZATION)
+const { mutate: updateOrganization, loading: updating } = useMutation(UPDATE_ORGANIZATION)
+const { mutate: deleteOrganization, loading: deleting } = useMutation(DELETE_ORGANIZATION)
 
 // Вычисляемые данные
-const states = computed(() => result.value?.states || [])
+const states = computed(() => {
+  const data = result.value?.organizationalUnits || []
+  
+  // Фильтрация по поиску
+  let filtered = data
+  if (searchQuery.value) {
+    filtered = filtered.filter(state => 
+      state.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      state.type.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  }
+  
+  // Фильтрация по типу
+  if (selectedType.value) {
+    filtered = filtered.filter(state => state.type === selectedType.value)
+  }
+  
+  return filtered
+})
 
 // Вычисляемые свойства для карты
 const mapCenter = computed(() => {
-  if (selectedState.value?.capital?.latitude && selectedState.value?.capital?.longitude) {
-    return [selectedState.value.capital.latitude, selectedState.value.capital.longitude] as [number, number]
+  if (selectedState.value?.location?.latitude && selectedState.value?.location?.longitude) {
+    return [selectedState.value.location.latitude, selectedState.value.location.longitude] as [number, number]
   }
   return [55.7558, 37.6176] as [number, number] // Москва по умолчанию
 })
 
 const mapZoom = computed(() => {
-  if (selectedState.value?.territory?.length) return 6
   return 10
 })
 
 const mapMarkers = computed(() => {
-  if (!selectedState.value?.capital) return []
+  if (!selectedState.value?.location) return []
   
   return [{
-    position: [selectedState.value.capital.latitude!, selectedState.value.capital.longitude!] as [number, number],
-    title: selectedState.value.capital.name,
-    description: 'Столица'
+    position: [selectedState.value.location.latitude!, selectedState.value.location.longitude!] as [number, number],
+    title: selectedState.value.location.name,
+    description: 'Местоположение'
   }]
 })
 
@@ -327,66 +368,73 @@ const mapPolygons = computed(() => {
 
 // Колонки таблицы
 const columns = [
-  { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' },
-  { name: 'code', label: 'Код', field: 'code', sortable: true, align: 'center' },
-  { name: 'type', label: 'Тип', field: 'type', sortable: true, align: 'left' },
-  { name: 'foundedDate', label: 'Основано', field: 'foundedDate', sortable: true, align: 'center' },
-  { name: 'dissolvedDate', label: 'Распалось', field: 'dissolvedDate', sortable: true, align: 'center' },
-  { name: 'capital', label: 'Столица', field: row => row.capital?.name || '-', sortable: false, align: 'left' },
-  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
+  { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' as const },
+  { name: 'type', label: 'Тип', field: 'type', sortable: true, align: 'left' as const },
+  { name: 'foundedDate', label: 'Основано', field: 'foundedDate', sortable: true, align: 'center' as const },
+  { name: 'dissolvedDate', label: 'Распалось', field: 'dissolvedDate', sortable: true, align: 'center' as const },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' as const }
 ]
 
 // Методы
 const resetForm = () => {
   form.name = ''
-  form.code = ''
-  form.type = StateType.REPUBLIC
-  form.description = ''
+  form.type = 'GOVERNMENT'
   form.foundedDate = ''
   form.dissolvedDate = ''
-  form.capitalId = ''
+  form.isFictional = false
   editingState.value = null
 }
 
-const editState = (state: State) => {
+const editState = (state: any) => {
+  console.log('editState - incoming state:', state)
+  console.log('editState - stateTypes:', stateTypes.value)
   editingState.value = state
+  
+  // Сбросим форму перед заполнением
+  resetForm()
+  
+  // Заполним форму новыми значениями
   form.name = state.name
-  form.code = state.code || ''
   form.type = state.type
-  form.description = state.description || ''
   form.foundedDate = state.foundedDate || ''
   form.dissolvedDate = state.dissolvedDate || ''
-  form.capitalId = state.capital?.id || ''
+  form.isFictional = state.isFictional || false
+  
+  console.log('editState - form after setting:', form)
+  console.log('editState - form.type:', form.type)
+  console.log('editState - stateTypes:', stateTypes.value)
+  console.log('editState - matching option:', stateTypes.value.find(t => t.value === form.type))
+  
   showCreateDialog.value = true
 }
 
-const showMap = (state: State) => {
+const showMap = (state: Organization) => {
   selectedState.value = state
   showMapDialog.value = true
 }
 
-const handleDeleteState = async (state: State) => {
+const handleDeleteState = async (state: Organization) => {
   try {
     await $q.dialog({
       title: 'Подтверждение удаления',
-      message: `Вы уверены, что хотите удалить государство "${state.name}"?`,
+      message: `Вы уверены, что хотите удалить организацию "${state.name}"?`,
       cancel: true,
       persistent: true
     })
 
-    await deleteState({ id: state.id })
+    await deleteOrganization({ id: state.id })
     
     $q.notify({
       type: 'positive',
-      message: 'Государство успешно удалено'
+      message: 'Организация успешно удалена'
     })
     
     await refetch()
   } catch (error) {
-    console.error('Ошибка удаления государства:', error)
+    console.error('Ошибка удаления организации:', error)
     $q.notify({
       type: 'negative',
-      message: 'Ошибка при удалении государства'
+      message: 'Ошибка при удалении организации'
     })
   }
 }
@@ -395,28 +443,26 @@ const saveState = async () => {
   try {
     const input = {
       name: form.name,
-      code: form.code || null,
       type: form.type,
-      description: form.description || null,
       foundedDate: form.foundedDate || null,
       dissolvedDate: form.dissolvedDate || null,
-      capitalId: form.capitalId || null
+      isFictional: form.isFictional
     }
 
     if (editingState.value) {
-      await updateState({ 
+      await updateOrganization({ 
         id: editingState.value.id, 
         input 
       })
       $q.notify({
         type: 'positive',
-        message: 'Государство успешно обновлено'
+        message: 'Организация успешно обновлена'
       })
     } else {
-      await createState({ input })
+      await createOrganization({ input })
       $q.notify({
         type: 'positive',
-        message: 'Государство успешно создано'
+        message: 'Организация успешно создана'
       })
     }
 
@@ -424,10 +470,10 @@ const saveState = async () => {
     resetForm()
     await refetch()
   } catch (error) {
-    console.error('Ошибка сохранения государства:', error)
+    console.error('Ошибка сохранения организации:', error)
     $q.notify({
       type: 'negative',
-      message: 'Ошибка при сохранении государства'
+      message: 'Ошибка при сохранении организации'
     })
   }
 }
@@ -438,19 +484,19 @@ const openCreateDialog = () => {
 }
 
 // Вспомогательные методы
-const getStateTypeLabel = (type: StateType): string => {
-  const typeOption = stateTypes.find(t => t.value === type)
+const getStateTypeLabel = (type: OrganizationType): string => {
+  const typeOption = stateTypes.value.find(t => t.value === type)
   return typeOption ? typeOption.label : type
 }
 
-const getLocationTypeLabel = (type: LocationType): string => {
-  const locationTypes = {
-    [LocationType.COUNTRY]: 'Страна',
-    [LocationType.REGION]: 'Регион',
-    [LocationType.CITY]: 'Город',
-    [LocationType.DISTRICT]: 'Район',
-    [LocationType.ADDRESS]: 'Адрес',
-    [LocationType.COORDINATES]: 'Координаты'
+const getLocationTypeLabel = (type: string): string => {
+  const locationTypes: Record<string, string> = {
+    'COUNTRY': 'Страна',
+    'REGION': 'Регион',
+    'CITY': 'Город',
+    'DISTRICT': 'Район',
+    'ADDRESS': 'Адрес',
+    'COORDINATES': 'Координаты'
   }
   return locationTypes[type] || type
 }
