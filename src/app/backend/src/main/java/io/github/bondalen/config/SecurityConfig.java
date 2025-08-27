@@ -20,9 +20,10 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/graphql/**").permitAll()
-                .requestMatchers("/graphiql/**").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/api/graphql/**").permitAll()
+                .requestMatchers("/api/graphiql/**").permitAll()
+                .requestMatchers("/api/actuator/**").permitAll()
+                .requestMatchers("/", "/index.html", "/assets/**", "/*.js", "/*.css").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

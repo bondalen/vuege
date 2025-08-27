@@ -19,6 +19,7 @@ spring:
       enabled: false
     schema:
       locations: classpath:graphql/
+    path: /api/graphql
 
 # JWT Configuration
 app:
@@ -29,8 +30,6 @@ app:
 # Server Configuration
 server:
   port: 8082
-  servlet:
-    context-path: /api
 
 # Logging Configuration
 logging:
