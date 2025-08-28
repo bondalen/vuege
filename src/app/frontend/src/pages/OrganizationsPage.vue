@@ -1,40 +1,44 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-mb-md">
-      <div class="col">
-        <h4 class="text-h4 q-mb-sm">Организации</h4>
-        <p class="text-body1 text-grey-7">
-          Управление государственными и коммерческими организациями
-        </p>
-      </div>
-      <div class="col-auto">
-        <q-btn
-          color="primary"
-          icon="add"
-          label="Добавить организацию"
-          @click="openCreateDialog"
-        />
-      </div>
+  <q-page class="q-pa-none" style="padding: 5px !important;">
+    <!-- Заголовки -->
+    <div class="text-center" style="margin-top: 5px; margin-bottom: 4px;">
+      <h4 class="text-h4 q-ma-xs">Организации</h4>
+      <p class="text-body1 text-grey-7 q-ma-xs">
+        Управление государственными и коммерческими организациями
+      </p>
     </div>
 
-    <!-- Фильтры -->
+    <!-- Фильтры и кнопка добавления -->
     <q-card class="q-mb-md">
-      <q-card-section>
-        <div class="row q-gutter-md">
+      <q-card-section class="q-pa-sm">
+        <!-- Верхняя строка: поиск и кнопка добавления -->
+        <div class="row q-gutter-md q-mb-sm" style="display: flex; align-items: center;">
           <q-input
             v-model="searchQuery"
             label="Поиск"
             outlined
             dense
-            class="col-12 col-sm-6 col-md-4"
+            style="flex: 2; margin-right: 8px;"
           >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
           
+          <q-btn
+            color="primary"
+            icon="add"
+            label="Добавить организацию"
+            @click="openCreateDialog"
+            style="flex: 1;"
+            dense
+          />
+        </div>
+        
+        <!-- Нижняя строка: комбобоксы фильтров -->
+        <div class="row q-gutter-md" style="display: flex; align-items: center;">
           <!-- Временное решение: обычный HTML select -->
-          <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6 col-md-4">
+          <div class="q-field q-field--outlined q-field--dense" style="flex: 2; margin-right: 8px;">
             <div class="q-field__control">
               <div class="q-field__control-container">
                 <select
@@ -54,7 +58,7 @@
           </div>
           
           <!-- Временное решение: обычный HTML select -->
-          <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6 col-md-4">
+          <div class="q-field q-field--outlined q-field--dense" style="flex: 1;">
             <div class="q-field__control">
               <div class="q-field__control-container">
                 <select
@@ -84,7 +88,61 @@
         row-key="id"
         :pagination="{ rowsPerPage: 10 }"
         dense
+        :class="{ 'selected-row-highlight': true }"
       >
+        <template v-slot:body="props">
+          <q-tr
+            :props="props"
+            :class="{ 'bg-blue-1': selectedOrganization?.id === props.row.id }"
+            @click="selectOrganization(props.row)"
+            style="cursor: pointer;"
+          >
+            <q-td key="name" :props="props">
+              {{ props.row.name }}
+            </q-td>
+            <q-td key="type" :props="props">
+              {{ getOrganizationTypeLabel(props.row.type) }}
+            </q-td>
+            <q-td key="status" :props="props">
+              {{ getOrganizationStatus(props.row) }}
+            </q-td>
+            <q-td key="foundedDate" :props="props">
+              {{ props.row.foundedDate }}
+            </q-td>
+            <q-td key="location" :props="props">
+              {{ props.row.location?.name || '-' }}
+            </q-td>
+            <q-td key="details" :props="props">
+              <q-btn
+                flat
+                round
+                color="info"
+                icon="info"
+                size="sm"
+                @click.stop="selectOrganization(props.row)"
+                :class="{ 'bg-blue-1': selectedOrganization?.id === props.row.id }"
+              />
+            </q-td>
+            <q-td key="actions" :props="props">
+              <q-btn
+                flat
+                round
+                color="primary"
+                icon="edit"
+                size="sm"
+                @click.stop="editOrganization(props.row)"
+              />
+              <q-btn
+                flat
+                round
+                color="negative"
+                icon="delete"
+                size="sm"
+                @click.stop="handleDeleteOrganization(props.row)"
+              />
+            </q-td>
+          </q-tr>
+        </template>
         <template v-slot:body-cell-details="props">
           <q-td :props="props">
             <q-btn
@@ -124,17 +182,16 @@
 
     <!-- Вкладки с деталями организации -->
     <q-card v-if="selectedOrganization" class="q-mt-md">
-      <q-card-section>
-        <div class="text-h6">
-          Детали организации: {{ selectedOrganization.name }}
+      <q-card-section style="padding: 8px 16px; background-color: #e3f2fd;">
+        <div style="display: flex; justify-content: space-between; align-items: center; height: 40px; font-size: 14px; color: #1976d2;">
+          <span>Детали организации: {{ selectedOrganization.name }}</span>
           <q-btn
             flat
             round
-            color="grey"
+            color="grey-7"
             icon="close"
             size="sm"
             @click="clearSelectedOrganization"
-            class="q-ml-sm"
           />
         </div>
       </q-card-section>
@@ -520,31 +577,47 @@ const organizations = computed(() => {
 
 // Данные для вкладок
 const positions = computed(() => {
+  if (!selectedOrganization.value) return []
+  
   const allPositions = positionsResult.value?.positions || []
-  return allPositions.filter(pos => pos.organization?.id === selectedOrganization.value?.id)
+  const filtered = allPositions.filter(pos => pos.organization?.id === selectedOrganization.value?.id)
+  
+  console.log('positions computed - selectedOrganization:', selectedOrganization.value?.id)
+  console.log('positions computed - allPositions:', allPositions.length)
+  console.log('positions computed - filtered:', filtered.length)
+  
+  return filtered
 })
 
 const childOrganizations = computed(() => {
+  if (!selectedOrganization.value) return []
+  
   const allOrganizations = childrenResult.value?.organizationalUnits || []
   // Фильтруем организации, которые имеют выбранную организацию как родителя
   // Поскольку у нас нет прямого поля parentUnitId в GraphQL, используем ID для демонстрации
+  let filtered = []
   if (selectedOrganization.value?.id === '36') {
     // Для Византийской Империи возвращаем дочерние организации
-    return allOrganizations.filter(org => ['37', '38', '39', '40'].includes(org.id))
+    filtered = allOrganizations.filter(org => ['37', '38', '39', '40'].includes(org.id))
   } else if (selectedOrganization.value?.id === '37') {
     // Для Константинополя возвращаем пустой список (нет дочерних)
-    return []
+    filtered = []
   } else if (selectedOrganization.value?.id === '38') {
     // Для Византийской Армии возвращаем пустой список (нет дочерних)
-    return []
+    filtered = []
   } else if (selectedOrganization.value?.id === '39') {
     // Для Византийского Флота возвращаем пустой список (нет дочерних)
-    return []
+    filtered = []
   } else if (selectedOrganization.value?.id === '40') {
     // Для Византийской Церкви возвращаем пустой список (нет дочерних)
-    return []
+    filtered = []
   }
-  return []
+  
+  console.log('childOrganizations computed - selectedOrganization:', selectedOrganization.value?.id)
+  console.log('childOrganizations computed - allOrganizations:', allOrganizations.length)
+  console.log('childOrganizations computed - filtered:', filtered.length)
+  
+  return filtered
 })
 
 // Колонки таблицы организаций
@@ -593,8 +666,20 @@ const resetForm = () => {
 
 // Методы для работы с вкладками
 const selectOrganization = (org: Organization) => {
-  selectedOrganization.value = org
-  activeTab.value = 'positions' // По умолчанию показываем должности
+  // Если нажимаем на ту же организацию - скрываем вкладки
+  if (selectedOrganization.value?.id === org.id) {
+    selectedOrganization.value = null
+    activeTab.value = 'positions'
+  } else {
+    // Если нажимаем на другую организацию - показываем её данные
+    selectedOrganization.value = org
+    activeTab.value = 'positions' // По умолчанию показываем должности
+    
+    // Принудительно обновляем данные для новой организации
+    console.log('Выбрана новая организация:', org.name, 'ID:', org.id)
+    console.log('positionsResult.value:', positionsResult.value)
+    console.log('childrenResult.value:', childrenResult.value)
+  }
 }
 
 const clearSelectedOrganization = () => {
@@ -833,3 +918,27 @@ if (error.value) {
   })
 }
 </script>
+
+<style scoped>
+.selected-row-highlight .q-tr.bg-blue-1 {
+  background-color: #e3f2fd !important;
+}
+
+.selected-row-highlight .q-tr.bg-blue-1:hover {
+  background-color: #bbdefb !important;
+}
+
+/* Простые отступы для карточек */
+.q-card {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+/* Дополнительная настройка для мобильных устройств */
+@media (max-width: 768px) {
+  .q-card {
+    margin-left: 2px !important;
+    margin-right: 2px !important;
+  }
+}
+</style>

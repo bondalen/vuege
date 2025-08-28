@@ -48,6 +48,32 @@
 ### 1. **Решение проблемы отображения опций в q-select**
 ```javascript
 // Использование computed для правильной реактивности
+```
+
+### 2. **Исправление заголовка вкладок организаций**
+```html
+<!-- Исправление читаемости и стилизации -->
+<q-card-section style="padding: 8px 16px; background-color: #e3f2fd;">
+  <div style="display: flex; justify-content: space-between; align-items: center; height: 40px; font-size: 14px; color: #1976d2;">
+    <span>Детали организации: {{ selectedOrganization.name }}</span>
+    <q-btn
+      flat
+      round
+      color="grey-7"
+      icon="close"
+      size="sm"
+      @click="clearSelectedOrganization"
+    />
+  </div>
+</q-card-section>
+```
+
+**Решения:**
+- ✅ **Цвет текста**: синий (#1976d2) на голубом фоне
+- ✅ **Высота строки**: 40px как в таблицах
+- ✅ **Размер шрифта**: 14px как в таблицах
+- ✅ **Фон**: голубой (#e3f2fd) как у активной строки
+- ✅ **Расположение**: название слева, значок справа
 const organizationTypes = computed(() => [
   { label: 'Империя', value: 'EMPIRE' },
   { label: 'Государство', value: 'STATE' },

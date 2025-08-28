@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <q-layout view="hHh lpR fFf">
-      <q-header elevated class="bg-primary text-white">
-        <q-toolbar>
-          <q-toolbar-title>
+      <q-header elevated class="bg-primary text-white" style="height: 32px; min-height: 32px;">
+        <q-toolbar style="height: 32px; min-height: 32px;">
+          <q-toolbar-title style="font-size: 0.9rem;">
             Vuege - Система учета организационных единиц
           </q-toolbar-title>
         </q-toolbar>
@@ -34,5 +34,22 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   width: 100vw;
+}
+
+/* Уменьшение высоты верхнего фрейма */
+.q-header {
+  height: 32px !important;
+  min-height: 32px !important;
+}
+
+.q-toolbar {
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0 16px !important;
+}
+
+.q-toolbar-title {
+  font-size: 0.9rem !important;
+  line-height: 32px !important;
 }
 </style>
