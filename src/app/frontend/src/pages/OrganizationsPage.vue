@@ -9,7 +9,7 @@
     </div>
 
     <!-- Фильтры и кнопка добавления -->
-    <q-card class="q-mb-md q-ma-sm-md q-ma-xs-sm filter-card">
+    <q-card class="filter-card" style="width: 100%; max-width: 2880px; margin-bottom: 3px;">
       <q-card-section class="q-pa-sm">
         <!-- Верхняя строка: поиск и кнопка добавления -->
         <div class="row q-gutter-md q-mb-sm" style="display: flex; align-items: center;">
@@ -28,10 +28,11 @@
           <q-btn
             color="primary"
             icon="add"
-            label="Добавить организацию"
+            :label="buttonLabel"
             @click="openCreateDialog"
             style="flex: 1;"
             dense
+            class="add-organization-btn"
           />
         </div>
         
@@ -80,7 +81,7 @@
     </q-card>
 
     <!-- Таблица организаций -->
-    <q-card class="table-card q-ma-sm-md q-ma-xs-sm">
+    <q-card class="table-card" style="width: 100%; max-width: 2880px; margin-bottom: 3px;">
       <q-table
         :rows="organizations"
         :columns="columns"
@@ -181,7 +182,7 @@
     </q-card>
 
     <!-- Вкладки с деталями организации -->
-    <q-card v-if="selectedOrganization" class="q-mt-md">
+    <q-card v-if="selectedOrganization" class="tabs-card" style="width: 100%; max-width: 2880px;">
       <q-card-section style="padding: 8px 16px; background-color: #e3f2fd;">
         <div style="display: flex; justify-content: space-between; align-items: center; height: 40px; font-size: 14px; color: #1976d2;">
           <span>Детали организации: {{ selectedOrganization.name }}</span>
@@ -441,7 +442,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import { useQuasar } from 'quasar'
 import type { Organization, OrganizationType, SearchInput } from '../types/graphql'
@@ -911,6 +912,29 @@ const updateDissolvedDateFromStatus = () => {
   }
 }
 
+// Реактивная ширина экрана
+const screenWidth = ref(window.innerWidth)
+
+// Обновление ширины экрана при изменении размера окна
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth
+}
+
+// Адаптивный текст кнопки
+const buttonLabel = computed(() => {
+  const isMobile = screenWidth.value <= 768
+  return isMobile ? 'Добавить' : 'Добавить организацию'
+})
+
+// Добавление слушателя изменения размера окна
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth)
+})
+
 // Обработка ошибок
 if (error.value) {
   console.error('Ошибка загрузки организаций:', error.value)
@@ -933,7 +957,57 @@ if (error.value) {
 /* Стили для заголовков страницы */
 .page-titles {
   margin-top: 5px !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 3px !important;
+}
+
+/* Унификация отступов между элементами страницы */
+.organizations-page > * {
+  margin-bottom: 3px !important;
+}
+
+.organizations-page > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Адаптивные стили для кнопки добавления организации */
+.add-organization-btn {
+  min-width: auto !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px) {
+  .add-organization-btn {
+    min-width: 80px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Унификация ширины всех карточек */
+.filter-card,
+.table-card,
+.tabs-card {
+  width: 100% !important;
+  max-width: 2880px !important;
+  margin: 0 auto !important;
+  margin-bottom: 3px !important;
+}
+
+/* Убираем нижний отступ у последней карточки */
+.tabs-card {
+  margin-bottom: 0 !important;
+}
+
+/* Стили для вкладок (если открыты) */
+.q-card .q-tabs {
+  width: 100% !important;
+  max-width: 2880px !important;
+}
+
+/* Дополнительные стили для q-page-container */
+.q-page-container {
+  width: 100% !important;
+  max-width: 2880px !important;
+  margin: 0 auto !important;
 }
 
 

@@ -35,7 +35,10 @@ onMounted(() => {
   height: 100vh;
   width: 100vw;
   padding: 2px !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
 /* Уменьшение высоты верхнего фрейма */
@@ -47,7 +50,39 @@ onMounted(() => {
 /* Исправление отступов для q-layout */
 .q-layout {
   padding: 2px !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 2880px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Центрирование основного контента */
+.q-page {
+  width: 100% !important;
+  max-width: 2880px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Исправление ширины q-page-container */
+.q-page-container {
+  width: 100% !important;
+  max-width: 2880px !important;
+  margin: 0 auto !important;
+}
+
+/* Глобальные стили для всех контейнеров Quasar */
+.q-page,
+.q-page-container,
+.q-layout,
+.q-layout-container {
+  width: 100% !important;
+  max-width: 2880px !important;
+  margin: 0 auto !important;
 }
 
 .q-toolbar {
