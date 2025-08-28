@@ -277,6 +277,65 @@ GraphQL мутации (CREATE, UPDATE, DELETE) возвращают INTERNAL_ER
 #### Инцидент 1 (2025-08-27)
 q-select отображал только одну опцию вместо всех четырех в выпадающем списке
 
+#### Инцидент 2 (2025-08-28)
+**Контекст**: Тестирование CRUD операций страницы "Организации"
+**Симптомы**: 
+- В комбобоксах страницы организаций при фильтрации по типу отображалась только активная организация
+- При добавлении и редактировании организации в списках комбобоксов показывалась только одна опция
+- Проблема аналогична ранее решенной P250825-02 на странице "Государства"
+
+**Действия по решению**:
+1. Изучение решения проблемы P250825-02 из документации
+2. Применение аналогичного решения к странице организаций:
+   - Замена q-select на HTML select (временное решение)
+   - Использование computed для organizationTypes
+   - Добавление вспомогательных методов getOrganizationTypeLabel(), getStatusLabel()
+   - Отладочное логирование для диагностики
+3. Тестирование исправлений:
+   - Проверка фильтров "Тип организации" и "Статус"
+   - Тестирование форм создания и редактирования
+   - Проверка отображения в таблице
+
+**Результат**: Проблема успешно решена, все комбобоксы отображают все доступные опции корректно
+
+**Техническое решение**:
+```javascript
+// Использование computed для правильной реактивности
+const organizationTypes = computed(() => [
+  { label: 'Империя', value: 'EMPIRE' },
+  { label: 'Государство', value: 'STATE' },
+  { label: 'Коммерческая', value: 'COMMERCIAL' },
+  // ... остальные опции
+])
+
+// Вспомогательные методы для получения лейблов
+const getOrganizationTypeLabel = (type: string): string => {
+  const typeOption = organizationTypes.value.find(t => t.value === type)
+  return typeOption ? typeOption.label : type
+}
+```
+
+**HTML структура**:
+```html
+<!-- Временное решение: обычный HTML select -->
+<div class="q-field q-field--outlined q-field--dense">
+  <div class="q-field__control">
+    <div class="q-field__control-container">
+      <select v-model="form.type" class="q-field__native q-placeholder">
+        <option value="">Выберите тип организации</option>
+        <option value="EMPIRE">Империя</option>
+        <!-- ... остальные опции -->
+      </select>
+    </div>
+  </div>
+  <div class="q-field__label">Тип организации *</div>
+</div>
+```
+
+**Статус**: Решена ✅
+**Влияние**: Улучшена пользовательская доступность страницы организаций
+**Профилактика**: Создан шаблон решения для применения к другим страницам с аналогичными проблемами
+
 ---
 
 ## [P250825-03] - Неправильная кнопка при редактировании в форме "Государства"
@@ -425,6 +484,501 @@ const confirmed = await new Promise((resolve) => {
 
 ---
 
+## [P250828-10] - Проблема отображения опций в q-select компоненте страницы организаций
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Высокий
+
+### Описание
+В компоненте OrganizationsPage.vue выпадающие списки (q-select) не отображали все доступные опции. При открытии выпадающих списков показывалась только одна опция (текущее выбранное значение) вместо всех опций из массивов organizationTypes и statusOptions. Проблема затрагивала:
+- Фильтр "Тип организации" на странице
+- Фильтр "Статус" на странице  
+- Поле "Тип организации" в форме создания/редактирования
+
+### Полезные ссылки
+- [Quasar q-select Documentation](https://quasar.dev/vue-components/select)
+- [Vue 3 Reactivity](https://vuejs.org/guide/extras/reactivity-in-depth.html)
+- [Решение проблемы P250825-02](./problems.md#p250825-02---проблема-отображения-опций-в-q-select-компоненте)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Изучение решения проблемы P250825-02 из документации
+2. Применение аналогичного решения к странице организаций:
+   - Замена q-select на HTML select (временное решение)
+   - Использование computed для organizationTypes и statusOptions
+   - Добавление вспомогательных методов getOrganizationTypeLabel(), getStatusLabel()
+   - Отладочное логирование для диагностики
+3. Тестирование исправлений
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Использован computed для organizationTypes**:
+   ```javascript
+   const organizationTypes = computed(() => [
+     { label: 'Империя', value: 'EMPIRE' },
+     { label: 'Государство', value: 'STATE' },
+     { label: 'Коммерческая', value: 'COMMERCIAL' },
+     { label: 'Правительственная', value: 'GOVERNMENT' },
+     { label: 'Некоммерческая', value: 'NON_PROFIT' },
+     { label: 'Образовательная', value: 'EDUCATIONAL' },
+     { label: 'Военная', value: 'MILITARY' },
+     { label: 'Религиозная', value: 'RELIGIOUS' },
+     { label: 'Другая', value: 'OTHER' }
+   ])
+   ```
+
+2. **Замена q-select на HTML select**:
+   ```html
+   <!-- Временное решение: обычный HTML select -->
+   <div class="q-field q-field--outlined q-field--dense">
+     <div class="q-field__control">
+       <div class="q-field__control-container">
+         <select v-model="form.type" class="q-field__native q-placeholder">
+           <option value="">Выберите тип организации</option>
+           <option value="EMPIRE">Империя</option>
+           <!-- ... остальные опции -->
+         </select>
+       </div>
+     </div>
+     <div class="q-field__label">Тип организации *</div>
+   </div>
+   ```
+
+3. **Добавлены вспомогательные методы**:
+   ```javascript
+   const getOrganizationTypeLabel = (type: string): string => {
+     const typeOption = organizationTypes.value.find(t => t.value === type)
+     return typeOption ? typeOption.label : type
+   }
+
+   const getStatusLabel = (status: string): string => {
+     const statusOption = statusOptions.value.find(s => s.value === status)
+     return statusOption ? statusOption.label : status
+   }
+   ```
+
+4. **Обновлены колонки таблицы**:
+   ```javascript
+   const columns = [
+     { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' },
+     { name: 'type', label: 'Тип', field: row => getOrganizationTypeLabel(row.type), sortable: true, align: 'left' },
+     // ... остальные колонки
+   ]
+   ```
+
+### Созданные улучшения
+- Правильное отображение всех опций в выпадающих списках
+- Человекочитаемые лейблы в таблице вместо кодов
+- Отладочное логирование для диагностики проблем
+- Шаблон решения для применения к другим страницам
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+**Контекст**: Тестирование CRUD операций страницы "Организации"
+**Симптомы**: 
+- В комбобоксах страницы организаций при фильтрации по типу отображалась только активная организация
+- При добавлении и редактировании организации в списках комбобоксов показывалась только одна опция
+- Проблема аналогична ранее решенной P250825-02 на странице "Государства"
+
+**Действия по решению**:
+1. Изучение решения проблемы P250825-02 из документации
+2. Применение аналогичного решения к странице организаций
+3. Тестирование исправлений
+
+**Результат**: Проблема успешно решена, все комбобоксы отображают все доступные опции корректно
+**Статус**: Решена ✅
+
+---
+
+## [P250828-11] - Несоответствие полей в GraphQL мутации создания организации
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Высокий
+
+### Описание
+При попытке создания организации возникала ошибка GraphQL: "The variables input contains a field name 'description' that is not defined for input object type 'OrganizationalUnitInput'". Frontend отправлял поля, которые не поддерживались Backend GraphQL схемой.
+
+### Полезные ссылки
+- [GraphQL Introspection](https://graphql.org/learn/introspection/)
+- [Spring GraphQL Documentation](https://docs.spring.io/spring-graphql/docs/current/reference/html/)
+- [GraphQL Input Types](https://graphql.org/learn/schema/#input-types)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Анализ GraphQL схемы Backend через introspection
+2. Приведение полей input в соответствие с OrganizationalUnitInput
+3. Удаление неподдерживаемого поля description
+4. Добавление обязательных полей isFictional, historicalPeriodId
+5. Исправление названий полей (locationId → location, parentOrganizationId → parentUnitId)
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Анализ GraphQL схемы**:
+   ```bash
+   curl -X POST http://localhost:8082/api/graphql \
+     -H "Content-Type: application/json" \
+     -d '{"query": "query IntrospectionQuery { __schema { types { name inputFields { name type { name } } } } }"}' \
+     | jq '.data.__schema.types[] | select(.name == "OrganizationalUnitInput")'
+   ```
+
+2. **Исправленный input для мутации**:
+   ```javascript
+   const input: any = {
+     name: form.name.trim(),
+     type: form.type,
+     foundedDate: form.foundedDate,
+     dissolvedDate: form.dissolvedDate || null,
+     isFictional: form.isFictional,
+     historicalPeriodId: '1', // По умолчанию раннее средневековье
+     parentUnitId: form.parentOrganizationId || null
+   }
+   ```
+
+3. **Обновленная форма**:
+   ```html
+   <!-- Убрано поле description, добавлен чекбокс isFictional -->
+   <q-checkbox
+     v-model="form.isFictional"
+     label="Вымышленная организация"
+     class="col-12"
+   />
+   ```
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+Ошибка GraphQL при создании организации из-за неподдерживаемого поля description
+
+---
+
+## [P250828-12] - Несоответствие enum значений OrganizationType между Frontend и Backend
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Высокий
+
+### Описание
+При попытке создания организации с типом "Некоммерческая" возникала ошибка GraphQL: "Invalid input for enum 'OrganizationType'. No value found for name 'NON_PROFIT'". Frontend использовал enum значения, которые не поддерживались Backend GraphQL схемой.
+
+### Полезные ссылки
+- [GraphQL Enum Types](https://graphql.org/learn/schema/#enumeration-types)
+- [GraphQL Introspection](https://graphql.org/learn/introspection/)
+- [Vue 3 Form Handling](https://vuejs.org/guide/essentials/forms.html)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Анализ enum OrganizationType через GraphQL introspection
+2. Приведение enum значений в соответствие с Backend схемой
+3. Удаление неподдерживаемых типов (NON_PROFIT, EDUCATIONAL, MILITARY, RELIGIOUS, OTHER)
+4. Обновление форм и фильтров
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Анализ enum через introspection**:
+   ```bash
+   curl -X POST http://localhost:8082/api/graphql \
+     -H "Content-Type: application/json" \
+     -d '{"query": "query IntrospectionQuery { __schema { types { name enumValues { name } } } }"}' \
+     | jq '.data.__schema.types[] | select(.name == "OrganizationType")'
+   ```
+
+2. **Исправленный массив organizationTypes**:
+   ```javascript
+   const organizationTypes = computed(() => [
+     { label: 'Империя', value: 'EMPIRE' },
+     { label: 'Государство', value: 'STATE' },
+     { label: 'Коммерческая', value: 'COMMERCIAL' },
+     { label: 'Правительственная', value: 'GOVERNMENT' }
+   ])
+   ```
+
+3. **Поддерживаемые Backend enum значения**:
+   - `STATE` - Государство
+   - `GOVERNMENT` - Правительственная  
+   - `COMMERCIAL` - Коммерческая
+   - `EMPIRE` - Империя
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+Ошибка GraphQL enum при создании организации с типом NON_PROFIT
+
+---
+
+## [P250828-13] - Неработающий поиск и фильтрация на странице организаций
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Средний
+
+### Описание
+Поиск и фильтрация на странице организаций не работали. Пользователи не могли искать организации по названию или фильтровать по типу. Проблема была в отсутствии клиентской фильтрации данных в computed свойстве.
+
+### Полезные ссылки
+- [Vue 3 Computed Properties](https://vuejs.org/guide/essentials/computed.html)
+- [Quasar q-table Documentation](https://quasar.dev/vue-components/table)
+- [Решение проблемы поиска на странице государств](./problems.md#p250825-02---проблема-отображения-опций-в-q-select-компоненте)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Анализ реализации поиска на странице государств
+2. Применение паттерна клиентской фильтрации к странице организаций
+3. Добавление фильтрации по названию, типу и статусу
+4. Тестирование всех сценариев поиска
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Добавлена клиентская фильтрация**:
+   ```javascript
+   const organizations = computed(() => {
+     const data = result.value?.organizationalUnits || []
+     
+     // Фильтрация по поиску
+     let filtered = data
+     if (searchQuery.value) {
+       filtered = filtered.filter(org => 
+         org.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+         org.type.toLowerCase().includes(searchQuery.value.toLowerCase())
+       )
+     }
+     
+     // Фильтрация по типу
+     if (selectedType.value) {
+       filtered = filtered.filter(org => org.type === selectedType.value)
+     }
+     
+     return filtered
+   })
+   ```
+
+2. **Реализован поиск по названию** - регистронезависимый поиск
+3. **Реализован поиск по типу** - поиск по enum значению
+4. **Реализована фильтрация по типу** - точное совпадение
+5. **Добавлена фильтрация по статусу** - с проверкой наличия поля
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+Поиск и фильтры не работали из-за отсутствия клиентской фильтрации в computed свойстве
+
+---
+
+## [P250828-14] - Отсутствие поля "Статус" в таблице и формах организаций
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Средний
+
+### Описание
+На странице организаций присутствовал фильтр по статусу, но поле "Статус" отсутствовало в таблице и формах создания/редактирования. Это создавало несоответствие в интерфейсе и затрудняло понимание пользователем текущего состояния организаций.
+
+### Полезные ссылки
+- [Vue 3 Computed Properties](https://vuejs.org/guide/essentials/computed.html)
+- [Quasar q-table Documentation](https://quasar.dev/vue-components/table)
+- [JavaScript Date Handling](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Анализ GraphQL API для определения доступных полей
+2. Создание логики определения статуса на основе поля dissolvedDate
+3. Добавление колонки "Статус" в таблицу организаций
+4. Добавление поля "Статус" в формы создания/редактирования
+5. Исправление фильтрации по статусу
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Логика определения статуса**:
+   ```javascript
+   const getOrganizationStatus = (org: any): string => {
+     const dissolvedDate = org.dissolvedDate || org.dissolvedDate
+     
+     if (dissolvedDate) {
+       const dissolvedDateObj = new Date(dissolvedDate)
+       const currentDate = new Date()
+       
+       if (dissolvedDateObj < currentDate) {
+         return 'Ликвидированная'
+       } else {
+         return 'Неактивная'
+       }
+     }
+     return 'Активная'
+   }
+   ```
+
+2. **Добавлена колонка в таблицу**:
+   ```javascript
+   { name: 'status', label: 'Статус', field: row => getOrganizationStatus(row), sortable: true, align: 'center' }
+   ```
+
+3. **Добавлено поле в форму**:
+   ```html
+   <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6">
+     <div class="q-field__control">
+       <div class="q-field__control-container">
+         <div class="q-field__native q-placeholder" style="padding: 8px; color: #666;">
+           {{ getOrganizationStatus(form) }}
+         </div>
+       </div>
+     </div>
+     <div class="q-field__label">Статус</div>
+   </div>
+   ```
+
+4. **Исправлена фильтрация**:
+   ```javascript
+   if (selectedStatus.value) {
+     filtered = filtered.filter(org => {
+       const orgStatus = getOrganizationStatus(org)
+       return orgStatus === getStatusLabel(selectedStatus.value!)
+     })
+   }
+   ```
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+Фильтр по статусу присутствовал, но поле "Статус" отсутствовало в таблице и формах
+
+---
+
+## [P250828-15] - Невозможность изменения статуса в формах создания и редактирования организаций
+
+**Статус**: Решена
+**Дата выявления**: 2025-08-28
+**Дата решения**: 2025-08-28
+**Приоритет**: Средний
+
+### Описание
+В формах создания и редактирования организаций поле "Статус" отображалось как статичный текст, а не как редактируемый комбобокс. Пользователи не могли изменять статус организации, что ограничивало функциональность интерфейса.
+
+### Полезные ссылки
+- [Vue 3 Reactive Forms](https://vuejs.org/guide/essentials/forms.html)
+- [Quasar q-select Documentation](https://quasar.dev/vue-components/select)
+- [JavaScript Date Manipulation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+### История решения
+#### Чат 1: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Анализ текущего отображения поля "Статус" в формах
+2. Создание опций статусов для форм (formStatusOptions)
+3. Добавление поля status в реактивное состояние формы
+4. Создание функций синхронизации между статусом и датой ликвидации
+5. Замена статичного текста на комбобокс в формах
+6. Добавление поля даты ликвидации для неактивных статусов
+
+**Результат**: Проблема решена
+**Статус**: Решена
+
+### Техническое решение
+1. **Опции статусов для форм**:
+   ```javascript
+   const formStatusOptions = computed(() => [
+     { label: 'Активная', value: 'active' },
+     { label: 'Неактивная', value: 'inactive' },
+     { label: 'Ликвидированная', value: 'dissolved' }
+   ])
+   ```
+
+2. **Поле статуса в форме**:
+   ```javascript
+   const form = reactive({
+     // ... другие поля
+     status: 'active' // Добавляем поле статуса
+   })
+   ```
+
+3. **Функции синхронизации**:
+   ```javascript
+   // Обновление статуса при изменении даты ликвидации
+   const updateStatusFromDissolvedDate = () => {
+     if (!form.dissolvedDate) {
+       form.status = 'active'
+     } else {
+       const dissolvedDate = new Date(form.dissolvedDate)
+       const currentDate = new Date()
+       
+       if (dissolvedDate < currentDate) {
+         form.status = 'dissolved'
+       } else {
+         form.status = 'inactive'
+       }
+     }
+   }
+
+   // Обновление даты ликвидации при изменении статуса
+   const updateDissolvedDateFromStatus = () => {
+     switch (form.status) {
+       case 'active':
+         form.dissolvedDate = ''
+         break
+       case 'inactive':
+         const futureDate = new Date()
+         futureDate.setFullYear(futureDate.getFullYear() + 1)
+         form.dissolvedDate = futureDate.toISOString().split('T')[0]
+         break
+       case 'dissolved':
+         const pastDate = new Date()
+         pastDate.setFullYear(pastDate.getFullYear() - 1)
+         form.dissolvedDate = pastDate.toISOString().split('T')[0]
+         break
+     }
+   }
+   ```
+
+4. **Комбобокс статуса в форме**:
+   ```html
+   <select v-model="form.status" class="q-field__native q-placeholder" @change="updateDissolvedDateFromStatus">
+     <option v-for="option in formStatusOptions" :key="option.value" :value="option.value">
+       {{ option.label }}
+     </option>
+   </select>
+   ```
+
+5. **Поле даты ликвидации**:
+   ```html
+   <q-input
+     v-if="form.status !== 'active'"
+     v-model="form.dissolvedDate"
+     label="Дата ликвидации"
+     type="date"
+     outlined
+     dense
+     class="col-12 col-sm-6"
+     @update:model-value="updateStatusFromDissolvedDate"
+   />
+   ```
+
+### Инциденты
+#### Инцидент 1 (2025-08-28)
+Поле "Статус" отображалось как статичный текст, а не как редактируемый комбобокс
+
+---
+
 ## [P250828-01] - Общие проблемы CRUD операций на страницах сущностей
 
 **Статус**: Актуальна
@@ -472,6 +1026,30 @@ const confirmed = await new Promise((resolve) => {
 #### P250825-02: Проблема отображения опций в q-select компоненте
 - **Симптом**: q-select отображал только одну опцию вместо всех
 - **Решение**: Использование computed для stateTypes, правильная настройка параметров
+
+#### P250828-10: Проблема отображения опций в q-select компоненте страницы организаций
+- **Симптом**: q-select отображал только одну опцию вместо всех в фильтрах и формах
+- **Решение**: Замена q-select на HTML select, использование computed для organizationTypes
+
+#### P250828-11: Несоответствие полей в GraphQL мутации создания организации
+- **Симптом**: Ошибка GraphQL из-за неподдерживаемого поля description
+- **Решение**: Приведение полей input в соответствие с OrganizationalUnitInput
+
+#### P250828-12: Несоответствие enum значений OrganizationType
+- **Симптом**: Ошибка GraphQL enum при использовании неподдерживаемых типов
+- **Решение**: Приведение enum значений в соответствие с Backend схемой
+
+#### P250828-13: Неработающий поиск и фильтрация на странице организаций
+- **Симптом**: Поиск и фильтры не работали из-за отсутствия клиентской фильтрации
+- **Решение**: Добавление клиентской фильтрации в computed свойство organizations
+
+#### P250828-14: Отсутствие поля "Статус" в таблице и формах организаций
+- **Симптом**: Фильтр по статусу присутствовал, но поле "Статус" отсутствовало в интерфейсе
+- **Решение**: Создание логики определения статуса на основе поля dissolvedDate
+
+#### P250828-15: Невозможность изменения статуса в формах создания и редактирования организаций
+- **Симптом**: Поле "Статус" отображалось как статичный текст, а не как редактируемый комбобокс
+- **Решение**: Добавление комбобокса для выбора статуса с автоматической синхронизацией даты ликвидации
 
 #### P250825-03: Неправильная кнопка при редактировании
 - **Симптом**: При редактировании показывалась кнопка "СОЗДАТЬ" вместо "СОХРАНИТЬ"
@@ -571,9 +1149,116 @@ const saveItem = async () => {
 **Результат**: Создан чек-лист и технические решения для предотвращения повторения
 **Статус**: Актуальна (требует проверки на других страницах)
 
+#### Чат 2: "Тестирование CRUD операций страницы 'Организации'"
+##### Попытка 1 (2025-08-28)
+**Действия**: 
+1. Комплексное тестирование CRUD операций страницы организаций
+2. Выявление и исправление проблемы P250828-10 с q-select компонентом
+3. Применение решения проблемы P250825-02 к странице организаций
+4. Создание инцидента и документации решения
+
+**Результат**: Проблема P250828-10 решена, подтверждена эффективность системного подхода
+**Статус**: Актуальна (требует проверки на остальных страницах)
+
 ### Инциденты
 #### Инцидент 1 (2025-08-25)
 Выявлены 4 критические проблемы на странице "Государства", требующие системного решения
+
+#### Инцидент 2 (2025-08-28)
+**Контекст**: Тестирование CRUD операций страницы "Организации"
+**Симптомы**: 
+- Повторение проблемы P250825-02 на странице организаций
+- Неправильное отображение опций в q-select компонентах
+- Проблемы с фильтрами и формами создания/редактирования
+
+**Действия**: 
+1. Применение решения проблемы P250825-02 к странице организаций
+2. Создание проблемы P250828-10 для систематизации
+3. Документирование решения и создание инцидента
+
+**Результат**: Подтверждена эффективность системного подхода к решению CRUD проблем
+**Статус**: Решена ✅
+
+#### Инцидент 3 (2025-08-28)
+**Контекст**: Тестирование создания организаций
+**Симптомы**: 
+- Ошибка GraphQL: "The variables input contains a field name 'description' that is not defined for input object type 'OrganizationalUnitInput'"
+- Несоответствие полей между Frontend и Backend
+
+**Действия**: 
+1. Анализ GraphQL схемы Backend через introspection
+2. Приведение полей input в соответствие с OrganizationalUnitInput
+3. Удаление неподдерживаемого поля description
+4. Добавление обязательных полей isFictional, historicalPeriodId
+
+**Результат**: Проблема P250828-11 решена, создание организаций работает
+**Статус**: Решена ✅
+
+#### Инцидент 4 (2025-08-28)
+**Контекст**: Тестирование создания организаций с разными типами
+**Симптомы**: 
+- Ошибка GraphQL: "Invalid input for enum 'OrganizationType'. No value found for name 'NON_PROFIT'"
+- Несоответствие enum значений между Frontend и Backend
+
+**Действия**: 
+1. Анализ enum OrganizationType через GraphQL introspection
+2. Приведение enum значений в соответствие с Backend схемой
+3. Удаление неподдерживаемых типов (NON_PROFIT, EDUCATIONAL, MILITARY, RELIGIOUS, OTHER)
+4. Обновление форм и фильтров
+
+**Результат**: Проблема P250828-12 решена, все типы организаций работают
+**Статус**: Решена ✅
+
+#### Инцидент 5 (2025-08-28)
+**Контекст**: Тестирование поиска и фильтрации на странице организаций
+**Симптомы**: 
+- Поиск по названию не работал
+- Фильтры по типу организации не работали
+- Отсутствие клиентской фильтрации данных
+
+**Действия**: 
+1. Анализ реализации поиска на странице государств
+2. Применение паттерна клиентской фильтрации к странице организаций
+3. Добавление фильтрации по названию, типу и статусу
+4. Тестирование всех сценариев поиска
+
+**Результат**: Проблема P250828-13 решена, поиск и фильтрация работают корректно
+**Статус**: Решена ✅
+
+#### Инцидент 6 (2025-08-28)
+**Контекст**: Тестирование отображения статуса организаций
+**Симптомы**: 
+- Фильтр по статусу присутствовал, но поле "Статус" отсутствовало в таблице
+- Поле "Статус" отсутствовало в формах создания/редактирования
+- Несоответствие в интерфейсе
+
+**Действия**: 
+1. Анализ GraphQL API для определения доступных полей
+2. Создание логики определения статуса на основе поля dissolvedDate
+3. Добавление колонки "Статус" в таблицу организаций
+4. Добавление поля "Статус" в формы
+5. Исправление фильтрации по статусу
+
+**Результат**: Проблема P250828-14 решена, поле "Статус" добавлено во все места интерфейса
+**Статус**: Решена ✅
+
+#### Инцидент 7 (2025-08-28)
+**Контекст**: Тестирование редактирования статуса организаций
+**Симптомы**: 
+- Поле "Статус" отображалось как статичный текст в формах
+- Невозможность изменения статуса организации
+- Ограниченная функциональность интерфейса
+
+**Действия**: 
+1. Анализ текущего отображения поля "Статус" в формах
+2. Создание опций статусов для форм (formStatusOptions)
+3. Добавление поля status в реактивное состояние формы
+4. Создание функций синхронизации между статусом и датой ликвидации
+5. Замена статичного текста на комбобокс в формах
+6. Добавление поля даты ликвидации для неактивных статусов
+
+**Результат**: Проблема P250828-15 решена, пользователи могут изменять статус через комбобокс
+**Статус**: Решена ✅
 
 ---
 

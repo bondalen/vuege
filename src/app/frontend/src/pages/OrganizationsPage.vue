@@ -33,25 +33,44 @@
             </template>
           </q-input>
           
-          <q-select
-            v-model="selectedType"
-            :options="organizationTypes"
-            label="Тип организации"
-            outlined
-            dense
-            class="col-12 col-sm-6 col-md-4"
-            clearable
-          />
+          <!-- Временное решение: обычный HTML select -->
+          <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6 col-md-4">
+            <div class="q-field__control">
+              <div class="q-field__control-container">
+                <select
+                  v-model="selectedType"
+                  class="q-field__native q-placeholder"
+                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                >
+                  <option value="">Все типы</option>
+                  <option value="EMPIRE">Империя</option>
+                  <option value="STATE">Государство</option>
+                  <option value="COMMERCIAL">Коммерческая</option>
+                  <option value="GOVERNMENT">Правительственная</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-field__label">Тип организации</div>
+          </div>
           
-          <q-select
-            v-model="selectedStatus"
-            :options="statusOptions"
-            label="Статус"
-            outlined
-            dense
-            class="col-12 col-sm-6 col-md-4"
-            clearable
-          />
+          <!-- Временное решение: обычный HTML select -->
+          <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6 col-md-4">
+            <div class="q-field__control">
+              <div class="q-field__control-container">
+                <select
+                  v-model="selectedStatus"
+                  class="q-field__native q-placeholder"
+                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                >
+                  <option value="">Все статусы</option>
+                  <option value="active">Активная</option>
+                  <option value="inactive">Неактивная</option>
+                  <option value="dissolved">Ликвидированная</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-field__label">Статус</div>
+          </div>
         </div>
       </q-card-section>
     </q-card>
@@ -108,15 +127,26 @@
               :rules="[val => !!val || 'Название обязательно']"
             />
             
-            <q-select
-              v-model="form.type"
-              :options="organizationTypes"
-              label="Тип организации *"
-              outlined
-              dense
-              class="col-12 col-sm-6"
-              :rules="[val => !!val || 'Тип обязателен']"
-            />
+            <!-- Временное решение: обычный HTML select -->
+            <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6">
+              <div class="q-field__control">
+                <div class="q-field__control-container">
+                  <select
+                    v-model="form.type"
+                    class="q-field__native q-placeholder"
+                    style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                    required
+                  >
+                    <option value="">Выберите тип организации</option>
+                    <option value="EMPIRE">Империя</option>
+                    <option value="STATE">Государство</option>
+                    <option value="COMMERCIAL">Коммерческая</option>
+                    <option value="GOVERNMENT">Правительственная</option>
+                  </select>
+                </div>
+              </div>
+              <div class="q-field__label">Тип организации *</div>
+            </div>
             
             <q-input
               v-model="form.foundedDate"
@@ -152,15 +182,37 @@
               class="col-12 col-sm-6"
             />
             
+            <q-checkbox
+              v-model="form.isFictional"
+              label="Вымышленная организация"
+              class="col-12 col-sm-6"
+            />
+            
+            <!-- Поле даты ликвидации (показывается только для неактивных статусов) -->
             <q-input
-              v-model="form.description"
-              label="Описание"
-              type="textarea"
+              v-if="form.status !== 'active'"
+              v-model="form.dissolvedDate"
+              label="Дата ликвидации"
+              type="date"
               outlined
               dense
-              class="col-12"
-              rows="3"
+              class="col-12 col-sm-6"
+              @update:model-value="updateStatusFromDissolvedDate"
             />
+            
+            <!-- Поле статуса (редактируемое) -->
+            <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6">
+              <div class="q-field__control">
+                <div class="q-field__control-container">
+                  <select v-model="form.status" class="q-field__native q-placeholder" style="padding: 8px; border: none; background: transparent; width: 100%;" @change="updateDissolvedDateFromStatus">
+                    <option v-for="option in formStatusOptions" :key="option.value" :value="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="q-field__label">Статус</div>
+            </div>
           </div>
         </q-card-section>
 
@@ -197,33 +249,46 @@ const editingOrganization = ref<Organization | null>(null)
 // Форма
 const form = reactive({
   name: '',
-  type: OrganizationType.COMMERCIAL,
-  description: '',
-  foundedDate: '',
+  type: 'STATE', // Изменено на поддерживаемое значение
+  foundedDate: new Date().toISOString().split('T')[0], // Устанавливаем сегодняшнюю дату по умолчанию
   dissolvedDate: '',
   locationId: '',
-  parentOrganizationId: ''
+  parentOrganizationId: '',
+  isFictional: false,
+  status: 'active' // Добавляем поле статуса
 })
 
-// Опции
-const organizationTypes = [
-  { label: 'Правительственная', value: OrganizationType.GOVERNMENT },
-  { label: 'Коммерческая', value: OrganizationType.COMMERCIAL },
-  { label: 'Некоммерческая', value: OrganizationType.NON_PROFIT },
-  { label: 'Образовательная', value: OrganizationType.EDUCATIONAL },
-  { label: 'Военная', value: OrganizationType.MILITARY },
-  { label: 'Религиозная', value: OrganizationType.RELIGIOUS },
-  { label: 'Другая', value: OrganizationType.OTHER }
-]
+// Опции - используем computed для правильной реактивности
+// Только значения, поддерживаемые Backend enum OrganizationType
+const organizationTypes = computed(() => [
+  { label: 'Империя', value: 'EMPIRE' },
+  { label: 'Государство', value: 'STATE' },
+  { label: 'Коммерческая', value: 'COMMERCIAL' },
+  { label: 'Правительственная', value: 'GOVERNMENT' }
+])
 
-const statusOptions = [
+const statusOptions = computed(() => [
   { label: 'Активная', value: 'active' },
   { label: 'Неактивная', value: 'inactive' },
   { label: 'Ликвидированная', value: 'dissolved' }
-]
+])
+
+// Опции статусов для форм (без "Все статусы")
+const formStatusOptions = computed(() => [
+  { label: 'Активная', value: 'active' },
+  { label: 'Неактивная', value: 'inactive' },
+  { label: 'Ликвидированная', value: 'dissolved' }
+])
+
+// Отладочное логирование
+console.log('organizationTypes array:', organizationTypes.value)
+console.log('organizationTypes length:', organizationTypes.value.length)
+organizationTypes.value.forEach((type, index) => {
+  console.log(`organizationTypes[${index}]:`, type)
+})
 
 // Вычисляемые параметры поиска
-const searchParams = computed<SearchInput>(() => ({
+const searchParams = computed(() => ({
   query: searchQuery.value,
   filters: {
     type: selectedType.value,
@@ -238,9 +303,14 @@ const searchParams = computed<SearchInput>(() => ({
 // GraphQL запросы
 const { result, loading, error, refetch } = useQuery(
   GET_ORGANIZATIONS,
-  { search: searchParams },
+  {},
   { fetchPolicy: 'cache-and-network' }
 )
+
+// Отладочное логирование
+console.log('OrganizationsPage - result:', result.value)
+console.log('OrganizationsPage - loading:', loading.value)
+console.log('OrganizationsPage - error:', error.value)
 
 // Мутации
 const { mutate: createOrganization, loading: creating } = useMutation(CREATE_ORGANIZATION)
@@ -248,12 +318,39 @@ const { mutate: updateOrganization, loading: updating } = useMutation(UPDATE_ORG
 const { mutate: deleteOrganization, loading: deleting } = useMutation(DELETE_ORGANIZATION)
 
 // Вычисляемые данные
-const organizations = computed(() => result.value?.organizations || [])
+const organizations = computed(() => {
+  const data = result.value?.organizationalUnits || []
+  
+  // Фильтрация по поиску
+  let filtered = data
+  if (searchQuery.value) {
+    filtered = filtered.filter(org => 
+      org.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      org.type.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  }
+  
+  // Фильтрация по типу
+  if (selectedType.value) {
+    filtered = filtered.filter(org => org.type === selectedType.value)
+  }
+  
+  // Фильтрация по статусу
+  if (selectedStatus.value) {
+    filtered = filtered.filter(org => {
+      const orgStatus = getOrganizationStatus(org)
+      return orgStatus === getStatusLabel(selectedStatus.value!)
+    })
+  }
+  
+  return filtered
+})
 
 // Колонки таблицы
 const columns = [
   { name: 'name', label: 'Название', field: 'name', sortable: true, align: 'left' },
-  { name: 'type', label: 'Тип', field: 'type', sortable: true, align: 'left' },
+  { name: 'type', label: 'Тип', field: row => getOrganizationTypeLabel(row.type), sortable: true, align: 'left' },
+  { name: 'status', label: 'Статус', field: row => getOrganizationStatus(row), sortable: true, align: 'center' },
   { name: 'foundedDate', label: 'Дата основания', field: 'foundedDate', sortable: true, align: 'center' },
   { name: 'location', label: 'Местоположение', field: row => row.location?.name || '-', sortable: false, align: 'left' },
   { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
@@ -262,24 +359,44 @@ const columns = [
 // Методы
 const resetForm = () => {
   form.name = ''
-  form.type = OrganizationType.COMMERCIAL
-  form.description = ''
-  form.foundedDate = ''
+  form.type = 'STATE' // Изменено на поддерживаемое значение
+  form.foundedDate = new Date().toISOString().split('T')[0] // Устанавливаем сегодняшнюю дату по умолчанию
   form.dissolvedDate = ''
   form.locationId = ''
   form.parentOrganizationId = ''
+  form.isFictional = false
+  form.status = 'active'
   editingOrganization.value = null
 }
 
 const editOrganization = (org: Organization) => {
+  console.log('editOrganization - incoming org:', org)
+  console.log('editOrganization - organizationTypes:', organizationTypes.value)
+  
+  // Сначала сбрасываем форму
+  resetForm()
+  
+  // Затем устанавливаем режим редактирования
   editingOrganization.value = org
+  
+  // Заполняем форму данными
   form.name = org.name
   form.type = org.type
-  form.description = org.description || ''
-  form.foundedDate = org.foundedDate || ''
+  form.foundedDate = org.foundedDate || new Date().toISOString().split('T')[0]
   form.dissolvedDate = org.dissolvedDate || ''
   form.locationId = org.location?.id || ''
   form.parentOrganizationId = org.parentOrganization?.id || ''
+  form.isFictional = org.isFictional || false
+  
+  // Устанавливаем статус на основе даты ликвидации
+  updateStatusFromDissolvedDate()
+  
+  console.log('editOrganization - form after setting:', form)
+  console.log('editOrganization - form.type:', form.type)
+  console.log('editOrganization - editingOrganization:', editingOrganization.value)
+  console.log('editOrganization - organizationTypes:', organizationTypes.value)
+  console.log('editOrganization - matching option:', organizationTypes.value.find(t => t.value === form.type))
+  
   showCreateDialog.value = true
 }
 
@@ -311,14 +428,39 @@ const handleDeleteOrganization = async (org: Organization) => {
 
 const saveOrganization = async () => {
   try {
-    const input = {
-      name: form.name,
+    // Проверяем обязательные поля
+    if (!form.name.trim()) {
+      $q.notify({
+        type: 'negative',
+        message: 'Название обязательно для заполнения'
+      })
+      return
+    }
+    
+    if (!form.foundedDate) {
+      $q.notify({
+        type: 'negative',
+        message: 'Дата основания обязательна для заполнения'
+      })
+      return
+    }
+
+        const input: any = {
+      name: form.name.trim(),
       type: form.type,
-      description: form.description || null,
-      foundedDate: form.foundedDate || null,
+      foundedDate: form.foundedDate,
       dissolvedDate: form.dissolvedDate || null,
-      locationId: form.locationId || null,
-      parentOrganizationId: form.parentOrganizationId || null
+      isFictional: form.isFictional,
+      historicalPeriodId: '1', // По умолчанию раннее средневековье
+      parentUnitId: form.parentOrganizationId || null
+    }
+
+    // Добавляем location только если указан locationId
+    if (form.locationId) {
+      input.location = {
+        latitude: 0, // Временные координаты
+        longitude: 0
+      }
     }
 
     if (editingOrganization.value) {
@@ -353,6 +495,71 @@ const saveOrganization = async () => {
 const openCreateDialog = () => {
   resetForm()
   showCreateDialog.value = true
+}
+
+// Вспомогательные методы
+const getOrganizationTypeLabel = (type: string): string => {
+  const typeOption = organizationTypes.value.find(t => t.value === type)
+  return typeOption ? typeOption.label : type
+}
+
+const getStatusLabel = (status: string): string => {
+  const statusOption = statusOptions.value.find(s => s.value === status)
+  return statusOption ? statusOption.label : status
+}
+
+const getOrganizationStatus = (org: any): string => {
+  // Проверяем, является ли org объектом организации или формой
+  const dissolvedDate = org.dissolvedDate || org.dissolvedDate
+  
+  if (dissolvedDate) {
+    const dissolvedDateObj = new Date(dissolvedDate)
+    const currentDate = new Date()
+    
+    if (dissolvedDateObj < currentDate) {
+      return 'Ликвидированная'
+    } else {
+      return 'Неактивная'
+    }
+  }
+  return 'Активная'
+}
+
+// Функция для синхронизации статуса с датой ликвидации
+const updateStatusFromDissolvedDate = () => {
+  if (!form.dissolvedDate) {
+    form.status = 'active'
+  } else {
+    const dissolvedDate = new Date(form.dissolvedDate)
+    const currentDate = new Date()
+    
+    if (dissolvedDate < currentDate) {
+      form.status = 'dissolved'
+    } else {
+      form.status = 'inactive'
+    }
+  }
+}
+
+// Функция для обновления даты ликвидации при изменении статуса
+const updateDissolvedDateFromStatus = () => {
+  switch (form.status) {
+    case 'active':
+      form.dissolvedDate = ''
+      break
+    case 'inactive':
+      // Устанавливаем дату в будущем (через год)
+      const futureDate = new Date()
+      futureDate.setFullYear(futureDate.getFullYear() + 1)
+      form.dissolvedDate = futureDate.toISOString().split('T')[0]
+      break
+    case 'dissolved':
+      // Устанавливаем дату в прошлом (год назад)
+      const pastDate = new Date()
+      pastDate.setFullYear(pastDate.getFullYear() - 1)
+      form.dissolvedDate = pastDate.toISOString().split('T')[0]
+      break
+  }
 }
 
 // Обработка ошибок
