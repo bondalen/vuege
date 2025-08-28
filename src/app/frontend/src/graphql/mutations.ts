@@ -27,10 +27,7 @@ export const UPDATE_ORGANIZATION = gql`
 
 export const DELETE_ORGANIZATION = gql`
   mutation DeleteOrganizationalUnit($id: ID!) {
-    deleteOrganizationalUnit(id: $id) {
-      id
-      name
-    }
+    deleteOrganizationalUnit(id: $id)
   }
 `
 

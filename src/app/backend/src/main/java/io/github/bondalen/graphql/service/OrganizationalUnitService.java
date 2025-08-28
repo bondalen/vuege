@@ -4,6 +4,8 @@ import io.github.bondalen.entity.OrganizationalUnit;
 import io.github.bondalen.entity.GeoPoint;
 import io.github.bondalen.graphql.input.OrganizationalUnitInput;
 import io.github.bondalen.repository.OrganizationalUnitRepository;
+import io.github.bondalen.repository.PositionRepository;
+import io.github.bondalen.repository.PersonPositionRepository;
 import io.github.bondalen.graphql.service.GeoPointService; // Required for GeoPoint operations
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,8 @@ import java.util.List;
 public class OrganizationalUnitService {
 
     private final OrganizationalUnitRepository organizationalUnitRepository;
+    private final PositionRepository positionRepository;
+    private final PersonPositionRepository personPositionRepository;
     private final GeoPointService geoPointService;
 
     // Явное использование GeoPointService для IDE
@@ -164,15 +168,35 @@ public class OrganizationalUnitService {
     }
 
     /**
-     * Удалить организационную единицу
+     * Удалить организационную единицу с каскадным удалением связанных записей
      */
     public Mono<Boolean> delete(Long id) {
-        log.debug("Deleting organizational unit with id: {}", id);
+        log.debug("Deleting organizational unit with id: {} and related records", id);
         
         return organizationalUnitRepository.findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("Organizational unit not found with id: " + id)))
-                .flatMap(unit -> organizationalUnitRepository.deleteById(id))
-                .then(Mono.just(true));
+                .flatMap(unit -> {
+                    // Каскадное удаление связанных записей
+                    return deleteRelatedRecords(id)
+                            .then(organizationalUnitRepository.deleteById(id))
+                            .then(Mono.just(true));
+                });
+    }
+    
+    /**
+     * Удалить связанные записи перед удалением организации
+     */
+    private Mono<Void> deleteRelatedRecords(Long organizationId) {
+        log.debug("Deleting related records for organization id: {}", organizationId);
+        
+        return positionRepository.findByOrganizationId(organizationId)
+                .flatMap(position -> {
+                    log.debug("Deleting person positions for position id: {}", position.getId());
+                    return personPositionRepository.findByPositionId(position.getId())
+                            .flatMap(personPosition -> personPositionRepository.deleteById(personPosition.getId()))
+                            .then(positionRepository.deleteById(position.getId()));
+                })
+                .then();
     }
 
     /**

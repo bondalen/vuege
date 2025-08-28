@@ -166,6 +166,27 @@
             label="Вымышленное государство"
             class="q-mb-md"
           />
+          
+          <!-- Поле выбора исторического периода -->
+          <div class="q-field q-field--outlined q-field--dense q-mb-md">
+            <div class="q-field__control">
+              <div class="q-field__control-container">
+                <select
+                  v-model="form.historicalPeriodId"
+                  class="q-field__native q-placeholder"
+                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
+                  aria-label="Исторический период"
+                >
+                  <option value="1">Раннее Средневековье (476-1000)</option>
+                  <option value="2">Высокое Средневековье (1000-1300)</option>
+                  <option value="3">Позднее Средневековье (1300-1492)</option>
+                  <option value="4">Новое время (1492-1789)</option>
+                  <option value="5">Новейшее время (1789-2025)</option>
+                </select>
+              </div>
+            </div>
+            <div class="q-field__label">Исторический период</div>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -261,9 +282,10 @@ const selectedState = ref<Organization | null>(null)
 const form = reactive({
   name: '',
   type: 'GOVERNMENT',
-  foundedDate: '',
+  foundedDate: new Date().toISOString().split('T')[0], // Устанавливаем сегодняшнюю дату по умолчанию
   dissolvedDate: '',
-  isFictional: false
+  isFictional: false,
+  historicalPeriodId: '1' // Добавляем обязательное поле с значением по умолчанию
 })
 
 // Опции - используем computed
@@ -379,19 +401,22 @@ const columns = [
 const resetForm = () => {
   form.name = ''
   form.type = 'GOVERNMENT'
-  form.foundedDate = ''
+  form.foundedDate = new Date().toISOString().split('T')[0] // Устанавливаем сегодняшнюю дату по умолчанию
   form.dissolvedDate = ''
   form.isFictional = false
+  form.historicalPeriodId = '1' // Сбрасываем к значению по умолчанию
   editingState.value = null
 }
 
 const editState = (state: any) => {
   console.log('editState - incoming state:', state)
   console.log('editState - stateTypes:', stateTypes.value)
-  editingState.value = state
   
-  // Сбросим форму перед заполнением
+  // Сначала сбросим форму
   resetForm()
+  
+  // Затем установим режим редактирования
+  editingState.value = state
   
   // Заполним форму новыми значениями
   form.name = state.name
@@ -399,9 +424,23 @@ const editState = (state: any) => {
   form.foundedDate = state.foundedDate || ''
   form.dissolvedDate = state.dissolvedDate || ''
   form.isFictional = state.isFictional || false
+  // Определяем historicalPeriodId на основе даты основания
+  const foundedYear = parseInt(state.foundedDate?.substring(0, 4) || '1000');
+  if (foundedYear < 1000) {
+    form.historicalPeriodId = '1'; // Раннее Средневековье
+  } else if (foundedYear < 1300) {
+    form.historicalPeriodId = '2'; // Высокое Средневековье
+  } else if (foundedYear < 1492) {
+    form.historicalPeriodId = '3'; // Позднее Средневековье
+  } else if (foundedYear < 1789) {
+    form.historicalPeriodId = '4'; // Новое время
+  } else {
+    form.historicalPeriodId = '5'; // Новейшее время
+  }
   
   console.log('editState - form after setting:', form)
   console.log('editState - form.type:', form.type)
+  console.log('editState - editingState:', editingState.value)
   console.log('editState - stateTypes:', stateTypes.value)
   console.log('editState - matching option:', stateTypes.value.find(t => t.value === form.type))
   
@@ -414,24 +453,64 @@ const showMap = (state: Organization) => {
 }
 
 const handleDeleteState = async (state: Organization) => {
+  console.log('🔄 Начинаем процесс удаления для:', state.name)
+  
   try {
-    await $q.dialog({
-      title: 'Подтверждение удаления',
-      message: `Вы уверены, что хотите удалить организацию "${state.name}"?`,
-      cancel: true,
-      persistent: true
+    // Сначала показываем диалог подтверждения и ждем ответа
+    console.log('📋 Показываем диалог подтверждения...')
+    
+    // Используем Promise для принудительного ожидания ответа
+    const confirmed = await new Promise((resolve) => {
+      $q.dialog({
+        title: 'Подтверждение удаления',
+        message: `Вы уверены, что хотите удалить организацию "${state.name}"?`,
+        ok: {
+          label: 'Удалить',
+          color: 'negative'
+        },
+        cancel: {
+          label: 'Отмена',
+          color: 'primary'
+        },
+        persistent: true
+      }).onOk(() => {
+        console.log('✅ Пользователь нажал "Удалить"')
+        resolve(true)
+      }).onCancel(() => {
+        console.log('❌ Пользователь нажал "Отмена"')
+        resolve(false)
+      }).onDismiss(() => {
+        console.log('❌ Диалог закрыт без ответа')
+        resolve(false)
+      })
     })
 
-    await deleteOrganization({ id: state.id })
+    // Если пользователь нажал "Отмена", выходим из функции
+    if (!confirmed) {
+      console.log('❌ Удаление отменено пользователем')
+      return
+    }
+
+    // Если пользователь подтвердил, выполняем удаление
+    console.log('✅ Удаление подтверждено, выполняем GraphQL запрос...')
     
+    // Выполняем удаление через GraphQL напрямую
+    const result = await deleteOrganization({ id: state.id })
+    console.log('📊 Результат удаления:', result)
+    
+    // Показываем уведомление об успехе
     $q.notify({
       type: 'positive',
       message: 'Организация успешно удалена'
     })
     
+    // Обновляем данные
+    console.log('🔄 Обновляем данные таблицы...')
     await refetch()
+    console.log('✅ Данные обновлены')
+    
   } catch (error) {
-    console.error('Ошибка удаления организации:', error)
+    console.error('❌ Ошибка удаления организации:', error)
     $q.notify({
       type: 'negative',
       message: 'Ошибка при удалении организации'
@@ -441,12 +520,30 @@ const handleDeleteState = async (state: Organization) => {
 
 const saveState = async () => {
   try {
+    // Проверяем обязательные поля
+    if (!form.name.trim()) {
+      $q.notify({
+        type: 'negative',
+        message: 'Название обязательно для заполнения'
+      })
+      return
+    }
+    
+    if (!form.foundedDate) {
+      $q.notify({
+        type: 'negative',
+        message: 'Дата основания обязательна для заполнения'
+      })
+      return
+    }
+    
     const input = {
-      name: form.name,
+      name: form.name.trim(),
       type: form.type,
-      foundedDate: form.foundedDate || null,
+      foundedDate: form.foundedDate,
       dissolvedDate: form.dissolvedDate || null,
-      isFictional: form.isFictional
+      isFictional: form.isFictional,
+      historicalPeriodId: form.historicalPeriodId
     }
 
     if (editingState.value) {
