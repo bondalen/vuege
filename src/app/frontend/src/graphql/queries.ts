@@ -14,6 +14,39 @@ export const GET_ORGANIZATIONS = gql`
   }
 `
 
+// Запрос для получения должностей организации
+export const GET_ORGANIZATION_POSITIONS = gql`
+  query GetOrganizationPositions {
+    positions {
+      id
+      title
+      createdDate
+      abolishedDate
+      hierarchy
+      responsibilities
+      isActive
+      organization {
+        id
+        name
+      }
+    }
+  }
+`
+
+// Запрос для получения дочерних организаций
+export const GET_CHILD_ORGANIZATIONS = gql`
+  query GetChildOrganizations {
+    organizationalUnits {
+      id
+      name
+      type
+      foundedDate
+      dissolvedDate
+      isFictional
+    }
+  }
+`
+
 export const GET_ORGANIZATION = gql`
   query GetOrganization($id: ID!) {
     organization(id: $id) {

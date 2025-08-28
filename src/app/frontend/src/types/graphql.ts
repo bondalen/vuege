@@ -126,3 +126,45 @@ export interface GraphQLResponse<T> {
     path?: string[]
   }>
 }
+
+// Типы для связанных данных
+export interface OrganizationWithPositions {
+  id: string
+  name: string
+  positions: Position[]
+}
+
+export interface OrganizationWithChildren {
+  id: string
+  name: string
+  childUnits: Organization[]
+}
+
+export interface PersonPosition {
+  id: string
+  person: Person
+  position: Position
+  startDate: string
+  endDate?: string
+  appointmentType: string
+  source: string
+}
+
+export enum PositionHierarchy {
+  ENTRY = 'ENTRY',
+  JUNIOR = 'JUNIOR',
+  MIDDLE = 'MIDDLE',
+  SENIOR = 'SENIOR',
+  LEAD = 'LEAD',
+  MANAGER = 'MANAGER',
+  DIRECTOR = 'DIRECTOR',
+  EXECUTIVE = 'EXECUTIVE'
+}
+
+export enum AppointmentType {
+  FULL_TIME = 'FULL_TIME',
+  PART_TIME = 'PART_TIME',
+  CONTRACT = 'CONTRACT',
+  TEMPORARY = 'TEMPORARY',
+  INTERNSHIP = 'INTERNSHIP'
+}
