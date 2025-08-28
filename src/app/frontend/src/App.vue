@@ -34,12 +34,20 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   width: 100vw;
+  padding: 2px !important;
+  margin: 0 !important;
 }
 
 /* Уменьшение высоты верхнего фрейма */
 .q-header {
   height: 32px !important;
   min-height: 32px !important;
+}
+
+/* Исправление отступов для q-layout */
+.q-layout {
+  padding: 2px !important;
+  margin: 0 !important;
 }
 
 .q-toolbar {

@@ -1,7 +1,7 @@
 <template>
-  <q-page class="q-pa-none" style="padding: 5px !important;">
+  <q-page class="q-pa-sm-md q-pa-xs-sm organizations-page">
     <!-- Заголовки -->
-    <div class="text-center" style="margin-top: 5px; margin-bottom: 4px;">
+    <div class="text-center page-titles">
       <h4 class="text-h4 q-ma-xs">Организации</h4>
       <p class="text-body1 text-grey-7 q-ma-xs">
         Управление государственными и коммерческими организациями
@@ -9,7 +9,7 @@
     </div>
 
     <!-- Фильтры и кнопка добавления -->
-    <q-card class="q-mb-md">
+    <q-card class="q-mb-md q-ma-sm-md q-ma-xs-sm filter-card">
       <q-card-section class="q-pa-sm">
         <!-- Верхняя строка: поиск и кнопка добавления -->
         <div class="row q-gutter-md q-mb-sm" style="display: flex; align-items: center;">
@@ -80,7 +80,7 @@
     </q-card>
 
     <!-- Таблица организаций -->
-    <q-card>
+    <q-card class="table-card q-ma-sm-md q-ma-xs-sm">
       <q-table
         :rows="organizations"
         :columns="columns"
@@ -843,6 +843,8 @@ const getOrganizationStatus = (org: any): string => {
   return 'Активная'
 }
 
+
+
 // Вспомогательные методы для должностей
 const getHierarchyLabel = (hierarchy: string): string => {
   const hierarchyMap: Record<string, string> = {
@@ -928,17 +930,59 @@ if (error.value) {
   background-color: #bbdefb !important;
 }
 
-/* Простые отступы для карточек */
-.q-card {
-  margin-left: 5px !important;
-  margin-right: 5px !important;
+/* Стили для заголовков страницы */
+.page-titles {
+  margin-top: 5px !important;
+  margin-bottom: 4px !important;
 }
 
-/* Дополнительная настройка для мобильных устройств */
+
+
+/* Адаптивные стили для мобильных устройств */
 @media (max-width: 768px) {
-  .q-card {
+  .organizations-page {
+    padding: 2px !important;
+  }
+  
+  .filter-card,
+  .table-card {
     margin-left: 2px !important;
     margin-right: 2px !important;
+  }
+  
+  .page-titles {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+  }
+  
+  /* Уменьшение размера шрифта для мобильных */
+  .page-titles h4 {
+    font-size: 1.2rem !important;
+  }
+  
+  .page-titles p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Стили для очень маленьких экранов */
+@media (max-width: 480px) {
+  .organizations-page {
+    padding: 1px !important;
+  }
+  
+  .filter-card,
+  .table-card {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+  }
+  
+  .page-titles h4 {
+    font-size: 1rem !important;
+  }
+  
+  .page-titles p {
+    font-size: 0.8rem !important;
   }
 }
 </style>
