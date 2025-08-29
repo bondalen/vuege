@@ -31,6 +31,49 @@ export const DELETE_ORGANIZATION = gql`
   }
 `
 
+// Мутации для должностей
+export const CREATE_POSITION = gql`
+  mutation CreatePosition($input: PositionInput!) {
+    createPosition(input: $input) {
+      id
+      title
+      hierarchy
+      responsibilities
+      isActive
+      organization {
+        id
+        name
+      }
+      createdDate
+      abolishedDate
+    }
+  }
+`
+
+export const UPDATE_POSITION = gql`
+  mutation UpdatePosition($id: ID!, $input: PositionInput!) {
+    updatePosition(id: $id, input: $input) {
+      id
+      title
+      hierarchy
+      responsibilities
+      isActive
+      organization {
+        id
+        name
+      }
+      createdDate
+      abolishedDate
+    }
+  }
+`
+
+export const DELETE_POSITION = gql`
+  mutation DeletePosition($id: ID!) {
+    deletePosition(id: $id)
+  }
+`
+
 // Мутации для государств
 export const CREATE_STATE = gql`
   mutation CreateState($input: CreateStateInput!) {

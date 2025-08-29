@@ -144,40 +144,7 @@
             </q-td>
           </q-tr>
         </template>
-        <template v-slot:body-cell-details="props">
-          <q-td :props="props">
-            <q-btn
-              flat
-              round
-              color="info"
-              icon="info"
-              size="sm"
-              @click="selectOrganization(props.row)"
-              :class="{ 'bg-blue-1': selectedOrganization?.id === props.row.id }"
-            />
-          </q-td>
-        </template>
-        
-        <template v-slot:body-cell-actions="props">
-          <q-td :props="props">
-            <q-btn
-              flat
-              round
-              color="primary"
-              icon="edit"
-              size="sm"
-              @click="editOrganization(props.row)"
-            />
-            <q-btn
-              flat
-              round
-              color="negative"
-              icon="delete"
-              size="sm"
-              @click="handleDeleteOrganization(props.row)"
-            />
-          </q-td>
-        </template>
+
       </q-table>
     </q-card>
 
@@ -230,39 +197,73 @@
             <div class="q-mt-sm">Должности не найдены</div>
           </div>
           
-          <q-table
-            v-else
-            :rows="positions"
-            :columns="positionColumns"
-            row-key="id"
-            dense
-            :pagination="{ rowsPerPage: 10 }"
-            class="q-mt-md"
-          >
-            <template v-slot:body-cell-hierarchy="props">
-              <q-td :props="props">
-                <q-chip
-                  :color="getHierarchyColor(props.value)"
-                  text-color="white"
-                  size="sm"
-                >
-                  {{ getHierarchyLabel(props.value) }}
-                </q-chip>
-              </q-td>
-            </template>
+          <div v-else>
+            <div class="q-mb-md">
+              <q-btn
+                color="primary"
+                icon="add"
+                label="Добавить должность"
+                @click="openCreatePositionDialog"
+                dense
+                size="sm"
+              />
+            </div>
             
-            <template v-slot:body-cell-status="props">
+            <q-table
+              :rows="positions"
+              :columns="positionColumns"
+              row-key="id"
+              dense
+              :pagination="{ rowsPerPage: 10 }"
+              class="q-mt-md"
+            >
+              <template v-slot:body-cell-hierarchy="props">
+                <q-td :props="props">
+                  <q-chip
+                    :color="getHierarchyColor(props.value)"
+                    text-color="white"
+                    size="sm"
+                  >
+                    {{ getHierarchyLabel(props.value) }}
+                  </q-chip>
+                </q-td>
+              </template>
+              
+              <template v-slot:body-cell-status="props">
+                <q-td :props="props">
+                  <q-chip
+                    :color="props.value ? 'positive' : 'negative'"
+                    text-color="white"
+                    size="sm"
+                  >
+                    {{ props.value ? 'Активная' : 'Неактивная' }}
+                  </q-chip>
+                </q-td>
+              </template>
+              
+                          <template v-slot:body-cell-actions="props">
               <q-td :props="props">
-                <q-chip
-                  :color="props.value ? 'positive' : 'negative'"
-                  text-color="white"
+                <!-- Временно отключаем редактирование из-за ошибки в бэкенде -->
+                <!-- <q-btn
+                  flat
+                  round
+                  color="primary"
+                  icon="edit"
                   size="sm"
-                >
-                  {{ props.value ? 'Активная' : 'Неактивная' }}
-                </q-chip>
+                  @click="editPosition(props.row)"
+                /> -->
+                <q-btn
+                  flat
+                  round
+                  color="negative"
+                  icon="delete"
+                  size="sm"
+                  @click="deletePosition(props.row)"
+                />
               </q-td>
             </template>
-          </q-table>
+            </q-table>
+          </div>
         </q-tab-panel>
 
         <!-- Вкладка "Дочерние организации" -->
@@ -282,15 +283,26 @@
             <div class="q-mt-sm">Дочерние организации не найдены</div>
           </div>
           
-          <q-table
-            v-else
-            :rows="childOrganizations"
-            :columns="childOrganizationColumns"
-            row-key="id"
-            dense
-            :pagination="{ rowsPerPage: 10 }"
-            class="q-mt-md"
-          >
+          <div v-else>
+            <div class="q-mb-md">
+              <q-btn
+                color="primary"
+                icon="add"
+                label="Добавить дочернюю организацию"
+                @click="openCreateChildOrganizationDialog"
+                dense
+                size="sm"
+              />
+            </div>
+            
+            <q-table
+              :rows="childOrganizations"
+              :columns="childOrganizationColumns"
+              row-key="id"
+              dense
+              :pagination="{ rowsPerPage: 10 }"
+              class="q-mt-md"
+            >
             <template v-slot:body-cell-type="props">
               <q-td :props="props">
                 {{ getOrganizationTypeLabel(props.value) }}
@@ -314,7 +326,29 @@
                 </q-chip>
               </q-td>
             </template>
+            
+            <template v-slot:body-cell-actions="props">
+              <q-td :props="props">
+                <q-btn
+                  flat
+                  round
+                  color="primary"
+                  icon="edit"
+                  size="sm"
+                  @click="editChildOrganization(props.row)"
+                />
+                <q-btn
+                  flat
+                  round
+                  color="negative"
+                  icon="delete"
+                  size="sm"
+                  @click="deleteChildOrganization(props.row)"
+                />
+              </q-td>
+            </template>
           </q-table>
+            </div>
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -438,6 +472,115 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <!-- Диалог для создания/редактирования должности -->
+    <q-dialog v-model="showPositionDialog" persistent>
+      <q-card style="min-width: 400px">
+        <q-card-section>
+          <div class="text-h6">
+            {{ editingPosition ? 'Редактировать должность' : 'Создать должность' }}
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="positionForm.title"
+            label="Название должности"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-select
+            v-model="positionForm.hierarchy"
+            :options="hierarchyOptions"
+            label="Уровень иерархии"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-input
+            v-model="positionForm.responsibilities"
+            label="Обязанности"
+            type="textarea"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-toggle
+            v-model="positionForm.isActive"
+            label="Активная должность"
+            color="primary"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Отмена" color="primary" @click="showPositionDialog = false" />
+          <q-btn
+            :label="editingPosition ? 'Сохранить' : 'Создать'"
+            color="primary"
+            @click="savePosition"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- Диалог для создания/редактирования дочерней организации -->
+    <q-dialog v-model="showChildOrganizationDialog" persistent>
+      <q-card style="min-width: 500px">
+        <q-card-section>
+          <div class="text-h6">
+            {{ editingChildOrganization ? 'Редактировать дочернюю организацию' : 'Создать дочернюю организацию' }}
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input
+            v-model="childOrganizationForm.name"
+            label="Название организации"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-select
+            v-model="childOrganizationForm.type"
+            :options="organizationTypes"
+            label="Тип организации"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-input
+            v-model="childOrganizationForm.foundedDate"
+            label="Дата основания"
+            type="date"
+            outlined
+            dense
+            class="q-mb-md"
+          />
+          
+          <q-toggle
+            v-model="childOrganizationForm.isFictional"
+            label="Вымышленная организация"
+            color="primary"
+            class="q-mb-md"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Отмена" color="primary" @click="showChildOrganizationDialog = false" />
+          <q-btn
+            :label="editingChildOrganization ? 'Сохранить' : 'Создать'"
+            color="primary"
+            @click="saveChildOrganization"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -445,9 +588,9 @@
 import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import { useQuasar } from 'quasar'
-import type { Organization, OrganizationType, SearchInput } from '../types/graphql'
+import type { Organization, OrganizationType, SearchInput, PositionHierarchy, PositionInput } from '../types/graphql'
 import { GET_ORGANIZATIONS, GET_ORGANIZATION_POSITIONS, GET_CHILD_ORGANIZATIONS } from '../graphql/queries'
-import { CREATE_ORGANIZATION, UPDATE_ORGANIZATION, DELETE_ORGANIZATION } from '../graphql/mutations'
+import { CREATE_ORGANIZATION, UPDATE_ORGANIZATION, DELETE_ORGANIZATION, CREATE_POSITION, UPDATE_POSITION, DELETE_POSITION } from '../graphql/mutations'
 
 const $q = useQuasar()
 
@@ -457,10 +600,17 @@ const selectedType = ref<OrganizationType | null>(null)
 const selectedStatus = ref<string | null>(null)
 const showCreateDialog = ref(false)
 const editingOrganization = ref<Organization | null>(null)
+const selectedOrganization = ref<Organization | null>(null)
+const screenWidth = ref(window.innerWidth)
 
 // Состояние для вкладок
-const selectedOrganization = ref<Organization | null>(null)
 const activeTab = ref('positions') // 'positions' или 'children'
+
+// Состояние для диалогов должностей и дочерних организаций
+const showPositionDialog = ref(false)
+const showChildOrganizationDialog = ref(false)
+const editingPosition = ref<any>(null)
+const editingChildOrganization = ref<any>(null)
 
 // Форма
 const form = reactive({
@@ -468,11 +618,35 @@ const form = reactive({
   type: 'STATE', // Изменено на поддерживаемое значение
   foundedDate: new Date().toISOString().split('T')[0], // Устанавливаем сегодняшнюю дату по умолчанию
   dissolvedDate: '',
-  locationId: '',
   parentOrganizationId: '',
   isFictional: false,
   status: 'active' // Добавляем поле статуса
 })
+
+// Форма для должности
+const positionForm = reactive({
+  title: '',
+  hierarchy: 'ADMINISTRATIVE',
+  responsibilities: '',
+  isActive: true
+})
+
+// Форма для дочерней организации
+const childOrganizationForm = reactive({
+  name: '',
+  type: 'STATE',
+  foundedDate: new Date().toISOString().split('T')[0],
+  isFictional: false
+})
+
+// Опции для иерархии должностей
+const hierarchyOptions = [
+  { label: 'Исполнительная', value: 'EXECUTIVE' },
+  { label: 'Законодательная', value: 'LEGISLATIVE' },
+  { label: 'Судебная', value: 'JUDICIAL' },
+  { label: 'Административная', value: 'ADMINISTRATIVE' },
+  { label: 'Операционная', value: 'OPERATIONAL' }
+]
 
 // Опции - используем computed для правильной реактивности
 // Только значения, поддерживаемые Backend enum OrganizationType
@@ -495,6 +669,26 @@ const formStatusOptions = computed(() => [
   { label: 'Неактивная', value: 'inactive' },
   { label: 'Ликвидированная', value: 'dissolved' }
 ])
+
+// Адаптивная кнопка
+const buttonLabel = computed(() => {
+  const isMobile = screenWidth.value <= 768
+  return isMobile ? 'Добавить' : 'Добавить организацию'
+})
+
+// Обработчик изменения размера экрана
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  window.addEventListener('resize', updateScreenWidth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth)
+})
 
 // Отладочное логирование
 console.log('organizationTypes array:', organizationTypes.value)
@@ -524,14 +718,14 @@ const { result, loading, error, refetch } = useQuery(
 )
 
 // Запрос для должностей организации
-const { result: positionsResult, loading: positionsLoading, error: positionsError } = useQuery(
+const { result: positionsResult, loading: positionsLoading, error: positionsError, refetch: refetchPositions } = useQuery(
   GET_ORGANIZATION_POSITIONS,
   {},
   { fetchPolicy: 'cache-and-network' }
 )
 
 // Запрос для дочерних организаций
-const { result: childrenResult, loading: childrenLoading, error: childrenError } = useQuery(
+const { result: childrenResult, loading: childrenLoading, error: childrenError, refetch: refetchChildren } = useQuery(
   GET_CHILD_ORGANIZATIONS,
   {},
   { fetchPolicy: 'cache-and-network' }
@@ -546,6 +740,11 @@ console.log('OrganizationsPage - error:', error.value)
 const { mutate: createOrganization, loading: creating } = useMutation(CREATE_ORGANIZATION)
 const { mutate: updateOrganization, loading: updating } = useMutation(UPDATE_ORGANIZATION)
 const { mutate: deleteOrganization, loading: deleting } = useMutation(DELETE_ORGANIZATION)
+
+// Мутации для должностей
+const { mutate: createPosition } = useMutation(CREATE_POSITION)
+const { mutate: updatePosition } = useMutation(UPDATE_POSITION)
+const { mutate: deletePositionMutation } = useMutation(DELETE_POSITION)
 
 // Вычисляемые данные
 const organizations = computed(() => {
@@ -595,24 +794,9 @@ const childOrganizations = computed(() => {
   
   const allOrganizations = childrenResult.value?.organizationalUnits || []
   // Фильтруем организации, которые имеют выбранную организацию как родителя
-  // Поскольку у нас нет прямого поля parentUnitId в GraphQL, используем ID для демонстрации
-  let filtered = []
-  if (selectedOrganization.value?.id === '36') {
-    // Для Византийской Империи возвращаем дочерние организации
-    filtered = allOrganizations.filter(org => ['37', '38', '39', '40'].includes(org.id))
-  } else if (selectedOrganization.value?.id === '37') {
-    // Для Константинополя возвращаем пустой список (нет дочерних)
-    filtered = []
-  } else if (selectedOrganization.value?.id === '38') {
-    // Для Византийской Армии возвращаем пустой список (нет дочерних)
-    filtered = []
-  } else if (selectedOrganization.value?.id === '39') {
-    // Для Византийского Флота возвращаем пустой список (нет дочерних)
-    filtered = []
-  } else if (selectedOrganization.value?.id === '40') {
-    // Для Византийской Церкви возвращаем пустой список (нет дочерних)
-    filtered = []
-  }
+  const filtered = allOrganizations.filter(org => 
+    org.parentUnit?.id === selectedOrganization.value?.id
+  )
   
   console.log('childOrganizations computed - selectedOrganization:', selectedOrganization.value?.id)
   console.log('childOrganizations computed - allOrganizations:', allOrganizations.length)
@@ -639,7 +823,8 @@ const positionColumns = [
   { name: 'createdDate', label: 'Дата создания', field: row => new Date(row.createdDate).toLocaleDateString(), sortable: true, align: 'center' },
   { name: 'abolishedDate', label: 'Дата ликвидации', field: row => row.abolishedDate ? new Date(row.abolishedDate).toLocaleDateString() : '-', sortable: true, align: 'center' },
   { name: 'status', label: 'Статус', field: 'isActive', sortable: true, align: 'center' },
-  { name: 'responsibilities', label: 'Обязанности', field: row => row.responsibilities?.join(', ') || '-', sortable: false, align: 'left' }
+  { name: 'responsibilities', label: 'Обязанности', field: row => row.responsibilities?.join(', ') || '-', sortable: false, align: 'left' },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
 ]
 
 // Колонки таблицы дочерних организаций
@@ -649,7 +834,8 @@ const childOrganizationColumns = [
   { name: 'foundedDate', label: 'Дата основания', field: row => new Date(row.foundedDate).toLocaleDateString(), sortable: true, align: 'center' },
   { name: 'dissolvedDate', label: 'Дата ликвидации', field: row => row.dissolvedDate ? new Date(row.dissolvedDate).toLocaleDateString() : '-', sortable: true, align: 'center' },
   { name: 'status', label: 'Статус', field: 'status', sortable: true, align: 'center' },
-  { name: 'fictional', label: 'Тип', field: 'isFictional', sortable: true, align: 'center' }
+  { name: 'fictional', label: 'Тип', field: 'isFictional', sortable: true, align: 'center' },
+  { name: 'actions', label: 'Действия', field: 'actions', sortable: false, align: 'center' }
 ]
 
 // Методы
@@ -658,7 +844,6 @@ const resetForm = () => {
   form.type = 'STATE' // Изменено на поддерживаемое значение
   form.foundedDate = new Date().toISOString().split('T')[0] // Устанавливаем сегодняшнюю дату по умолчанию
   form.dissolvedDate = ''
-  form.locationId = ''
   form.parentOrganizationId = ''
   form.isFictional = false
   form.status = 'active'
@@ -703,7 +888,6 @@ const editOrganization = (org: Organization) => {
   form.type = org.type
   form.foundedDate = org.foundedDate || new Date().toISOString().split('T')[0]
   form.dissolvedDate = org.dissolvedDate || ''
-  form.locationId = org.location?.id || ''
   form.parentOrganizationId = org.parentOrganization?.id || ''
   form.isFictional = org.isFictional || false
   
@@ -720,29 +904,85 @@ const editOrganization = (org: Organization) => {
 }
 
 const handleDeleteOrganization = async (org: Organization) => {
+  console.log('=== НАЧАЛО handleDeleteOrganization ===')
+  console.log('Организация:', org.name, 'ID:', org.id)
+  console.log('$q доступен:', !!$q)
+  console.log('$q.dialog доступен:', !!$q?.dialog)
+  
   try {
-    await $q.dialog({
-      title: 'Подтверждение удаления',
-      message: `Вы уверены, что хотите удалить организацию "${org.name}"?`,
-      cancel: true,
-      persistent: true
+    console.log('Показываем диалог подтверждения...')
+    
+    // Показываем диалог подтверждения с обработчиками
+    const confirmed = await new Promise((resolve) => {
+      $q.dialog({
+        title: 'Подтверждение удаления',
+        message: `Вы уверены, что хотите удалить организацию "${org.name}"?`,
+        ok: {
+          label: 'Удалить',
+          color: 'negative'
+        },
+        cancel: {
+          label: 'Отмена',
+          color: 'primary'
+        },
+        persistent: true
+      }).onOk(() => {
+        console.log('Пользователь нажал OK')
+        resolve(true)
+      }).onCancel(() => {
+        console.log('Пользователь нажал Отмена')
+        resolve(false)
+      }).onDismiss(() => {
+        console.log('Диалог закрыт')
+        resolve(false)
+      })
     })
 
-    await deleteOrganization({ id: org.id })
+    console.log('Результат диалога:', confirmed)
+    
+    if (confirmed) {
+      console.log('Пользователь подтвердил удаление, выполняем удаление...')
+      await deleteOrganization({ id: org.id })
+    } else {
+      console.log('Пользователь отменил удаление')
+      return
+    }
+    
+    console.log('Удаление выполнено успешно')
     
     $q.notify({
       type: 'positive',
       message: 'Организация успешно удалена'
     })
     
-    await refetch()
+    // Обновляем все данные
+    await refetch() // Обновляем основной список организаций
+    await refetchChildren() // Обновляем данные дочерних организаций
+    await refetchPositions() // Обновляем данные должностей
   } catch (error) {
+    console.log('=== ОШИБКА В handleDeleteOrganization ===')
+    console.log('Тип ошибки:', typeof error)
+    console.log('Название ошибки:', error.name)
+    console.log('Сообщение ошибки:', error.message)
+    console.log('Полная ошибка:', error)
+    
     console.error('Ошибка удаления организации:', error)
+    
+    // Проверяем тип ошибки
+    let errorMessage = 'Ошибка при удалении организации'
+    if (error.message?.includes('not found') || error.message?.includes('не найдена')) {
+      errorMessage = 'Организация уже удалена или не найдена'
+    } else if (error.message?.includes('permission') || error.message?.includes('доступ')) {
+      errorMessage = 'Нет прав для удаления организации'
+    }
+    
     $q.notify({
       type: 'negative',
-      message: 'Ошибка при удалении организации'
+      message: errorMessage
     })
   }
+  
+  console.log('=== КОНЕЦ handleDeleteOrganization ===')
 }
 
 const saveOrganization = async () => {
@@ -764,22 +1004,19 @@ const saveOrganization = async () => {
       return
     }
 
+    // Извлекаем значение type, если это объект
+    const typeValue = typeof form.type === 'object' 
+      ? form.type.value 
+      : form.type
+
         const input: any = {
       name: form.name.trim(),
-      type: form.type,
+      type: typeValue,
       foundedDate: form.foundedDate,
       dissolvedDate: form.dissolvedDate || null,
       isFictional: form.isFictional,
       historicalPeriodId: '1', // По умолчанию раннее средневековье
       parentUnitId: form.parentOrganizationId || null
-    }
-
-    // Добавляем location только если указан locationId
-    if (form.locationId) {
-      input.location = {
-        latitude: 0, // Временные координаты
-        longitude: 0
-      }
     }
 
     if (editingOrganization.value) {
@@ -801,7 +1038,10 @@ const saveOrganization = async () => {
 
     showCreateDialog.value = false
     resetForm()
-    await refetch()
+    // Обновляем все данные
+    await refetch() // Обновляем основной список организаций
+    await refetchChildren() // Обновляем данные дочерних организаций
+    await refetchPositions() // Обновляем данные должностей
   } catch (error) {
     console.error('Ошибка сохранения организации:', error)
     $q.notify({
@@ -849,28 +1089,22 @@ const getOrganizationStatus = (org: any): string => {
 // Вспомогательные методы для должностей
 const getHierarchyLabel = (hierarchy: string): string => {
   const hierarchyMap: Record<string, string> = {
-    'ENTRY': 'Начальный',
-    'JUNIOR': 'Младший',
-    'MIDDLE': 'Средний',
-    'SENIOR': 'Старший',
-    'LEAD': 'Ведущий',
-    'MANAGER': 'Менеджер',
-    'DIRECTOR': 'Директор',
-    'EXECUTIVE': 'Руководитель'
+    'EXECUTIVE': 'Исполнительная',
+    'LEGISLATIVE': 'Законодательная',
+    'JUDICIAL': 'Судебная',
+    'ADMINISTRATIVE': 'Административная',
+    'OPERATIONAL': 'Операционная'
   }
   return hierarchyMap[hierarchy] || hierarchy
 }
 
 const getHierarchyColor = (hierarchy: string): string => {
   const colorMap: Record<string, string> = {
-    'ENTRY': 'grey',
-    'JUNIOR': 'blue',
-    'MIDDLE': 'green',
-    'SENIOR': 'orange',
-    'LEAD': 'purple',
-    'MANAGER': 'teal',
-    'DIRECTOR': 'red',
-    'EXECUTIVE': 'deep-purple'
+    'EXECUTIVE': 'deep-purple',
+    'LEGISLATIVE': 'blue',
+    'JUDICIAL': 'red',
+    'ADMINISTRATIVE': 'green',
+    'OPERATIONAL': 'orange'
   }
   return colorMap[hierarchy] || 'grey'
 }
@@ -912,28 +1146,319 @@ const updateDissolvedDateFromStatus = () => {
   }
 }
 
-// Реактивная ширина экрана
-const screenWidth = ref(window.innerWidth)
 
-// Обновление ширины экрана при изменении размера окна
-const updateScreenWidth = () => {
-  screenWidth.value = window.innerWidth
+
+// Методы для работы с должностями
+const openCreatePositionDialog = () => {
+  editingPosition.value = null
+  // Сбрасываем форму
+  positionForm.title = ''
+  positionForm.hierarchy = 'ADMINISTRATIVE'
+  positionForm.responsibilities = ''
+  positionForm.isActive = true
+  showPositionDialog.value = true
 }
 
-// Адаптивный текст кнопки
-const buttonLabel = computed(() => {
-  const isMobile = screenWidth.value <= 768
-  return isMobile ? 'Добавить' : 'Добавить организацию'
-})
+const editPosition = (position: any) => {
+  editingPosition.value = position
+  // Заполняем форму данными из выбранной должности
+  positionForm.title = position.title
+  positionForm.hierarchy = position.hierarchy
+  // Обрабатываем responsibilities - они могут быть JSON строками или обычными строками
+  let responsibilities = ''
+  if (Array.isArray(position.responsibilities)) {
+    responsibilities = position.responsibilities.map((resp: string) => {
+      // Если это JSON строка, извлекаем значение
+      if (resp.startsWith('"') && resp.endsWith('"')) {
+        try {
+          return JSON.parse(resp)
+        } catch {
+          return resp
+        }
+      }
+      return resp
+    }).join(', ')
+  } else if (position.responsibilities) {
+    responsibilities = position.responsibilities
+  }
+  positionForm.responsibilities = responsibilities
+  positionForm.isActive = position.isActive
+  showPositionDialog.value = true
+}
 
-// Добавление слушателя изменения размера окна
-onMounted(() => {
-  window.addEventListener('resize', updateScreenWidth)
-})
+const deletePosition = async (position: any) => {
+  console.log('=== НАЧАЛО deletePosition ===')
+  console.log('Должность:', position.title, 'ID:', position.id)
+  
+  try {
+    // Показываем диалог подтверждения с обработчиками
+    const confirmed = await new Promise((resolve) => {
+      $q.dialog({
+        title: 'Подтверждение удаления',
+        message: `Вы уверены, что хотите удалить должность "${position.title}"?`,
+        ok: {
+          label: 'Удалить',
+          color: 'negative'
+        },
+        cancel: {
+          label: 'Отмена',
+          color: 'primary'
+        },
+        persistent: true
+      }).onOk(() => {
+        console.log('Пользователь нажал OK для должности')
+        resolve(true)
+      }).onCancel(() => {
+        console.log('Пользователь нажал Отмена для должности')
+        resolve(false)
+      }).onDismiss(() => {
+        console.log('Диалог должности закрыт')
+        resolve(false)
+      })
+    })
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateScreenWidth)
-})
+    console.log('Результат диалога должности:', confirmed)
+    
+    if (confirmed) {
+      console.log('Пользователь подтвердил удаление должности, выполняем удаление...')
+      await deletePositionMutation({ id: position.id })
+      console.log('Удаление должности выполнено успешно')
+      
+      // Обновляем все данные
+      await refetch() // Обновляем основной список организаций
+      await refetchChildren() // Обновляем данные дочерних организаций
+      await refetchPositions() // Обновляем данные должностей
+      
+      $q.notify({
+        type: 'positive',
+        message: 'Должность успешно удалена'
+      })
+    } else {
+      console.log('Пользователь отменил удаление должности')
+      return
+    }
+  } catch (error) {
+    console.error('Ошибка удаления должности:', error)
+    
+    // Проверяем тип ошибки
+    let errorMessage = 'Ошибка при удалении должности'
+    if (error.message?.includes('not found') || error.message?.includes('не найдена')) {
+      errorMessage = 'Должность уже удалена или не найдена'
+    } else if (error.message?.includes('permission') || error.message?.includes('доступ')) {
+      errorMessage = 'Нет прав для удаления должности'
+    }
+    
+    $q.notify({
+      type: 'negative',
+      message: errorMessage
+    })
+  }
+  
+  console.log('=== КОНЕЦ deletePosition ===')
+}
+
+// Методы для работы с дочерними организациями
+const openCreateChildOrganizationDialog = () => {
+  editingChildOrganization.value = null
+  // Сбрасываем форму
+  childOrganizationForm.name = ''
+  childOrganizationForm.type = 'STATE'
+  childOrganizationForm.foundedDate = new Date().toISOString().split('T')[0]
+  childOrganizationForm.isFictional = false
+  showChildOrganizationDialog.value = true
+}
+
+const editChildOrganization = (organization: any) => {
+  editingChildOrganization.value = organization
+  // Заполняем форму данными из выбранной организации
+  childOrganizationForm.name = organization.name
+  childOrganizationForm.type = organization.type
+  childOrganizationForm.foundedDate = organization.foundedDate || new Date().toISOString().split('T')[0]
+  childOrganizationForm.isFictional = organization.isFictional || false
+  showChildOrganizationDialog.value = true
+}
+
+const deleteChildOrganization = async (organization: any) => {
+  console.log('=== НАЧАЛО deleteChildOrganization ===')
+  console.log('Дочерняя организация:', organization.name, 'ID:', organization.id)
+  
+  try {
+    // Показываем диалог подтверждения с обработчиками
+    const confirmed = await new Promise((resolve) => {
+      $q.dialog({
+        title: 'Подтверждение удаления',
+        message: `Вы уверены, что хотите удалить дочернюю организацию "${organization.name}"?`,
+        ok: {
+          label: 'Удалить',
+          color: 'negative'
+        },
+        cancel: {
+          label: 'Отмена',
+          color: 'primary'
+        },
+        persistent: true
+      }).onOk(() => {
+        console.log('Пользователь нажал OK для дочерней организации')
+        resolve(true)
+      }).onCancel(() => {
+        console.log('Пользователь нажал Отмена для дочерней организации')
+        resolve(false)
+      }).onDismiss(() => {
+        console.log('Диалог дочерней организации закрыт')
+        resolve(false)
+      })
+    })
+
+    console.log('Результат диалога дочерней организации:', confirmed)
+    
+    if (confirmed) {
+      console.log('Пользователь подтвердил удаление дочерней организации, выполняем удаление...')
+      await deleteOrganization({ id: organization.id })
+      console.log('Удаление дочерней организации выполнено успешно')
+      
+      $q.notify({
+        type: 'positive',
+        message: 'Дочерняя организация успешно удалена'
+      })
+      
+      // Обновляем все данные
+      await refetch() // Обновляем основной список организаций
+      await refetchChildren() // Обновляем данные дочерних организаций
+      await refetchPositions() // Обновляем данные должностей
+    } else {
+      console.log('Пользователь отменил удаление дочерней организации')
+      return
+    }
+  } catch (error) {
+    console.error('Ошибка удаления дочерней организации:', error)
+    
+    // Проверяем тип ошибки
+    let errorMessage = 'Ошибка при удалении дочерней организации'
+    if (error.message?.includes('not found') || error.message?.includes('не найдена')) {
+      errorMessage = 'Организация уже удалена или не найдена'
+    } else if (error.message?.includes('permission') || error.message?.includes('доступ')) {
+      errorMessage = 'Нет прав для удаления организации'
+    }
+    
+    $q.notify({
+      type: 'negative',
+      message: errorMessage
+    })
+  }
+  
+  console.log('=== КОНЕЦ deleteChildOrganization ===')
+}
+
+// Методы сохранения
+const savePosition = async () => {
+  try {
+    const input: PositionInput = {
+      title: positionForm.title,
+      hierarchy: positionForm.hierarchy,
+      responsibilities: [positionForm.responsibilities], // Преобразуем в массив
+      isActive: positionForm.isActive,
+      organizationId: selectedOrganization.value?.id,
+      createdDate: new Date().toISOString().split('T')[0] // Добавляем текущую дату
+    }
+    
+    if (editingPosition.value) {
+      // При обновлении используем существующую дату создания
+      const updateInput = {
+        ...input,
+        createdDate: editingPosition.value.createdDate || new Date().toISOString().split('T')[0]
+      }
+      await updatePosition({ id: editingPosition.value.id, input: updateInput })
+    } else {
+      await createPosition({ input })
+    }
+    
+    console.log('Сохранение должности:', positionForm)
+    
+    showPositionDialog.value = false
+    
+    // Обновляем все данные
+    await refetch() // Обновляем основной список организаций
+    await refetchChildren() // Обновляем данные дочерних организаций
+    await refetchPositions() // Обновляем данные должностей
+    
+    $q.notify({
+      type: 'positive',
+      message: editingPosition.value ? 'Должность успешно обновлена' : 'Должность успешно создана'
+    })
+    
+    // Сброс формы
+    positionForm.title = ''
+    positionForm.hierarchy = 'ADMINISTRATIVE'
+    positionForm.responsibilities = ''
+    positionForm.isActive = true
+    editingPosition.value = null
+  } catch (error) {
+    console.error('Ошибка сохранения должности:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при сохранении должности'
+    })
+  }
+}
+
+const saveChildOrganization = async () => {
+  try {
+    // Извлекаем значение type, если это объект
+    const typeValue = typeof childOrganizationForm.type === 'object' 
+      ? childOrganizationForm.type.value 
+      : childOrganizationForm.type
+
+    console.log('=== СОЗДАНИЕ ДОЧЕРНЕЙ ОРГАНИЗАЦИИ ===')
+    console.log('selectedOrganization.value:', selectedOrganization.value)
+    console.log('selectedOrganization.value?.id:', selectedOrganization.value?.id)
+    console.log('childOrganizationForm:', childOrganizationForm)
+
+    const input = {
+      name: childOrganizationForm.name,
+      type: typeValue,
+      foundedDate: childOrganizationForm.foundedDate,
+      dissolvedDate: null,
+      parentUnitId: selectedOrganization.value?.id,
+      isFictional: childOrganizationForm.isFictional,
+      historicalPeriodId: '1' // По умолчанию раннее средневековье
+    }
+    
+    console.log('GraphQL input:', input)
+    
+    if (editingChildOrganization.value) {
+      await updateOrganization({ id: editingChildOrganization.value.id, input })
+    } else {
+      await createOrganization({ input })
+    }
+    
+    console.log('Сохранение дочерней организации:', childOrganizationForm)
+    
+    showChildOrganizationDialog.value = false
+    // Обновляем все данные
+    await refetch() // Обновляем основной список организаций
+    await refetchChildren() // Обновляем данные дочерних организаций
+    await refetchPositions() // Обновляем данные должностей
+    $q.notify({
+      type: 'positive',
+      message: editingChildOrganization.value ? 'Дочерняя организация успешно обновлена' : 'Дочерняя организация успешно создана'
+    })
+    
+    // Сброс формы
+    childOrganizationForm.name = ''
+    childOrganizationForm.type = 'STATE'
+    childOrganizationForm.foundedDate = new Date().toISOString().split('T')[0]
+    childOrganizationForm.isFictional = false
+    editingChildOrganization.value = null
+  } catch (error) {
+    console.error('Ошибка сохранения дочерней организации:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка при сохранении дочерней организации'
+    })
+  }
+}
+
+
 
 // Обработка ошибок
 if (error.value) {

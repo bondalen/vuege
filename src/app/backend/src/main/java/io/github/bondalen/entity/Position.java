@@ -70,10 +70,4 @@ public class Position {
     
     @Column("updated_at")
     private java.time.LocalDateTime updatedAt;
-    
-    @Column("created_by")
-    private String createdBy;
-    
-    @Column("updated_by")
-    private String updatedBy;
 }

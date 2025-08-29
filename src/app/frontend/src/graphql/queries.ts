@@ -43,6 +43,10 @@ export const GET_CHILD_ORGANIZATIONS = gql`
       foundedDate
       dissolvedDate
       isFictional
+      parentUnit {
+        id
+        name
+      }
     }
   }
 `

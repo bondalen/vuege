@@ -19,10 +19,14 @@ export interface Position {
   id: string
   title: string
   description?: string
+  hierarchy?: PositionHierarchy
+  responsibilities?: string[]
   organization: Organization
   person?: Person
   startDate?: string
   endDate?: string
+  createdDate?: string
+  abolishedDate?: string
   isActive: boolean
   createdAt: string
   updatedAt: string
@@ -84,6 +88,14 @@ export enum OrganizationType {
   MILITARY = 'MILITARY',
   RELIGIOUS = 'RELIGIOUS',
   OTHER = 'OTHER'
+}
+
+export enum PositionHierarchy {
+  EXECUTIVE = 'EXECUTIVE',
+  LEGISLATIVE = 'LEGISLATIVE',
+  JUDICIAL = 'JUDICIAL',
+  ADMINISTRATIVE = 'ADMINISTRATIVE',
+  OPERATIONAL = 'OPERATIONAL'
 }
 
 export enum LocationType {
@@ -150,21 +162,20 @@ export interface PersonPosition {
   source: string
 }
 
-export enum PositionHierarchy {
-  ENTRY = 'ENTRY',
-  JUNIOR = 'JUNIOR',
-  MIDDLE = 'MIDDLE',
-  SENIOR = 'SENIOR',
-  LEAD = 'LEAD',
-  MANAGER = 'MANAGER',
-  DIRECTOR = 'DIRECTOR',
-  EXECUTIVE = 'EXECUTIVE'
-}
-
 export enum AppointmentType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',
   CONTRACT = 'CONTRACT',
   TEMPORARY = 'TEMPORARY',
   INTERNSHIP = 'INTERNSHIP'
+}
+
+export interface PositionInput {
+  title?: string
+  hierarchy?: PositionHierarchy
+  responsibilities?: string[]
+  isActive?: boolean
+  organizationId?: string
+  createdDate?: string
+  abolishedDate?: string
 }

@@ -18,5 +18,6 @@
     <include file="backend/src/main/resources/db/changelog/changes/010-test-data.xml"/>
     <include file="backend/src/main/resources/db/changelog/changes/011-add-performance-indexes.xml"/>
     <include file="backend/src/main/resources/db/changelog/changes/012-add-extended-functionality.xml"/>
+    <include file="backend/src/main/resources/db/changelog/changes/013-add-parent-child-relationships.xml"/>
 
 </databaseChangeLog>

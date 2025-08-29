@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- ChangeSet: Добавление связей parent-child между организациями -->
+    <changeSet id="013-add-parent-child-relationships" author="vuege">
+        <comment>Добавление связей parent-child между организациями для тестирования дочерних организаций</comment>
+        
+        <!-- Константинополь -> Византийская Империя -->
+        <update tableName="organizational_units">
+            <column name="parent_unit_id">36</column>
+            <where>id = 37</where>
+        </update>
+        
+        <!-- Византийская Армия -> Византийская Империя -->
+        <update tableName="organizational_units">
+            <column name="parent_unit_id">36</column>
+            <where>id = 38</where>
+        </update>
+        
+        <!-- Византийский Флот -> Византийская Империя -->
+        <update tableName="organizational_units">
+            <column name="parent_unit_id">36</column>
+            <where>id = 39</where>
+        </update>
+        
+        <!-- Византийская Церковь -> Византийская Империя -->
+        <update tableName="organizational_units">
+            <column name="parent_unit_id">36</column>
+            <where>id = 40</where>
+        </update>
+        
+    </changeSet>
+
+</databaseChangeLog>
