@@ -38,44 +38,37 @@
         
         <!-- Нижняя строка: комбобоксы фильтров -->
         <div class="row q-gutter-md" style="display: flex; align-items: center;">
-          <!-- Временное решение: обычный HTML select -->
-          <div class="q-field q-field--outlined q-field--dense" style="flex: 2; margin-right: 8px;">
-            <div class="q-field__control">
-              <div class="q-field__control-container">
-                <select
-                  v-model="selectedType"
-                  class="q-field__native q-placeholder"
-                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
-                >
-                  <option value="">Все типы</option>
-                  <option value="EMPIRE">Империя</option>
-                  <option value="STATE">Государство</option>
-                  <option value="COMMERCIAL">Коммерческая</option>
-                  <option value="GOVERNMENT">Правительственная</option>
-                </select>
-              </div>
-            </div>
-            <div class="q-field__label">Тип организации</div>
-          </div>
+          <q-select
+            v-model="selectedType"
+            :options="organizationTypeOptions"
+            label="Тип организации"
+            outlined
+            dense
+            dark
+            clearable
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
+            class="filter-select"
+            style="flex: 2; margin-right: 8px; background-color: #f5f5f5;"
+          />
           
-          <!-- Временное решение: обычный HTML select -->
-          <div class="q-field q-field--outlined q-field--dense" style="flex: 1;">
-            <div class="q-field__control">
-              <div class="q-field__control-container">
-                <select
-                  v-model="selectedStatus"
-                  class="q-field__native q-placeholder"
-                  style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
-                >
-                  <option value="">Все статусы</option>
-                  <option value="active">Активная</option>
-                  <option value="inactive">Неактивная</option>
-                  <option value="dissolved">Ликвидированная</option>
-                </select>
-              </div>
-            </div>
-            <div class="q-field__label">Статус</div>
-          </div>
+          <q-select
+            v-model="selectedStatus"
+            :options="organizationStatusOptions"
+            label="Статус"
+            outlined
+            dense
+            dark
+            clearable
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
+            class="filter-select"
+            style="flex: 1; background-color: #f5f5f5;"
+          />
         </div>
       </q-card-section>
     </q-card>
@@ -243,15 +236,14 @@
               
                           <template v-slot:body-cell-actions="props">
               <q-td :props="props">
-                <!-- Временно отключаем редактирование из-за ошибки в бэкенде -->
-                <!-- <q-btn
+                <q-btn
                   flat
                   round
                   color="primary"
                   icon="edit"
                   size="sm"
                   @click="editPosition(props.row)"
-                /> -->
+                />
                 <q-btn
                   flat
                   round
@@ -373,26 +365,22 @@
               :rules="[val => !!val || 'Название обязательно']"
             />
             
-            <!-- Временное решение: обычный HTML select -->
-            <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6">
-              <div class="q-field__control">
-                <div class="q-field__control-container">
-                  <select
-                    v-model="form.type"
-                    class="q-field__native q-placeholder"
-                    style="width: 100%; padding: 8px; border: none; outline: none; background: transparent;"
-                    required
-                  >
-                    <option value="">Выберите тип организации</option>
-                    <option value="EMPIRE">Империя</option>
-                    <option value="STATE">Государство</option>
-                    <option value="COMMERCIAL">Коммерческая</option>
-                    <option value="GOVERNMENT">Правительственная</option>
-                  </select>
-                </div>
-              </div>
-              <div class="q-field__label">Тип организации *</div>
-            </div>
+            <q-select
+              v-model="form.type"
+              :options="organizationTypes"
+              label="Тип организации *"
+              outlined
+              dense
+              dark
+              clearable
+              option-value="value"
+              option-label="label"
+              emit-value
+              map-options
+              class="col-12 col-sm-6"
+              style="background-color: #f5f5f5;"
+              :rules="[val => !!val || 'Тип организации обязателен']"
+            />
             
             <q-input
               v-model="form.foundedDate"
@@ -412,13 +400,7 @@
               class="col-12 col-sm-6"
             />
             
-            <q-input
-              v-model="form.locationId"
-              label="ID местоположения"
-              outlined
-              dense
-              class="col-12 col-sm-6"
-            />
+
             
             <q-input
               v-model="form.parentOrganizationId"
@@ -434,31 +416,22 @@
               class="col-12 col-sm-6"
             />
             
-            <!-- Поле даты ликвидации (показывается только для неактивных статусов) -->
-            <q-input
-              v-if="form.status !== 'active'"
-              v-model="form.dissolvedDate"
-              label="Дата ликвидации"
-              type="date"
+            <!-- Поле статуса -->
+            <q-select
+              v-model="form.status"
+              :options="formStatusOptions"
+              label="Статус"
               outlined
               dense
+              dark
+              clearable
+              option-value="value"
+              option-label="label"
+              emit-value
+              map-options
               class="col-12 col-sm-6"
-              @update:model-value="updateStatusFromDissolvedDate"
+              style="background-color: #f5f5f5;"
             />
-            
-            <!-- Поле статуса (редактируемое) -->
-            <div class="q-field q-field--outlined q-field--dense col-12 col-sm-6">
-              <div class="q-field__control">
-                <div class="q-field__control-container">
-                  <select v-model="form.status" class="q-field__native q-placeholder" style="padding: 8px; border: none; background: transparent; width: 100%;" @change="updateDissolvedDateFromStatus">
-                    <option v-for="option in formStatusOptions" :key="option.value" :value="option.value">
-                      {{ option.label }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="q-field__label">Статус</div>
-            </div>
           </div>
         </q-card-section>
 
@@ -497,7 +470,14 @@
             label="Уровень иерархии"
             outlined
             dense
+            dark
+            clearable
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
             class="q-mb-md"
+            style="background-color: #f5f5f5;"
           />
           
           <q-input
@@ -537,38 +517,74 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-input
-            v-model="childOrganizationForm.name"
-            label="Название организации"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-select
-            v-model="childOrganizationForm.type"
-            :options="organizationTypes"
-            label="Тип организации"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-input
-            v-model="childOrganizationForm.foundedDate"
-            label="Дата основания"
-            type="date"
-            outlined
-            dense
-            class="q-mb-md"
-          />
-          
-          <q-toggle
-            v-model="childOrganizationForm.isFictional"
-            label="Вымышленная организация"
-            color="primary"
-            class="q-mb-md"
-          />
+          <div class="row q-gutter-md">
+            <q-input
+              v-model="childOrganizationForm.name"
+              label="Название организации *"
+              outlined
+              dense
+              class="col-12"
+              :rules="[val => !!val || 'Название обязательно']"
+            />
+            
+            <q-select
+              v-model="childOrganizationForm.type"
+              :options="organizationTypes"
+              label="Тип организации *"
+              outlined
+              dense
+              dark
+              clearable
+              option-value="value"
+              option-label="label"
+              emit-value
+              map-options
+              class="col-12 col-sm-6"
+              style="background-color: #f5f5f5;"
+              :rules="[val => !!val || 'Тип организации обязателен']"
+            />
+            
+            <q-input
+              v-model="childOrganizationForm.foundedDate"
+              label="Дата основания *"
+              type="date"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+              :rules="[val => !!val || 'Дата основания обязательна']"
+            />
+            
+            <q-input
+              v-model="childOrganizationForm.dissolvedDate"
+              label="Дата ликвидации"
+              type="date"
+              outlined
+              dense
+              class="col-12 col-sm-6"
+            />
+            
+            <q-checkbox
+              v-model="childOrganizationForm.isFictional"
+              label="Вымышленная организация"
+              class="col-12 col-sm-6"
+            />
+            
+            <q-select
+              v-model="childOrganizationForm.status"
+              :options="formStatusOptions"
+              label="Статус"
+              outlined
+              dense
+              dark
+              clearable
+              option-value="value"
+              option-label="label"
+              emit-value
+              map-options
+              class="col-12 col-sm-6"
+              style="background-color: #f5f5f5;"
+            />
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -636,7 +652,9 @@ const childOrganizationForm = reactive({
   name: '',
   type: 'STATE',
   foundedDate: new Date().toISOString().split('T')[0],
-  isFictional: false
+  dissolvedDate: '',
+  isFictional: false,
+  status: 'active'
 })
 
 // Опции для иерархии должностей
@@ -665,6 +683,22 @@ const statusOptions = computed(() => [
 
 // Опции статусов для форм (без "Все статусы")
 const formStatusOptions = computed(() => [
+  { label: 'Активная', value: 'active' },
+  { label: 'Неактивная', value: 'inactive' },
+  { label: 'Ликвидированная', value: 'dissolved' }
+])
+
+// Опции для фильтров (с пустым значением "Все")
+const organizationTypeOptions = computed(() => [
+  { label: 'Все типы', value: null },
+  { label: 'Империя', value: 'EMPIRE' },
+  { label: 'Государство', value: 'STATE' },
+  { label: 'Коммерческая', value: 'COMMERCIAL' },
+  { label: 'Правительственная', value: 'GOVERNMENT' }
+])
+
+const organizationStatusOptions = computed(() => [
+  { label: 'Все статусы', value: null },
   { label: 'Активная', value: 'active' },
   { label: 'Неактивная', value: 'inactive' },
   { label: 'Ликвидированная', value: 'dissolved' }
@@ -736,6 +770,14 @@ console.log('OrganizationsPage - result:', result.value)
 console.log('OrganizationsPage - loading:', loading.value)
 console.log('OrganizationsPage - error:', error.value)
 
+// Отладочная информация о данных организаций
+if (result.value?.organizationalUnits) {
+  console.log('Доступные организации:', result.value.organizationalUnits.length)
+  result.value.organizationalUnits.forEach((org, index) => {
+    console.log(`Организация ${index}:`, org.name, 'тип:', org.type)
+  })
+}
+
 // Мутации
 const { mutate: createOrganization, loading: creating } = useMutation(CREATE_ORGANIZATION)
 const { mutate: updateOrganization, loading: updating } = useMutation(UPDATE_ORGANIZATION)
@@ -760,16 +802,23 @@ const organizations = computed(() => {
   }
   
   // Фильтрация по типу
-  if (selectedType.value) {
-    filtered = filtered.filter(org => org.type === selectedType.value)
+  if (selectedType.value !== null && selectedType.value !== undefined) {
+    console.log('Фильтрация по типу:', selectedType.value, 'тип:', typeof selectedType.value)
+    filtered = filtered.filter(org => {
+      console.log('Сравниваем:', org.type, 'с', selectedType.value, 'результат:', org.type === selectedType.value)
+      return org.type === selectedType.value
+    })
+    console.log('Организации после фильтрации по типу:', filtered.length)
   }
   
   // Фильтрация по статусу
-  if (selectedStatus.value) {
+  if (selectedStatus.value !== null && selectedStatus.value !== undefined) {
+    console.log('Фильтрация по статусу:', selectedStatus.value)
     filtered = filtered.filter(org => {
       const orgStatus = getOrganizationStatus(org)
       return orgStatus === getStatusLabel(selectedStatus.value!)
     })
+    console.log('Организации после фильтрации по статусу:', filtered.length)
   }
   
   return filtered
@@ -891,8 +940,7 @@ const editOrganization = (org: Organization) => {
   form.parentOrganizationId = org.parentOrganization?.id || ''
   form.isFictional = org.isFictional || false
   
-  // Устанавливаем статус на основе даты ликвидации
-  updateStatusFromDissolvedDate()
+
   
   console.log('editOrganization - form after setting:', form)
   console.log('editOrganization - form.type:', form.type)
@@ -1009,7 +1057,23 @@ const saveOrganization = async () => {
       ? form.type.value 
       : form.type
 
-        const input: any = {
+    // Извлекаем значение status, если это объект (для логики фронтенда)
+    const statusValue = typeof form.status === 'object' 
+      ? form.status.value 
+      : form.status
+
+    console.log('Данные формы для отправки:', {
+      name: form.name.trim(),
+      type: typeValue,
+      status: statusValue,
+      foundedDate: form.foundedDate,
+      dissolvedDate: form.dissolvedDate || null,
+      isFictional: form.isFictional,
+      historicalPeriodId: '1',
+      parentUnitId: form.parentOrganizationId || null
+    })
+
+    const input: any = {
       name: form.name.trim(),
       type: typeValue,
       foundedDate: form.foundedDate,
@@ -1264,7 +1328,9 @@ const openCreateChildOrganizationDialog = () => {
   childOrganizationForm.name = ''
   childOrganizationForm.type = 'STATE'
   childOrganizationForm.foundedDate = new Date().toISOString().split('T')[0]
+  childOrganizationForm.dissolvedDate = ''
   childOrganizationForm.isFictional = false
+  childOrganizationForm.status = 'active'
   showChildOrganizationDialog.value = true
 }
 
@@ -1274,7 +1340,9 @@ const editChildOrganization = (organization: any) => {
   childOrganizationForm.name = organization.name
   childOrganizationForm.type = organization.type
   childOrganizationForm.foundedDate = organization.foundedDate || new Date().toISOString().split('T')[0]
+  childOrganizationForm.dissolvedDate = organization.dissolvedDate || ''
   childOrganizationForm.isFictional = organization.isFictional || false
+  childOrganizationForm.status = organization.status || 'active'
   showChildOrganizationDialog.value = true
 }
 
@@ -1408,6 +1476,11 @@ const saveChildOrganization = async () => {
       ? childOrganizationForm.type.value 
       : childOrganizationForm.type
 
+    // Извлекаем значение status, если это объект (для логики фронтенда)
+    const statusValue = typeof childOrganizationForm.status === 'object' 
+      ? childOrganizationForm.status.value 
+      : childOrganizationForm.status
+
     console.log('=== СОЗДАНИЕ ДОЧЕРНЕЙ ОРГАНИЗАЦИИ ===')
     console.log('selectedOrganization.value:', selectedOrganization.value)
     console.log('selectedOrganization.value?.id:', selectedOrganization.value?.id)
@@ -1417,7 +1490,7 @@ const saveChildOrganization = async () => {
       name: childOrganizationForm.name,
       type: typeValue,
       foundedDate: childOrganizationForm.foundedDate,
-      dissolvedDate: null,
+      dissolvedDate: childOrganizationForm.dissolvedDate || null,
       parentUnitId: selectedOrganization.value?.id,
       isFictional: childOrganizationForm.isFictional,
       historicalPeriodId: '1' // По умолчанию раннее средневековье
@@ -1447,7 +1520,9 @@ const saveChildOrganization = async () => {
     childOrganizationForm.name = ''
     childOrganizationForm.type = 'STATE'
     childOrganizationForm.foundedDate = new Date().toISOString().split('T')[0]
+    childOrganizationForm.dissolvedDate = ''
     childOrganizationForm.isFictional = false
+    childOrganizationForm.status = 'active'
     editingChildOrganization.value = null
   } catch (error) {
     console.error('Ошибка сохранения дочерней организации:', error)
@@ -1583,5 +1658,101 @@ if (error.value) {
   .page-titles p {
     font-size: 0.8rem !important;
   }
+}
+
+/* Стили для q-select фильтров - базовая видимость */
+.filter-select :deep(.q-field__label) {
+  color: #1976d2 !important;
+  font-weight: 500 !important;
+}
+
+.filter-select :deep(.q-field__native) {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+}
+
+.filter-select :deep(.q-field__control) {
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.filter-select :deep(.q-field--focused .q-field__control) {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2) !important;
+}
+
+.filter-select :deep(.q-field--outlined .q-field__control:before) {
+  border-color: #e0e0e0 !important;
+}
+
+.filter-select :deep(.q-field--outlined .q-field__control:hover:before) {
+  border-color: #1976d2 !important;
+}
+
+.filter-select :deep(.q-select__dropdown) {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
+}
+
+.filter-select :deep(.q-item) {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+.filter-select :deep(.q-item:hover) {
+  background-color: #f5f5f5 !important;
+}
+
+.filter-select :deep(.q-item--active) {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+}
+
+/* Стили для q-select в диалогах - улучшенная видимость полей */
+.q-dialog .q-select :deep(.q-field__label) {
+  color: #1976d2 !important;
+  font-weight: 500 !important;
+}
+
+.q-dialog .q-select :deep(.q-field__native) {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+}
+
+.q-dialog .q-select :deep(.q-field__control) {
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.q-dialog .q-select :deep(.q-field--focused .q-field__control) {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2) !important;
+}
+
+.q-dialog .q-select :deep(.q-field--outlined .q-field__control:before) {
+  border-color: #e0e0e0 !important;
+}
+
+.q-dialog .q-select :deep(.q-field--outlined .q-field__control:hover:before) {
+  border-color: #1976d2 !important;
+}
+
+.q-dialog .q-select :deep(.q-select__dropdown) {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
+}
+
+.q-dialog .q-select :deep(.q-item) {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+.q-dialog .q-select :deep(.q-item:hover) {
+  background-color: #f5f5f5 !important;
+}
+
+.q-dialog .q-select :deep(.q-item--active) {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
 }
 </style>

@@ -50,6 +50,7 @@ OrganizationsPage.vue
 - **q-tabs**: Вкладки для организации контента
 - **q-dialog**: Модальные окна для форм
 - **q-input**: Поля ввода с валидацией
+- **q-select**: Выпадающие списки с фильтрацией
 - **q-btn**: Кнопки с иконками и состояниями
 - **q-chip**: Чипы для отображения статусов
 
@@ -76,6 +77,22 @@ const filteredOrganizations = computed(() => {
     org.name.toLowerCase().includes(searchQuery.value.toLowerCase())
   )
 })
+
+// Опции для q-select (обязательно computed!)
+const typeOptions = computed(() => [
+  { label: 'Все типы', value: null },
+  { label: 'Империя', value: 'EMPIRE' },
+  { label: 'Государство', value: 'STATE' },
+  { label: 'Коммерческая', value: 'COMMERCIAL' },
+  { label: 'Правительственная', value: 'GOVERNMENT' }
+])
+
+const statusOptions = computed(() => [
+  { label: 'Все статусы', value: null },
+  { label: 'Активная', value: 'active' },
+  { label: 'Неактивная', value: 'inactive' },
+  { label: 'Ликвидированная', value: 'dissolved' }
+])
 
 // Методы
 const selectOrganization = (org) => {
@@ -126,8 +143,37 @@ const [createOrganization] = useMutation(CREATE_ORGANIZATION, {
     
     <!-- Фильтры -->
     <div class="row q-gutter-md">
-      <q-select v-model="selectedType" :options="typeOptions" />
-      <q-select v-model="selectedStatus" :options="statusOptions" />
+      <q-select
+        v-model="selectedType"
+        :options="typeOptions"
+        label="Тип организации"
+        outlined
+        dense
+        dark
+        clearable
+        option-value="value"
+        option-label="label"
+        emit-value
+        map-options
+        class="filter-select"
+        style="flex: 2; margin-right: 8px; background-color: #f5f5f5;"
+      />
+      
+      <q-select
+        v-model="selectedStatus"
+        :options="statusOptions"
+        label="Статус"
+        outlined
+        dense
+        dark
+        clearable
+        option-value="value"
+        option-label="label"
+        emit-value
+        map-options
+        class="filter-select"
+        style="flex: 1; background-color: #f5f5f5;"
+      />
     </div>
   </q-card-section>
 </q-card>
@@ -217,6 +263,152 @@ const [createOrganization] = useMutation(CREATE_ORGANIZATION, {
 - Валидация полей в реальном времени
 - Условное отображение полей
 - Автоматическое заполнение при редактировании
+
+### 5. Стили для q-select компонентов
+
+#### Базовый шаблон q-select
+```vue
+<q-select
+  v-model="selectedValue"
+  :options="options"
+  label="Название поля"
+  outlined
+  dense
+  dark
+  clearable
+  option-value="value"
+  option-label="label"
+  emit-value
+  map-options
+  class="filter-select"
+  style="background-color: #f5f5f5;"
+/>
+```
+
+#### Computed опции (обязательно!)
+```javascript
+// Правильно - используем computed для реактивности
+const options = computed(() => [
+  { label: 'Все варианты', value: null },
+  { label: 'Вариант 1', value: 'value1' },
+  { label: 'Вариант 2', value: 'value2' }
+])
+
+// Неправильно - обычный массив
+const options = [
+  { label: 'Вариант 1', value: 'value1' },
+  { label: 'Вариант 2', value: 'value2' }
+]
+```
+
+#### CSS стили для улучшенной видимости
+```css
+/* Стили для q-select фильтров - базовая видимость */
+.filter-select :deep(.q-field__label) {
+  color: #1976d2 !important;
+  font-weight: 500 !important;
+}
+
+.filter-select :deep(.q-field__native) {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+}
+
+.filter-select :deep(.q-field__control) {
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.filter-select :deep(.q-field--focused .q-field__control) {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2) !important;
+}
+
+.filter-select :deep(.q-field--outlined .q-field__control:before) {
+  border-color: #e0e0e0 !important;
+}
+
+.filter-select :deep(.q-field--outlined .q-field__control:hover:before) {
+  border-color: #1976d2 !important;
+}
+
+.filter-select :deep(.q-select__dropdown) {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
+}
+
+.filter-select :deep(.q-item) {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+.filter-select :deep(.q-item:hover) {
+  background-color: #f5f5f5 !important;
+}
+
+.filter-select :deep(.q-item--active) {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+}
+
+/* Стили для q-select в диалогах - улучшенная видимость полей */
+.q-dialog .q-select :deep(.q-field__label) {
+  color: #1976d2 !important;
+  font-weight: 500 !important;
+}
+
+.q-dialog .q-select :deep(.q-field__native) {
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+}
+
+.q-dialog .q-select :deep(.q-field__control) {
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.q-dialog .q-select :deep(.q-field--focused .q-field__control) {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2) !important;
+}
+
+.q-dialog .q-select :deep(.q-field--outlined .q-field__control:before) {
+  border-color: #e0e0e0 !important;
+}
+
+.q-dialog .q-select :deep(.q-field--outlined .q-field__control:hover:before) {
+  border-color: #1976d2 !important;
+}
+
+.q-dialog .q-select :deep(.q-select__dropdown) {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
+}
+
+.q-dialog .q-select :deep(.q-item) {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+.q-dialog .q-select :deep(.q-item:hover) {
+  background-color: #f5f5f5 !important;
+}
+
+.q-dialog .q-select :deep(.q-item--active) {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+}
+```
+
+#### Ключевые принципы для q-select:
+1. **Всегда используйте `computed`** для опций
+2. **Добавляйте атрибут `dark`** для контраста
+3. **Используйте `background-color: #f5f5f5`** для фона
+4. **Применяйте CSS стили** для улучшенной видимости полей и опций
+5. **Используйте `clearable`** для возможности очистки
+6. **Добавляйте `option-value` и `option-label`** для объектов
+7. **Используйте `emit-value` и `map-options`** для правильной работы
+8. **Применяйте отдельные стили для диалогов** через `.q-dialog .q-select`
 - Обработка ошибок сервера
 
 ---
@@ -353,6 +545,12 @@ src/app/frontend/src/pages/
 - **Подтверждения**: Диалоги для критических операций
 - **Клавиатурная навигация**: Горячие клавиши для быстрой работы
 
+### Решение проблем q-select
+- **Проблема "белый по белому"**: Используйте атрибут `dark` и фон `#f5f5f5`
+- **Невидимые опции**: Всегда используйте `computed` для опций
+- **Проблемы с фильтрацией**: Правильно обрабатывайте `null` значения
+- **Плохая видимость лейблов**: Применяйте CSS стили для контраста
+
 ---
 
 ## 📈 Метрики и мониторинг
@@ -407,6 +605,7 @@ const client = new ApolloClient({
 - [Vue.js Composition API](https://vuejs.org/guide/extras/composition-api-faq.html)
 - [Quasar Framework](https://quasar.dev/)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
+- [Решение проблем q-select](../solutions/q-select-white-on-white-fix.md)
 
 ### Примеры использования
 - [OrganizationsPage.vue](../../src/app/frontend/src/pages/OrganizationsPage.vue)

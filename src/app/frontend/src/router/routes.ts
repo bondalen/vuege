@@ -16,6 +16,7 @@ import CssTestPage from '../pages/CssTestPage.vue'
 import ForceRenderTestPage from '../pages/ForceRenderTestPage.vue'
 import VirtualScrollTestPage from '../pages/VirtualScrollTestPage.vue'
 
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -96,5 +97,5 @@ export const routes: RouteRecordRaw[] = [
     path: '/virtual-scroll-test',
     name: 'virtual-scroll-test',
     component: VirtualScrollTestPage
-  }
+  },
 ]
