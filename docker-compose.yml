@@ -1,0 +1,32 @@
+# docker-compose.yml (один контейнер)
+version: '3.8'
+
+services:
+  vuege:
+    build: .
+    container_name: vuege-all-in-one
+    ports:
+      - "8082:8082"
+    volumes:
+      - vuege_redis:/var/lib/redis
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:vuege;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_REDIS_HOST=localhost
+      - SPRING_REDIS_PORT=6379
+
+volumes:
+  vuege_redis:
