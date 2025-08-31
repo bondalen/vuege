@@ -1,0 +1,241 @@
+@startuml Migration Control System Schema
+
+!define TABLE(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define PK primary_key
+!define FK foreign_key
+!define INDEX index
+
+' Настройки
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
+' Таблица задач миграции
+TABLE(migration_tasks, "migration_tasks") {
+    PK id : SERIAL
+    --
+    description : TEXT
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+' Родительская таблица объектов MS SQL
+TABLE(mssql_objects, "mssql_objects") {
+    PK id : SERIAL
+    FK task_id : INTEGER
+    --
+    object_name : VARCHAR(255)
+    object_type : VARCHAR(50)
+    schema_name : VARCHAR(100)
+    migration_status : VARCHAR(50)
+    migration_date : TIMESTAMP
+    error_message : TEXT
+    create_date : TIMESTAMP
+    modify_date : TIMESTAMP
+    object_id : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+' Дочерняя таблица для таблиц MS SQL
+TABLE(mssql_tables, "mssql_tables") {
+    PK id : SERIAL
+    FK task_id : INTEGER
+    --
+    object_name : VARCHAR(255)
+    object_type : VARCHAR(50)
+    schema_name : VARCHAR(100)
+    migration_status : VARCHAR(50)
+    migration_date : TIMESTAMP
+    error_message : TEXT
+    create_date : TIMESTAMP
+    modify_date : TIMESTAMP
+    object_id : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+    --
+    table_size : BIGINT
+    row_count : INTEGER
+    has_primary_key : BOOLEAN
+    has_foreign_keys : BOOLEAN
+    has_indexes : BOOLEAN
+    has_triggers : BOOLEAN
+    column_count : INTEGER
+    max_column_length : INTEGER
+    postgres_table_name : VARCHAR(255)
+    postgres_schema_name : VARCHAR(100)
+    postgres_row_count : INTEGER
+    postgres_table_size : BIGINT
+    migration_duration : INTERVAL
+    data_transfer_size : BIGINT
+}
+
+' Дочерняя таблица для представлений MS SQL
+TABLE(mssql_views, "mssql_views") {
+    PK id : SERIAL
+    FK task_id : INTEGER
+    --
+    object_name : VARCHAR(255)
+    object_type : VARCHAR(50)
+    schema_name : VARCHAR(100)
+    migration_status : VARCHAR(50)
+    migration_date : TIMESTAMP
+    error_message : TEXT
+    create_date : TIMESTAMP
+    modify_date : TIMESTAMP
+    object_id : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+    --
+    view_definition : TEXT
+    is_updatable : BOOLEAN
+    check_option : VARCHAR(20)
+    is_encrypted : BOOLEAN
+    dependency_count : INTEGER
+    referenced_tables : TEXT[]
+    postgres_view_name : VARCHAR(255)
+    postgres_schema_name : VARCHAR(100)
+    postgres_view_definition : TEXT
+    migration_duration : INTERVAL
+    definition_complexity : VARCHAR(20)
+}
+
+' Дочерняя таблица для функций MS SQL
+TABLE(mssql_functions, "mssql_functions") {
+    PK id : SERIAL
+    FK task_id : INTEGER
+    --
+    object_name : VARCHAR(255)
+    object_type : VARCHAR(50)
+    schema_name : VARCHAR(100)
+    migration_status : VARCHAR(50)
+    migration_date : TIMESTAMP
+    error_message : TEXT
+    create_date : TIMESTAMP
+    modify_date : TIMESTAMP
+    object_id : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+    --
+    function_definition : TEXT
+    return_type : VARCHAR(100)
+    parameter_count : INTEGER
+    is_deterministic : BOOLEAN
+    function_type : VARCHAR(20)
+    postgres_function_name : VARCHAR(255)
+    postgres_function_definition : TEXT
+}
+
+' Дочерняя таблица для хранимых процедур MS SQL
+TABLE(mssql_stored_procedures, "mssql_stored_procedures") {
+    PK id : SERIAL
+    FK task_id : INTEGER
+    --
+    object_name : VARCHAR(255)
+    object_type : VARCHAR(50)
+    schema_name : VARCHAR(100)
+    migration_status : VARCHAR(50)
+    migration_date : TIMESTAMP
+    error_message : TEXT
+    create_date : TIMESTAMP
+    modify_date : TIMESTAMP
+    object_id : INTEGER
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+    --
+    procedure_definition : TEXT
+    parameter_count : INTEGER
+    is_encrypted : BOOLEAN
+    postgres_function_name : VARCHAR(255)
+    postgres_function_definition : TEXT
+    migration_duration : INTERVAL
+}
+
+' Представления для анализа
+TABLE(migration_overview, "migration_overview") {
+    object_category : VARCHAR(50)
+    total_objects : INTEGER
+    completed_objects : INTEGER
+    failed_objects : INTEGER
+    pending_objects : INTEGER
+    completion_percentage : DECIMAL(5,2)
+}
+
+TABLE(table_migration_details, "table_migration_details") {
+    object_name : VARCHAR(255)
+    table_size : BIGINT
+    row_count : INTEGER
+    has_primary_key : BOOLEAN
+    has_foreign_keys : BOOLEAN
+    migration_status : VARCHAR(50)
+    postgres_table_name : VARCHAR(255)
+    postgres_row_count : INTEGER
+    postgres_table_size : BIGINT
+    migration_duration : INTERVAL
+    data_integrity_percentage : DECIMAL(5,2)
+}
+
+TABLE(view_migration_details, "view_migration_details") {
+    object_name : VARCHAR(255)
+    is_updatable : BOOLEAN
+    check_option : VARCHAR(20)
+    definition_complexity : VARCHAR(20)
+    dependency_count : INTEGER
+    migration_status : VARCHAR(50)
+    postgres_view_name : VARCHAR(255)
+    migration_duration : INTERVAL
+    definition_length_category : VARCHAR(20)
+}
+
+' Связи
+migration_tasks ||--o{ mssql_objects : "task_id"
+mssql_objects <|-- mssql_tables : "INHERITS"
+mssql_objects <|-- mssql_views : "INHERITS"
+mssql_objects <|-- mssql_functions : "INHERITS"
+mssql_objects <|-- mssql_stored_procedures : "INHERITS"
+
+' Индексы
+note right of mssql_objects
+  Индексы:
+  - idx_task_id
+  - idx_object_type
+  - idx_migration_status
+  - idx_object_name
+end note
+
+note right of mssql_tables
+  Индексы:
+  - idx_table_size
+  - idx_row_count
+  - idx_postgres_name
+end note
+
+note right of mssql_views
+  Индексы:
+  - idx_updatable
+  - idx_postgres_name
+  - idx_complexity
+end note
+
+' Ограничения
+note bottom of mssql_objects
+  Ограничения:
+  - check_migration_status
+  - check_object_type
+end note
+
+note bottom of mssql_tables
+  Ограничения:
+  - check_table_size >= 0
+  - check_row_count >= 0
+end note
+
+note bottom of mssql_views
+  Ограничения:
+  - check_check_option
+  - check_complexity
+end note
+
+@enduml

@@ -1,0 +1,1315 @@
+{
+  "timestamp": "2025-08-31T09:54:49.103198",
+  "control_duplicates": [],
+  "specific_names": {
+    "sqlserver": [
+      {
+        "name": "cnInvAccnt",
+        "type": "U ",
+        "type_desc": "USER_TABLE"
+      },
+      {
+        "name": "cnInvAccntCs",
+        "type": "V ",
+        "type_desc": "VIEW"
+      },
+      {
+        "name": "cnInvAccntSmpl",
+        "type": "U ",
+        "type_desc": "USER_TABLE"
+      },
+      {
+        "name": "DF_cnInvAccnt_ciaTimeOfEntry",
+        "type": "D ",
+        "type_desc": "DEFAULT_CONSTRAINT"
+      },
+      {
+        "name": "DF_cnInvAccntSmpl_ciasTimeOfEntry",
+        "type": "D ",
+        "type_desc": "DEFAULT_CONSTRAINT"
+      },
+      {
+        "name": "FK_cn_inv_dbt_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cn_inv_pm_cnInvAccntSmpl",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cn_PrDoc_cnInvAccntSmpl",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvAccnt_cn_s_org",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvAccnt_cnInvAccntSmpl",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvAccntSmpl_accnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvAccntSmpl_cn_s_org_smpl",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvAccntSmpl_cnInv",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvCmm_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvCmmAg_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvCmmCst_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvCmmDt_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvCmmFn_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_cnInvGr_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "FK_invDbtTmpCiaRel_cnInvAccnt",
+        "type": "F ",
+        "type_desc": "FOREIGN_KEY_CONSTRAINT"
+      },
+      {
+        "name": "PK_cnInvAccnt",
+        "type": "PK",
+        "type_desc": "PRIMARY_KEY_CONSTRAINT"
+      },
+      {
+        "name": "PK_cnInvAccntSmpl",
+        "type": "PK",
+        "type_desc": "PRIMARY_KEY_CONSTRAINT"
+      }
+    ],
+    "postgres": [
+      {
+        "name": "cninvaccnt",
+        "type": "TABLE",
+        "type_desc": "BASE TABLE"
+      },
+      {
+        "name": "cninvaccntcs",
+        "type": "TABLE",
+        "type_desc": "BASE TABLE"
+      },
+      {
+        "name": "cninvaccntsmpl",
+        "type": "TABLE",
+        "type_desc": "BASE TABLE"
+      }
+    ]
+  },
+  "similar_names": [
+    {
+      "name1": "cncs",
+      "type1": "TABLE",
+      "name2": "cnCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cninv",
+      "type1": "TABLE",
+      "name2": "cnInv",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvaccnt",
+      "type1": "TABLE",
+      "name2": "cnInvAccnt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvaccntcs",
+      "type1": "TABLE",
+      "name2": "cnInvAccntCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cninvaccntsmpl",
+      "type1": "TABLE",
+      "name2": "cnInvAccntSmpl",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmm",
+      "type1": "TABLE",
+      "name2": "cnInvCmm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmag",
+      "type1": "TABLE",
+      "name2": "cnInvCmmAg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmagn",
+      "type1": "TABLE",
+      "name2": "cnInvCmmAgN",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmcst",
+      "type1": "TABLE",
+      "name2": "cnInvCmmCst",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmcstn",
+      "type1": "TABLE",
+      "name2": "cnInvCmmCstN",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmdt",
+      "type1": "TABLE",
+      "name2": "cnInvCmmDt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmdtn",
+      "type1": "TABLE",
+      "name2": "cnInvCmmDtN",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmfn",
+      "type1": "TABLE",
+      "name2": "cnInvCmmFn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmfnn",
+      "type1": "TABLE",
+      "name2": "cnInvCmmFnN",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmgr",
+      "type1": "TABLE",
+      "name2": "cnInvCmmGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvcmmtp",
+      "type1": "TABLE",
+      "name2": "cnInvCmmTp",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvgr",
+      "type1": "TABLE",
+      "name2": "cnInvGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvgrnm",
+      "type1": "TABLE",
+      "name2": "cnInvGrNm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cninvtransfer",
+      "type1": "TABLE",
+      "name2": "cnInvTransfer",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cnnum",
+      "type1": "TABLE",
+      "name2": "cnNum",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cnnumcs",
+      "type1": "TABLE",
+      "name2": "cnNumCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cnnumenum",
+      "type1": "TABLE",
+      "name2": "cnNumEnum",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cnnumtype",
+      "type1": "TABLE",
+      "name2": "cnNumType",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cn_prdoc",
+      "type1": "TABLE",
+      "name2": "cn_PrDoc",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cn_prdoccs",
+      "type1": "TABLE",
+      "name2": "cn_PrDocCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_prdocp",
+      "type1": "TABLE",
+      "name2": "cn_PrDocP",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cn_prdoct",
+      "type1": "TABLE",
+      "name2": "cn_PrDocT",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cn_scs",
+      "type1": "TABLE",
+      "name2": "cn_sCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_s_orgcs",
+      "type1": "TABLE",
+      "name2": "cn_s_orgCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_s_orgcustbuirginv",
+      "type1": "TABLE",
+      "name2": "cn_s_orgCustBuirgInv",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_s_orgexebuirg",
+      "type1": "TABLE",
+      "name2": "cn_s_orgExeBuirg",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_s_orgexebuirginv",
+      "type1": "TABLE",
+      "name2": "cn_s_orgExeBuirgInv",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cn_s_org_smplcs",
+      "type1": "TABLE",
+      "name2": "cn_s_org_smplCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cnwithnum",
+      "type1": "TABLE",
+      "name2": "cnWithNum",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cstag",
+      "type1": "TABLE",
+      "name2": "cstAg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cstagcs",
+      "type1": "TABLE",
+      "name2": "cstAgCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cstagpn",
+      "type1": "TABLE",
+      "name2": "cstAgPn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cstagpnbranch",
+      "type1": "TABLE",
+      "name2": "cstAgPnBranch",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cstagpnbranch_now",
+      "type1": "TABLE",
+      "name2": "cstAgPnBranch_Now",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cstagpncs",
+      "type1": "TABLE",
+      "name2": "cstAgPnCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cstagpnmnrl",
+      "type1": "TABLE",
+      "name2": "cstAgPnMnrl",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "cstccngr",
+      "type1": "TABLE",
+      "name2": "cstCcnGr",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "cststorgr",
+      "type1": "TABLE",
+      "name2": "cstStorGr",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "dtqcontract",
+      "type1": "TABLE",
+      "name2": "dtqContract",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "dtqcounterparty",
+      "type1": "TABLE",
+      "name2": "dtqCounterparty",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "dtqinvoice",
+      "type1": "TABLE",
+      "name2": "dtqInvoice",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "dtqinvoicedbt",
+      "type1": "TABLE",
+      "name2": "dtqInvoiceDbt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "impcstcodestrange",
+      "type1": "TABLE",
+      "name2": "impCstCodeStrange",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "impgr",
+      "type1": "TABLE",
+      "name2": "impGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "imppir_21",
+      "type1": "TABLE",
+      "name2": "impPIR_21",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invbranch_23q1",
+      "type1": "TABLE",
+      "name2": "invBranch_23q1",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invbranch_23q2",
+      "type1": "TABLE",
+      "name2": "invBranch_23q2",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invbranch_25q0",
+      "type1": "TABLE",
+      "name2": "invBranch_25q0",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invbranch_25q1",
+      "type1": "TABLE",
+      "name2": "invBranch_25q1",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invbranch_25q1_new",
+      "type1": "TABLE",
+      "name2": "invBranch_25q1_new",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invcs",
+      "type1": "TABLE",
+      "name2": "invCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "invdbt",
+      "type1": "TABLE",
+      "name2": "invDbt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invdbttmpciarel",
+      "type1": "TABLE",
+      "name2": "invDbtTmpCiaRel",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invdbtvalue",
+      "type1": "TABLE",
+      "name2": "invDbtValue",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invnum",
+      "type1": "TABLE",
+      "name2": "invNum",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "invnumenum",
+      "type1": "TABLE",
+      "name2": "invNumEnum",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "invwithnum",
+      "type1": "TABLE",
+      "name2": "invWithNum",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ipgch",
+      "type1": "TABLE",
+      "name2": "ipgCh",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgchrl",
+      "type1": "TABLE",
+      "name2": "ipgChRl",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgcostits",
+      "type1": "TABLE",
+      "name2": "ipgCostIts",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgcostitsnm",
+      "type1": "TABLE",
+      "name2": "ipgCostItsNm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgcostitsnmall",
+      "type1": "TABLE",
+      "name2": "ipgCostItsNmAll",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ipgpn",
+      "type1": "TABLE",
+      "name2": "ipgPn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgpnlim",
+      "type1": "TABLE",
+      "name2": "ipgPnLim",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgsh",
+      "type1": "TABLE",
+      "name2": "ipgSh",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgsmrslt",
+      "type1": "TABLE",
+      "name2": "ipgSmRslt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ipgst",
+      "type1": "TABLE",
+      "name2": "ipgSt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgstlm",
+      "type1": "TABLE",
+      "name2": "ipgStLm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgstpn",
+      "type1": "TABLE",
+      "name2": "ipgStPn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgstrl",
+      "type1": "TABLE",
+      "name2": "ipgStRl",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgstrlsh",
+      "type1": "TABLE",
+      "name2": "ipgStRlSh",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgstrlshp",
+      "type1": "TABLE",
+      "name2": "ipgStRlShP",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutpl",
+      "type1": "TABLE",
+      "name2": "ipgUtPl",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplgr",
+      "type1": "TABLE",
+      "name2": "ipgUtPlGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplgrp",
+      "type1": "TABLE",
+      "name2": "ipgUtPlGrP",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplp",
+      "type1": "TABLE",
+      "name2": "ipgUtPlP",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplpncostits",
+      "type1": "TABLE",
+      "name2": "ipgUtPlPnCostIts",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplpnlmmn",
+      "type1": "TABLE",
+      "name2": "ipgUtPlPnLmMn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplpnlmqu",
+      "type1": "TABLE",
+      "name2": "ipgUtPlPnLmQu",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ipgutplpnlmye",
+      "type1": "TABLE",
+      "name2": "ipgUtPlPnLmYe",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundoc",
+      "type1": "TABLE",
+      "name2": "JuUnDoc",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocchng",
+      "type1": "TABLE",
+      "name2": "JuUnDocChng",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocchnggr",
+      "type1": "TABLE",
+      "name2": "JuUnDocChngGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocchnggrrel",
+      "type1": "TABLE",
+      "name2": "JuUnDocChngGrRel",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocchngtype",
+      "type1": "TABLE",
+      "name2": "JuUnDocChngType",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocchngvw",
+      "type1": "TABLE",
+      "name2": "JuUnDocChngVw",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocdocprmrinsert",
+      "type1": "TABLE",
+      "name2": "JuUnDocDocPrmrInsert",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocdocprmrinsertold",
+      "type1": "TABLE",
+      "name2": "JuUnDocDocPrmrInsertOld",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocimport",
+      "type1": "TABLE",
+      "name2": "JuUnDocImport",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocprmr",
+      "type1": "TABLE",
+      "name2": "JuUnDocPrmr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocprmrcount",
+      "type1": "TABLE",
+      "name2": "JuUnDocPrmrCount",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocprmrgr",
+      "type1": "TABLE",
+      "name2": "JuUnDocPrmrGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocprmrgrrel",
+      "type1": "TABLE",
+      "name2": "JuUnDocPrmrGrRel",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocprmrtype",
+      "type1": "TABLE",
+      "name2": "JuUnDocPrmrType",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocreg",
+      "type1": "TABLE",
+      "name2": "JuUnDocReg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocreglink",
+      "type1": "TABLE",
+      "name2": "JuUnDocRegLink",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocreglinkvw",
+      "type1": "TABLE",
+      "name2": "JuUnDocRegLinkVw",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocrelchng",
+      "type1": "TABLE",
+      "name2": "JuUnDocRelChng",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocrelchngvw",
+      "type1": "TABLE",
+      "name2": "JuUnDocRelChngVw",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "juundocside",
+      "type1": "TABLE",
+      "name2": "JuUnDocSide",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocsideorg",
+      "type1": "TABLE",
+      "name2": "JuUnDocSideOrg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundocsidetype",
+      "type1": "TABLE",
+      "name2": "JuUnDocSideType",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "juundoctype",
+      "type1": "TABLE",
+      "name2": "JuUnDocType",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogag",
+      "type1": "TABLE",
+      "name2": "ogAg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ogagcs",
+      "type1": "TABLE",
+      "name2": "ogAgCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfee",
+      "type1": "TABLE",
+      "name2": "ogAgFee",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ogagfeegr",
+      "type1": "TABLE",
+      "name2": "ogAgFeeGr",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeegra",
+      "type1": "TABLE",
+      "name2": "ogAgFeeGrA",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeep",
+      "type1": "TABLE",
+      "name2": "ogAgFeeP",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ogagfeepntest",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTest",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ogagfeepntestactattr",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestActAttr",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestactattrtrue",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestActAttrTrue",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestactnew",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestActNew",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestactpnnoeq",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestActPnNoEq",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestagentno",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestAgentNo",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestcstno",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestCstNo",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ogagfeepntestdbno",
+      "type1": "TABLE",
+      "name2": "ogAgFeePnTestDbNo",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ognmf",
+      "type1": "TABLE",
+      "name2": "ogNmF",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ognmf_allvariants",
+      "type1": "TABLE",
+      "name2": "ogNmF_allVariants",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ognmf_allvariantsag",
+      "type1": "TABLE",
+      "name2": "ogNmF_allVariantsAg",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ognmf_allvariantsnorepeat",
+      "type1": "TABLE",
+      "name2": "ogNmF_allVariantsNoRepeat",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "org_idcs",
+      "type1": "TABLE",
+      "name2": "org_idCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "q_cn_inv_dbt_str",
+      "type1": "TABLE",
+      "name2": "q_cn_inv_dbt_Str",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ra_change_summct",
+      "type1": "TABLE",
+      "name2": "ra_change_summCt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ra_chcs",
+      "type1": "TABLE",
+      "name2": "ra_chCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ra_chsmlt",
+      "type1": "TABLE",
+      "name2": "ra_chSmLt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "racs",
+      "type1": "TABLE",
+      "name2": "raCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ralpgr",
+      "type1": "TABLE",
+      "name2": "ralpGr",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ralpold",
+      "type1": "TABLE",
+      "name2": "ralpOld",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ralpra",
+      "type1": "TABLE",
+      "name2": "ralpRa",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ralpraau",
+      "type1": "TABLE",
+      "name2": "ralpRaAu",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rara_chsmlt",
+      "type1": "TABLE",
+      "name2": "RaRa_chSmLt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rara_chsmlt_rlt",
+      "type1": "TABLE",
+      "name2": "RaRa_chSmLt_Rlt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rara_chsmlt_rltyy",
+      "type1": "TABLE",
+      "name2": "RaRa_chSmLt_RltYy",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rasmlt",
+      "type1": "TABLE",
+      "name2": "raSmLt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ra_summct",
+      "type1": "TABLE",
+      "name2": "ra_summCt",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "ratime",
+      "type1": "TABLE",
+      "name2": "raTime",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ratimeag",
+      "type1": "TABLE",
+      "name2": "raTimeAg",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ratimeagprvs",
+      "type1": "TABLE",
+      "name2": "raTimeAgPrvs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "ra_typegr",
+      "type1": "TABLE",
+      "name2": "ra_typeGr",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxbuirg",
+      "type1": "TABLE",
+      "name2": "rgTaxBuirg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxidnumind",
+      "type1": "TABLE",
+      "name2": "rgTaxIdNumInd",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxidnumjurpers",
+      "type1": "TABLE",
+      "name2": "rgTaxIdNumJurPers",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxind",
+      "type1": "TABLE",
+      "name2": "rgTaxInd",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxlgentfrmmtd",
+      "type1": "TABLE",
+      "name2": "rgTaxLgEntFrmMtd",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxlgenttrmmtd",
+      "type1": "TABLE",
+      "name2": "rgTaxLgEntTrmMtd",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxmnstregnum",
+      "type1": "TABLE",
+      "name2": "rgTaxMnStRegNum",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxmnstregnumind",
+      "type1": "TABLE",
+      "name2": "rgTaxMnStRegNumInd",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxname",
+      "type1": "TABLE",
+      "name2": "rgTaxName",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxnameshort",
+      "type1": "TABLE",
+      "name2": "rgTaxNameShort",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxoffice",
+      "type1": "TABLE",
+      "name2": "rgTaxOffice",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreason",
+      "type1": "TABLE",
+      "name2": "rgTaxReason",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreasoncode",
+      "type1": "TABLE",
+      "name2": "rgTaxReasonCode",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxregion",
+      "type1": "TABLE",
+      "name2": "rgTaxRegion",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreoracqui",
+      "type1": "TABLE",
+      "name2": "rgTaxReorAcqui",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreordivis",
+      "type1": "TABLE",
+      "name2": "rgTaxReorDivis",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreordivisacqu",
+      "type1": "TABLE",
+      "name2": "rgTaxReorDivisAcqu",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreordivismerg",
+      "type1": "TABLE",
+      "name2": "rgTaxReorDivisMerg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreormerge",
+      "type1": "TABLE",
+      "name2": "rgTaxReorMerge",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreorsepar",
+      "type1": "TABLE",
+      "name2": "rgTaxReorSepar",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreorseparacqu",
+      "type1": "TABLE",
+      "name2": "rgTaxReorSeparAcqu",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreorseparmerg",
+      "type1": "TABLE",
+      "name2": "rgTaxReorSeparMerg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxreortrans",
+      "type1": "TABLE",
+      "name2": "rgTaxReorTrans",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxsubdivs",
+      "type1": "TABLE",
+      "name2": "rgTaxSubDivs",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxsubdivsbuirg",
+      "type1": "TABLE",
+      "name2": "rgTaxSubDivsBuirg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxsubdivsname",
+      "type1": "TABLE",
+      "name2": "rgTaxSubDivsName",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rgtaxsubdivsreas",
+      "type1": "TABLE",
+      "name2": "rgTaxSubDivsReas",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "rrclist",
+      "type1": "TABLE",
+      "name2": "RRcList",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rrclistview",
+      "type1": "TABLE",
+      "name2": "RRcListView",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rrcrslt",
+      "type1": "TABLE",
+      "name2": "RRcRslt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "rrctimelist",
+      "type1": "TABLE",
+      "name2": "RRcTimeList",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "stcost",
+      "type1": "TABLE",
+      "name2": "stCost",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stcostcs",
+      "type1": "TABLE",
+      "name2": "stCostCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "stcostnm",
+      "type1": "TABLE",
+      "name2": "stCostNm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stilim",
+      "type1": "TABLE",
+      "name2": "stiLim",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stipg",
+      "type1": "TABLE",
+      "name2": "stIpg",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stipgcs",
+      "type1": "TABLE",
+      "name2": "stIpgCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "stipgnm",
+      "type1": "TABLE",
+      "name2": "stIpgNm",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stnet",
+      "type1": "TABLE",
+      "name2": "stNet",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "stnetpn",
+      "type1": "TABLE",
+      "name2": "stNetPn",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "strel",
+      "type1": "TABLE",
+      "name2": "stRel",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "sttype",
+      "type1": "TABLE",
+      "name2": "stType",
+      "type2": "TABLE"
+    },
+    {
+      "name1": "sysobjectswithdescription",
+      "type1": "TABLE",
+      "name2": "sysObjectsWithDescription",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "timersltcap",
+      "type1": "TABLE",
+      "name2": "TimeRsltCAP",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "timersltm",
+      "type1": "TABLE",
+      "name2": "TimeRsltM",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "timersltmrl",
+      "type1": "TABLE",
+      "name2": "TimeRsltMrl",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "timersltmrttl",
+      "type1": "TABLE",
+      "name2": "TimeRsltMrTtl",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "yrcs",
+      "type1": "TABLE",
+      "name2": "yrCs",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "yr_ctrlaccnt",
+      "type1": "TABLE",
+      "name2": "yr_ctrlAccnt",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "yr_ctrl_cmacc21",
+      "type1": "TABLE",
+      "name2": "yr_ctrl_cmAcc21",
+      "type2": "VIEW"
+    },
+    {
+      "name1": "yr_ctrl_cmacc21_06",
+      "type1": "TABLE",
+      "name2": "yr_ctrl_cmAcc21_06",
+      "type2": "VIEW"
+    }
+  ],
+  "total_objects": 583,
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/check-duplicate-names-fixed-20250831_095449.log"
+}

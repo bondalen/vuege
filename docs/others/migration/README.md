@@ -1,0 +1,165 @@
+# 📊 Документация миграции базы данных
+
+Эта папка содержит полную документацию процесса миграции схемы AGS из SQL Server в PostgreSQL.
+
+## 🎯 Обзор миграции
+
+**Цель**: Миграция схемы `ags` из базы данных SQL Server `Fish_Eye` в PostgreSQL `vuege`
+**Результат**: 236/251 таблиц успешно мигрировано (94.0%)
+**Объем данных**: ~1,800,000+ записей
+**Статус**: Завершена с отличными результатами
+
+## 📋 Ключевые документы
+
+### 🏆 [ags-migration-final-completion-report.md](./ags-migration-final-completion-report.md)
+**Финальный отчет о завершении миграции** - полный отчет с детальными результатами и метриками.
+
+**Содержит:**
+- Финальные показатели миграции (94% успеха)
+- Список успешно мигрированных таблиц (236)
+- Критически важные таблицы (100% готовность)
+- Оставшиеся проблемы (15 таблиц)
+- Бизнес-ценность мигрированных данных
+- Следующие шаги
+
+### 🔧 [dbhub-testing-report.md](./dbhub-testing-report.md)
+**Отчет о тестировании DBHub MCP сервера** - результаты тестирования универсального инструмента миграции.
+
+**Содержит:**
+- Тестирование DBHub MCP сервера
+- Анализ возможностей и ограничений
+- Предложения по дальнейшим действиям
+- Переход к Python-скриптам
+
+### 📊 [ags-migration-fix-plan.md](./ags-migration-fix-plan.md)
+**План исправления проблемных таблиц** - детальный план для исправления оставшихся проблем.
+
+**Содержит:**
+- Анализ проблемных таблиц
+- Категории проблем
+- Стратегии исправления
+- Приоритизация задач
+
+### 🚀 [mssql-to-postgres-migration-plan.md](./mssql-to-postgres-migration-plan.md)
+**Общий план миграции** - стратегия и архитектура процесса миграции.
+
+**Содержит:**
+- Архитектуру миграции
+- Технические решения
+- Инструменты и технологии
+- План выполнения
+
+## 📈 Отчеты о прогрессе
+
+### 📊 [ags-migration-completion-report.md](./ags-migration-completion-report.md)
+**Отчет о завершении основного этапа** - результаты после основного этапа миграции.
+
+### 📊 [ags-migration-excellent-progress-report.md](./ags-migration-excellent-progress-report.md)
+**Отчет об отличном прогрессе** - промежуточные результаты (87.2% готовности).
+
+### 📊 [ags-migration-major-progress-report.md](./ags-migration-major-progress-report.md)
+**Отчет о значительном прогрессе** - результаты после миграции ключевых таблиц.
+
+### 📊 [ags-migration-midway-report.md](./ags-migration-midway-report.md)
+**Промежуточный отчет** - статус на середине процесса миграции.
+
+## 🔧 Исправления и оптимизация
+
+### 📊 [ags-migration-fixes-completed-report.md](./ags-migration-fixes-completed-report.md)
+**Отчет о завершении исправлений** - результаты после выполнения всех исправлений.
+
+### 📊 [ags-migration-achievements.md](./ags-migration-achievements.md)
+**Достижения миграции** - ключевые успехи и прорывы в процессе.
+
+### 📊 [ags-migration-final-achievements.md](./ags-migration-final-achievements.md)
+**Финальные достижения** - итоговые результаты и метрики.
+
+## 📋 Промежуточные отчеты
+
+### 📊 [ags-schema-migration-status.md](./ags-schema-migration-status.md)
+**Статус миграции схемы AGS** - текущее состояние процесса.
+
+### 📊 [data-migration-report.md](./data-migration-report.md)
+**Отчет о миграции данных** - результаты миграции данных.
+
+### 📊 [data-migration-staged-report.md](./data-migration-staged-report.md)
+**Отчет о поэтапной миграции** - результаты поэтапного подхода.
+
+### 📊 [staged-migration-report.md](./staged-migration-report.md)
+**Отчет о поэтапной миграции** - детали поэтапного процесса.
+
+## 🧪 Тестирование и валидация
+
+### 📊 [test-migration-report.md](./test-migration-report.md)
+**Отчет о тестировании миграции** - результаты тестирования процесса.
+
+### 📊 [final-migration-report.md](./final-migration-report.md)
+**Финальный отчет о миграции** - итоговые результаты тестирования.
+
+## 🎯 Ключевые достижения
+
+### ✅ **Успешно мигрированные категории (100% готовность):**
+- **Финансовые данные**: 450,000+ записей
+- **Документальная база**: 150,000+ документов
+- **Инвестиционные проекты**: 70,000+ записей
+- **Аналитическая база**: 250,000+ отчетов
+- **Налоговая система**: 1,500+ записей
+- **Организационная структура**: 30,000+ записей
+
+### 🔧 **Созданные инструменты:**
+- `migrate-only-ags-schema.py` - Основной скрипт миграции
+- `fix-column-case-issues.py` - Исправление регистра колонок
+- `fix-uuid-issues.py` - Исправление UUID типов
+- `fix-table-name-issues.py` - Исправление имен таблиц
+- `fix-remaining-issues.py` - Исправление оставшихся таблиц
+- `check-migration-progress.py` - Проверка прогресса
+- `run-all-fixes.py` - Общий запуск исправлений
+
+### 📊 **Технические решения:**
+- Автоматическая конвертация UUID в text
+- Приведение имен колонок к нижнему регистру
+- Замена дефисов на подчеркивания в именах таблиц
+- Обработка дублирующихся типов
+- Система мониторинга прогресса
+
+## 🚀 Следующие шаги
+
+1. **Исправление оставшихся 15 таблиц** (при необходимости)
+2. **Интеграция с основным приложением**
+3. **Запуск Spring Boot приложения**
+4. **Тестирование GraphQL API**
+
+## 📁 Структура файлов
+
+```
+migration/
+├── README.md                                    # Этот файл
+├── ags-migration-final-completion-report.md    # Финальный отчет
+├── dbhub-testing-report.md                     # Тестирование DBHub
+├── ags-migration-fix-plan.md                   # План исправлений
+├── mssql-to-postgres-migration-plan.md         # Общий план
+├── ags-migration-completion-report.md          # Отчет о завершении
+├── ags-migration-excellent-progress-report.md  # Отличный прогресс
+├── ags-migration-major-progress-report.md      # Значительный прогресс
+├── ags-migration-midway-report.md              # Промежуточный отчет
+├── ags-migration-fixes-completed-report.md     # Исправления завершены
+├── ags-migration-achievements.md               # Достижения
+├── ags-migration-final-achievements.md         # Финальные достижения
+├── ags-schema-migration-status.md              # Статус схемы
+├── data-migration-report.md                    # Миграция данных
+├── data-migration-staged-report.md             # Поэтапная миграция
+├── staged-migration-report.md                  # Отчет о поэтапности
+├── test-migration-report.md                    # Тестирование
+├── final-migration-report.md                   # Финальный отчет
+└── ... (другие документы)
+```
+
+## 🔗 Связанные ресурсы
+
+- **Скрипты миграции**: `src/infrastructure/scripts/`
+- **Проблема в problems.md**: [P250830-01](../main/problems.md#p250830-01---проблема-миграции-схемы-ags-из-sql-server-в-postgresql)
+- **Changelog**: [changelog.md](../main/changelog.md)
+
+---
+
+*Последнее обновление: 2025-08-30*

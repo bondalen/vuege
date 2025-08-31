@@ -1,0 +1,1353 @@
+{
+  "timestamp": "2025-08-30T16:46:39.338321",
+  "total_tables_processed": 211,
+  "successful_creations": 39,
+  "failed_creations": 0,
+  "no_candidates": 172,
+  "results": [
+    {
+      "table_name": "cn_inv_dbt_double",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cn_inv_dbt_upl_pm_upl",
+      "pk_columns": [
+        "cn_inv_dbt_upl"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_inv_pm_upl",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_prdoc",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_prdoccs",
+      "pk_columns": [
+        "cnpdkey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_prdocp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cn_prdoct",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_org",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_org_smpl",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_org_smplcs",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_orgcs",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_orgcustbuirginv",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_orgexebuirg",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_orgexebuirginv",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_s_type",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cn_scs",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cncs",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cninv",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cninvaccnt",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cninvaccntcs",
+      "pk_columns": [
+        "ciakey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cninvaccntsmpl",
+      "pk_columns": [
+        "cn_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "cninvcmmag",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmagn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmcst",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmcstn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmdt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmdtn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmfn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmfnn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvcmmtp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvgrnm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cninvtransfer",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cnnum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cnnumcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cnnumenum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cnnumtype",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cnwithnum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstagcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstagpnbranch",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstagpnbranch_now",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstagpncs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstagpnmnrl",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cstccngr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "cststorgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "dtqcontract",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "dtqcounterparty",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "dtqinvoice",
+      "pk_columns": [
+        "mark"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "dtqinvoicedbt",
+      "pk_columns": [
+        "cn_inv_dbt_upl"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "dym_pm_pm",
+      "pk_columns": [
+        "upl_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "impcstcodestrange",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "impgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "imppir_21",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invbranch_23q1",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invbranch_23q2",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invbranch_25q0",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invbranch_25q1",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invbranch_25q1_new",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invdbt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invdbttmpciarel",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invnum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invnumenum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "invwithnum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipg",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgch",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgchrl",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgcostits",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgcostitsnm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgcostitsnmall",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgpn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgpnlim",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgsh",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgsmrslt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgst",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgstlm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgstpn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgstrl",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgstrlsh",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgstrlshp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutpl",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplgrp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplpnlmmn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplpnlmqu",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ipgutplpnlmye",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundoc",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocchng",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocchngtype",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocchngvw",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocdocprmrinsert",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocdocprmrinsertold",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocimport",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocprmr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocprmrcount",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocprmrgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocprmrtype",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocreg",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocreglink",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocreglinkvw",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocrelchng",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundocrelchngvw",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "juundoctype",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "mmmm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "og",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfee",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfeegr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfeegra",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfeep",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfeepntest",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ogagfeepntestactattr",
+      "pk_columns": [
+        "cstaag"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestactattrtrue",
+      "pk_columns": [
+        "cstaag"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestactnew",
+      "pk_columns": [
+        "oafptoafname"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestactpnnoeq",
+      "pk_columns": [
+        "oafkey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestagentno",
+      "pk_columns": [
+        "oafptoafsender"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestcstno",
+      "pk_columns": [
+        "oafptkey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ogagfeepntestdbno",
+      "pk_columns": [
+        "oafkey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "ognmf",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ognmf_allvariants",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ognmf_allvariantsag",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ognmf_allvariantsnorepeat",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "org",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "org_id",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "org_id_type",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "org_idcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "q_cn_inv_dbt_str",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "q_cn_inv_dbt_upl_sum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "q_cn_inv_pm_upl_sum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "qqqq",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_change",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_change_summ",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_change_summct",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_chcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_chsmlt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_summ",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_summct",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ra_typegr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "racs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ralp",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ralpgr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ralpold",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ralpra",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ralpraau",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rara_chsmlt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rara_chsmlt_rlt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rara_chsmlt_rltyy",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rasmlt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ratime",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ratimeag",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "ratimeagprvs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxbuirg",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxidnumind",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxidnumjurpers",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxind",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxlgentfrmmtd",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxlgenttrmmtd",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxmnstregnum",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxmnstregnumind",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxname",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxnameshort",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxoffice",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreason",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreasoncode",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxregion",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreoracqui",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreordivis",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreordivisacqu",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreormerge",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreorsepar",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreorseparacqu",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxreortrans",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxsubdivs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxsubdivsbuirg",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxsubdivsname",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rgtaxsubdivsreas",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rrclist",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rrclistview",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rrcrslt",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "rrctimelist",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "st",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stcost",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stcostcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stcostnm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stilim",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stipg",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stipgcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stipgnm",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stnet",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "stnetpn",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "strel",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "sttype",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "sysobjectswithdescription",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "timersltcap",
+      "pk_columns": [
+        "ykey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "timersltm",
+      "pk_columns": [
+        "ykey"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "timersltmrl",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "timersltmrttl",
+      "pk_columns": [
+        "yyyy"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "yr_ctrl",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_ctrl_cm",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_ctrl_cm_21",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_ctrl_cmacc21",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_ctrl_cmacc21_06",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_ctrlaccnt",
+      "pk_columns": [
+        "yr_key"
+      ],
+      "total_records": 0,
+      "status": "success"
+    },
+    {
+      "table_name": "yr_upl_p",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "yrcs",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    },
+    {
+      "table_name": "yyyy",
+      "pk_columns": [],
+      "status": "no_candidates",
+      "error": "No suitable columns found"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-08-31T09:18:17.427031",
+  "sqlserver_objects": 378,
+  "postgres_objects": 236,
+  "object_types": 6,
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/populate-migration-control-tables-20250831_091816.log"
+}

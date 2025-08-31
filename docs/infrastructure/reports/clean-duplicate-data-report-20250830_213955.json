@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-08-30T21:39:55.227098",
+  "results": {
+    "analyzed_tables": 25,
+    "cleaned_tables": 0,
+    "total_duplicates_removed": 0,
+    "primary_keys_created": 0,
+    "errors": []
+  },
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/clean-duplicate-data-20250830_213954.log"
+}

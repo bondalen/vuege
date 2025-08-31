@@ -178,22 +178,31 @@ docs/
 │   ├── problems.md # Долговременные проблемы
 │   ├── qa.md       # Вопросы и ответы
 │   └── tasktracker.md # Управление задачами
-└── others/         # Вспомогательная документация
-    ├── ssh-setup.md
-    ├── date-helper.md
-    ├── postgres-mcp-setup.md
-    ├── terminal-mcp-setup.md
-    ├── terminal-mcp-status.md
-    ├── universal-container-setup.md
-    ├── cursor-rules-optimization-strategy.md
-    ├── cursor-rules-problem-proposals.md
-    ├── chat-reminder-solution.md
-    ├── comprehensive-solution-report.md
-    ├── pager-prevention-strategy.md
-    ├── pager-problem-solution-report.md
-    ├── pager-blocking-solution.md
-    ├── terminal-recovery-checklist.md
-    └── next-chat-pager-plan.md
+├── others/         # Вспомогательная документация
+│   ├── ssh-setup.md
+│   ├── date-helper.md
+│   ├── postgres-mcp-setup.md
+│   ├── terminal-mcp-setup.md
+│   ├── terminal-mcp-status.md
+│   ├── universal-container-setup.md
+│   ├── cursor-rules-optimization-strategy.md
+│   ├── cursor-rules-problem-proposals.md
+│   ├── chat-reminder-solution.md
+│   ├── comprehensive-solution-report.md
+│   ├── pager-prevention-strategy.md
+│   ├── pager-problem-solution-report.md
+│   ├── pager-blocking-solution.md
+│   ├── terminal-recovery-checklist.md
+│   ├── next-chat-pager-plan.md
+│   └── migration/   # Документация миграции БД
+│       ├── ags-migration-final-completion-report.md
+│       ├── dbhub-testing-report.md
+│       ├── ags-migration-fix-plan.md
+│       └── ... (другие документы миграции)
+└── infrastructure/ # Инфраструктурная документация
+    ├── logs/       # Логи выполнения скриптов
+    ├── reports/    # JSON отчеты и аналитика
+    └── README.md   # Документация инфраструктуры
 ```
 
 ## Назначение документов
@@ -278,6 +287,36 @@ docs/
 - Troubleshooting процедуры
 - Рекомендации по профилактике
 
+### 📊 [migration/](./migration/)
+**Документация миграции базы данных** - полная документация процесса миграции схемы AGS из SQL Server в PostgreSQL.
+
+**Содержит:**
+- Отчеты о миграции схемы AGS
+- Планы и стратегии миграции
+- Результаты тестирования DBHub
+- Исправления проблемных таблиц
+- Финальные отчеты о завершении
+
+**Ключевые документы:**
+- `ags-migration-final-completion-report.md` - Финальный отчет о завершении миграции (94% успеха)
+- `dbhub-testing-report.md` - Отчет о тестировании DBHub MCP сервера
+- `ags-migration-fix-plan.md` - План исправления проблемных таблиц
+- `mssql-to-postgres-migration-plan.md` - Общий план миграции
+
+### 🔧 [infrastructure/](../infrastructure/)
+**Инфраструктурная документация** - логи выполнения скриптов, отчеты и техническая документация инфраструктуры.
+
+**Содержит:**
+- Логи выполнения скриптов миграции
+- JSON отчеты о процессах
+- Техническую документацию инфраструктуры
+- Отчеты производительности и безопасности
+
+**Структура:**
+- `logs/` - Логи выполнения скриптов
+- `reports/` - JSON отчеты и аналитика
+- `README.md` - Документация инфраструктуры
+
 ---
 
-*Последнее обновление: 2025-08-27*
+*Последнее обновление: 2025-08-30*

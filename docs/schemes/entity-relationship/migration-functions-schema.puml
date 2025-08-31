@@ -1,0 +1,72 @@
+@startuml Migration Control System Functions
+
+!define FUNCTION(name,desc) class name as "desc" << (F,#AAFFAA) >>
+
+' Функции для работы с данными
+FUNCTION(add_mssql_table, "add_mssql_table()") {
+    p_task_id : INTEGER
+    p_object_name : VARCHAR(255)
+    p_table_size : BIGINT
+    p_row_count : INTEGER
+    p_has_primary_key : BOOLEAN
+    p_has_foreign_keys : BOOLEAN
+    --
+    RETURNS : INTEGER
+}
+
+FUNCTION(add_mssql_view, "add_mssql_view()") {
+    p_task_id : INTEGER
+    p_object_name : VARCHAR(255)
+    p_view_definition : TEXT
+    p_is_updatable : BOOLEAN
+    p_check_option : VARCHAR(20)
+    --
+    RETURNS : INTEGER
+}
+
+FUNCTION(update_migration_status, "update_migration_status()") {
+    p_object_id : INTEGER
+    p_status : VARCHAR(50)
+    p_postgres_name : VARCHAR(255)
+    p_error_message : TEXT
+    --
+    RETURNS : BOOLEAN
+}
+
+FUNCTION(get_migration_progress, "get_migration_progress()") {
+    p_task_id : INTEGER
+    --
+    RETURNS : TABLE
+}
+
+' Триггеры
+FUNCTION(update_updated_at, "update_updated_at()") {
+    TRIGGER : BEFORE UPDATE
+    --
+    NEW.updated_at = CURRENT_TIMESTAMP
+    RETURN NEW
+}
+
+FUNCTION(validate_object_name, "validate_object_name()") {
+    TRIGGER : BEFORE INSERT/UPDATE
+    --
+    Проверка уникальности имени
+    Проверка формата имени
+    RETURN NEW/RAISE EXCEPTION
+}
+
+' Связи функций с таблицами
+add_mssql_table --> mssql_tables : "INSERT"
+add_mssql_view --> mssql_views : "INSERT"
+update_migration_status --> mssql_objects : "UPDATE"
+get_migration_progress --> migration_overview : "SELECT"
+
+update_updated_at --> mssql_objects : "TRIGGER"
+update_updated_at --> mssql_tables : "TRIGGER"
+update_updated_at --> mssql_views : "TRIGGER"
+update_updated_at --> mssql_functions : "TRIGGER"
+update_updated_at --> mssql_stored_procedures : "TRIGGER"
+
+validate_object_name --> mssql_objects : "TRIGGER"
+
+@enduml

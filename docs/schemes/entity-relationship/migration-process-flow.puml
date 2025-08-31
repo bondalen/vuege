@@ -1,0 +1,62 @@
+@startuml Migration Process Flow
+
+start
+
+:Создание задачи миграции;
+note right: INSERT INTO migration_tasks
+
+:Анализ объектов MS SQL Server;
+note right: Получение списка таблиц, представлений, функций
+
+:Заполнение родительской таблицы;
+note right: INSERT INTO mssql_objects
+!pragma useVerticalIf on
+:Определение типа объекта;
+
+if (Тип объекта: TABLE) then (да)
+    :Заполнение mssql_tables;
+    note left: INSERT INTO mssql_tables
+elseif (Тип объекта: VIEW) then (да)
+    :Заполнение mssql_views;
+    note left: INSERT INTO mssql_views
+elseif (Тип объекта: FUNCTION) then (да)
+    :Заполнение mssql_functions;
+    note left: INSERT INTO mssql_functions
+elseif (Тип объекта: STORED_PROCEDURE) then (да)
+    :Заполнение mssql_stored_procedures;
+    note left: INSERT INTO mssql_stored_procedures
+else (иной тип)
+  :нет действий;
+endif
+
+repeat :начало обработки объектов;
+
+:Выбор объекта для миграции;
+
+:Проверка возможности миграции;
+
+if (Объект можно мигрировать?) then (да)
+    :Выполнение миграции;
+    :Проверка успешности;
+    
+    if (Миграция успешна?) then (да)
+        :Обновление статуса 'completed';
+        :Запись migration_date;
+    else (нет)
+        :Обновление статуса 'failed';
+        :Запись error_message;
+    endif
+else (нет)
+    :Обновление статуса 'skipped';
+    :Запись причины пропуска;
+endif
+
+:Проверка завершения всех объектов;
+
+repeat while (Все объекты обработаны?) is (нет) not (да)
+
+:Генерация отчета;
+:Анализ результатов;
+stop
+
+@enduml

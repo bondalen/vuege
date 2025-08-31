@@ -1,0 +1,45 @@
+{
+  "migration_info": {
+    "group_name": "Группа 1: Основные справочники",
+    "migration_date": "2025-08-30T12:22:55.283310",
+    "total_tables": 3,
+    "successful_migrations": 2,
+    "failed_migrations": 1
+  },
+  "table_results": {
+    "cn": {
+      "table_name": "cn",
+      "status": "success",
+      "rows_migrated": 2329,
+      "validation": {
+        "status": "warning",
+        "postgresql_count": 4658,
+        "mssql_count": 2329,
+        "match": false
+      },
+      "timestamp": "2025-08-30T12:22:55.162724"
+    },
+    "org": {
+      "table_name": "org",
+      "status": "success",
+      "rows_migrated": 135,
+      "validation": {
+        "status": "warning",
+        "postgresql_count": 270,
+        "mssql_count": 135,
+        "match": false
+      },
+      "timestamp": "2025-08-30T12:22:55.228797"
+    },
+    "cst": {
+      "table_name": "cst",
+      "status": "error",
+      "error": "can't adapt type 'UUID'",
+      "timestamp": "2025-08-30T12:22:55.283291"
+    }
+  },
+  "summary": {
+    "success_rate": "66.7%",
+    "total_rows_migrated": 2464
+  }
+}

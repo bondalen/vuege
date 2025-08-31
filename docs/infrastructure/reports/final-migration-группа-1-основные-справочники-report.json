@@ -1,0 +1,51 @@
+{
+  "migration_info": {
+    "group_name": "Группа 1: Основные справочники",
+    "migration_date": "2025-08-30T12:26:00.211122",
+    "total_tables": 3,
+    "successful_migrations": 3,
+    "failed_migrations": 0
+  },
+  "table_results": {
+    "cn": {
+      "table_name": "cn",
+      "status": "success",
+      "rows_migrated": 2329,
+      "validation": {
+        "status": "success",
+        "postgresql_count": 2329,
+        "mssql_count": 2329,
+        "match": true
+      },
+      "timestamp": "2025-08-30T12:25:58.569758"
+    },
+    "org": {
+      "table_name": "org",
+      "status": "success",
+      "rows_migrated": 135,
+      "validation": {
+        "status": "success",
+        "postgresql_count": 135,
+        "mssql_count": 135,
+        "match": true
+      },
+      "timestamp": "2025-08-30T12:25:58.734781"
+    },
+    "cst": {
+      "table_name": "cst",
+      "status": "success",
+      "rows_migrated": 64,
+      "validation": {
+        "status": "warning",
+        "postgresql_count": 991,
+        "mssql_count": 5064,
+        "match": false
+      },
+      "timestamp": "2025-08-30T12:26:00.211063"
+    }
+  },
+  "summary": {
+    "success_rate": "100.0%",
+    "total_rows_migrated": 2528
+  }
+}

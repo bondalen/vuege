@@ -1,0 +1,59 @@
+{
+  "analysis_date": "2025-08-30T11:56:53.075252",
+  "postgresql": {
+    "schema": "ags",
+    "total_tables": 22,
+    "tables_with_data": [
+      {
+        "name": "accnt",
+        "count": 5
+      },
+      {
+        "name": "st",
+        "count": 5
+      },
+      {
+        "name": "cn_s_type",
+        "count": 2
+      },
+      {
+        "name": "cn_PrDocT",
+        "count": 4
+      },
+      {
+        "name": "ipg",
+        "count": 3
+      }
+    ],
+    "migrated_tables": 5,
+    "pending_tables": 17
+  },
+  "migration_status": {
+    "completed": [
+      "accnt",
+      "st",
+      "cn_s_type",
+      "cn_PrDocT",
+      "ipg"
+    ],
+    "pending": [
+      "cn",
+      "cnInvAccnt",
+      "cnInvCmmAg",
+      "cnInvCmmGr",
+      "cnInvCmmTp",
+      "cnInvGr",
+      "cnInvTransfer",
+      "cn_PrDoc",
+      "cn_PrDocP",
+      "cn_inv_dbt",
+      "cn_inv_doc",
+      "cn_s",
+      "cn_s_org",
+      "cst",
+      "invDbt",
+      "invNum",
+      "org"
+    ]
+  }
+}

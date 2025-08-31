@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-08-30T21:40:56.762026",
+  "results": {
+    "processed_tables": 132,
+    "successful_pks": 44,
+    "failed_pks": 88,
+    "errors": []
+  },
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/create-primary-keys-fixed-20250830_214054.log"
+}

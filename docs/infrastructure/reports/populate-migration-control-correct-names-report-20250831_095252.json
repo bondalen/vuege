@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-08-31T09:52:52.275720",
+  "task_id": 1,
+  "sqlserver_objects": 378,
+  "postgres_objects": 236,
+  "object_types": 6,
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/populate-migration-control-correct-names-20250831_095251.log"
+}

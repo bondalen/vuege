@@ -1,0 +1,4215 @@
+{
+  "timestamp": "2025-08-30T21:40:19.378348",
+  "total_tables": 236,
+  "tables_with_pk": 64,
+  "table_structures": {
+    "accnt": {
+      "table_name": "accnt",
+      "columns": [
+        "account_key",
+        "account_num",
+        "account_name"
+      ],
+      "record_count": 16,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "account_key"
+      ]
+    },
+    "cn": {
+      "table_name": "cn",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 2329,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_inv": {
+      "table_name": "cn_inv",
+      "columns": [
+        "cn_inv_key",
+        "cn_s_kontr",
+        "cn_inv_num",
+        "cn_inv_date",
+        "cn_note",
+        "mark",
+        "accnt",
+        "cn_key",
+        "cn_s_agent"
+      ],
+      "record_count": 2028,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_key"
+      ]
+    },
+    "cn_inv_dbt": {
+      "table_name": "cn_inv_dbt",
+      "columns": [
+        "cn_inv_dbt_key",
+        "cn_inv_date_start",
+        "cn_inv_date_maturity",
+        "debt_type",
+        "dbt_ttl",
+        "dbt_overd",
+        "doc_base",
+        "link",
+        "cn_inv_dbt_upl",
+        "number",
+        "mark",
+        "cidcninvaccntctpt",
+        "cidtimeofentry"
+      ],
+      "record_count": 42367,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_dbt_key"
+      ]
+    },
+    "cn_inv_dbt_double": {
+      "table_name": "cn_inv_dbt_double",
+      "columns": [
+        "ikey",
+        "innum",
+        "ccc",
+        "account_num",
+        "cianame",
+        "cn_inv_dbt_upl",
+        "upl_date",
+        "dcount"
+      ],
+      "record_count": 13,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cn_inv_dbt_upl": {
+      "table_name": "cn_inv_dbt_upl",
+      "columns": [
+        "upl_key",
+        "uplnmcs",
+        "upl_date",
+        "upl_name",
+        "uplstatusondate"
+      ],
+      "record_count": 23,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "upl_key"
+      ]
+    },
+    "cn_inv_dbt_upl_g_p": {
+      "table_name": "cn_inv_dbt_upl_g_p",
+      "columns": [
+        "key",
+        "cn_inv_pm_upl",
+        "cn_inv_dbt_upl"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "key"
+      ]
+    },
+    "cn_inv_dbt_upl_pm_upl": {
+      "table_name": "cn_inv_dbt_upl_pm_upl",
+      "columns": [
+        "cn_inv_dbt_upl",
+        "cn_inv_pm_upl",
+        "cn_inv_pm_key",
+        "cn_inv_key",
+        "cn_s_agent",
+        "cn_inv_doc",
+        "constract_code",
+        "cnipcstagpn",
+        "cn_inv_pm_due",
+        "dbt_blns",
+        "dbt_blns_overd",
+        "dbt_blns_not_overd",
+        "cdt_blns",
+        "cdt_blns_overd",
+        "cdt_blns_not_overd",
+        "blns",
+        "alignment_date",
+        "base_date",
+        "storno_reason",
+        "storno_doc",
+        "number",
+        "mark"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_dbt_upl"
+      ]
+    },
+    "cn_inv_doc": {
+      "table_name": "cn_inv_doc",
+      "columns": [
+        "cn_inv_doc_key",
+        "cn_inv_doc_kod",
+        "cn_inv_doc_date",
+        "cn_inv_doc_date_entry",
+        "cn_inv_doc_sum",
+        "cn_inv_doc_link",
+        "mark"
+      ],
+      "record_count": 211583,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_doc_key"
+      ]
+    },
+    "cn_inv_pm": {
+      "table_name": "cn_inv_pm",
+      "columns": [
+        "cn_inv_pm_key",
+        "cn_inv_key",
+        "cn_s_agent",
+        "cn_inv_doc",
+        "constract_code",
+        "cn_inv_pm_due",
+        "dbt_blns",
+        "dbt_blns_overd",
+        "dbt_blns_not_overd",
+        "cdt_blns",
+        "cdt_blns_overd",
+        "cdt_blns_not_overd",
+        "blns",
+        "alignment_date",
+        "base_date",
+        "storno_reason",
+        "storno_doc",
+        "cn_inv_pm_upl",
+        "number",
+        "mark",
+        "cnipcstagpn",
+        "cn_inv_doc_date",
+        "cn_inv_doc_date_entry",
+        "cn_inv_doc_sum",
+        "cn_inv_doc_link",
+        "cninvkey",
+        "cipcninvaccnt",
+        "ciptimeofentry",
+        "cidcninvaccntctpt",
+        "csocn_s_org_smpl",
+        "ciacninvaccntsmpl"
+      ],
+      "record_count": 479268,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_pm_key"
+      ]
+    },
+    "cn_inv_pm_upl": {
+      "table_name": "cn_inv_pm_upl",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_prdoc": {
+      "table_name": "cn_prdoc",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_prdoccs": {
+      "table_name": "cn_prdoccs",
+      "columns": [
+        "cnpdkey",
+        "name"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cnpdkey"
+      ]
+    },
+    "cn_prdocp": {
+      "table_name": "cn_prdocp",
+      "columns": [
+        "pdpkey",
+        "pdpprdoc",
+        "pdpcstagpn",
+        "statusofdictext",
+        "satstusofoukvtext",
+        "summ",
+        "cost",
+        "sumtax",
+        "costvat",
+        "sppelement",
+        "docofaccountnum",
+        "docofaccountnumnull",
+        "accountdate",
+        "positingdate",
+        "accountingdoc",
+        "accountingdocnull",
+        "agent",
+        "textofagent",
+        "prjctdefinition",
+        "prjctdefinitionsort",
+        "prjcthierarchylevel",
+        "parentsppelementnum",
+        "object",
+        "objectnull",
+        "cstdsw",
+        "ranum",
+        "radate",
+        "correctionnum",
+        "correctiondate",
+        "accountingdocname",
+        "purchasinggroup",
+        "purchasinggroupname",
+        "pdpnote",
+        "pdptimeofentry"
+      ],
+      "record_count": 10299,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cn_prdoct": {
+      "table_name": "cn_prdoct",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s": {
+      "table_name": "cn_s",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_org": {
+      "table_name": "cn_s_org",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_org_smpl": {
+      "table_name": "cn_s_org_smpl",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_org_smplcs": {
+      "table_name": "cn_s_org_smplcs",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_orgcs": {
+      "table_name": "cn_s_orgcs",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_orgcustbuirginv": {
+      "table_name": "cn_s_orgcustbuirginv",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_note",
+        "cn_s_key",
+        "cn_s_org_key",
+        "csocndate",
+        "csoasbuid",
+        "org_id",
+        "org_id_value_l",
+        "cikey",
+        "cinum",
+        "ciakey",
+        "ciaaccnt",
+        "account_num"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_orgexebuirg": {
+      "table_name": "cn_s_orgexebuirg",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_note",
+        "cn_s_key",
+        "cn_s_org_key",
+        "csocndate",
+        "csoasbuid",
+        "org_id",
+        "org_id_value_l"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_orgexebuirginv": {
+      "table_name": "cn_s_orgexebuirginv",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_note",
+        "cn_s_key",
+        "cn_s_org_key",
+        "csocndate",
+        "csoasbuid",
+        "org_id",
+        "org_id_value_l",
+        "cikey",
+        "cinum",
+        "ciakey",
+        "ciaaccnt",
+        "account_num"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_s_type": {
+      "table_name": "cn_s_type",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cn_scs": {
+      "table_name": "cn_scs",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cncs": {
+      "table_name": "cncs",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cninv": {
+      "table_name": "cninv",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cninvaccnt": {
+      "table_name": "cninvaccnt",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cninvaccntcs": {
+      "table_name": "cninvaccntcs",
+      "columns": [
+        "ciakey",
+        "cianame"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "ciakey"
+      ]
+    },
+    "cninvaccntsmpl": {
+      "table_name": "cninvaccntsmpl",
+      "columns": [
+        "cn_key",
+        "cn_number",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cnname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_key"
+      ]
+    },
+    "cninvcmm": {
+      "table_name": "cninvcmm",
+      "columns": [
+        "cnickey",
+        "cnictype",
+        "cnicgroup",
+        "cnicinv",
+        "cnictext",
+        "cnicinvaccnt"
+      ],
+      "record_count": 11556,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cnickey"
+      ]
+    },
+    "cninvcmmag": {
+      "table_name": "cninvcmmag",
+      "columns": [
+        "cicakey",
+        "cicacmmgr",
+        "cicatype",
+        "cicaogag",
+        "cicainvaccnt"
+      ],
+      "record_count": 2562,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmagn": {
+      "table_name": "cninvcmmagn",
+      "columns": [
+        "cicankey",
+        "cicanname"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmcst": {
+      "table_name": "cninvcmmcst",
+      "columns": [
+        "cicckey",
+        "cicccmmgr",
+        "cicctype",
+        "cicccstagpn",
+        "ciccinvaccnt"
+      ],
+      "record_count": 11570,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmcstn": {
+      "table_name": "cninvcmmcstn",
+      "columns": [
+        "ciccnkey",
+        "ciccnname"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmdt": {
+      "table_name": "cninvcmmdt",
+      "columns": [
+        "cnicdkey",
+        "cnicdname",
+        "cnicdcmmgr",
+        "cnicdinv",
+        "cnicddate",
+        "cnicdinvaccnt"
+      ],
+      "record_count": 302,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmdtn": {
+      "table_name": "cninvcmmdtn",
+      "columns": [
+        "cnicdnkey",
+        "cnicdnname"
+      ],
+      "record_count": 2,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmfn": {
+      "table_name": "cninvcmmfn",
+      "columns": [
+        "cnicfkey",
+        "cnicfname",
+        "cnicfcmmgr",
+        "cnicfinv",
+        "cnicfvalue",
+        "cnicfinvaccnt"
+      ],
+      "record_count": 2246,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmfnn": {
+      "table_name": "cninvcmmfnn",
+      "columns": [
+        "cnicfnkey",
+        "cnicfnname"
+      ],
+      "record_count": 10,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmgr": {
+      "table_name": "cninvcmmgr",
+      "columns": [
+        "cnicgkey",
+        "cnicgnmcs",
+        "cnicgdate",
+        "cnicgname"
+      ],
+      "record_count": 68,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvcmmtp": {
+      "table_name": "cninvcmmtp",
+      "columns": [
+        "cnictkey",
+        "cnictname"
+      ],
+      "record_count": 20,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvgr": {
+      "table_name": "cninvgr",
+      "columns": [
+        "cnigkey",
+        "cniginv",
+        "cnigcmmgr",
+        "cniggrname",
+        "cniginvaccnt"
+      ],
+      "record_count": 320,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvgrnm": {
+      "table_name": "cninvgrnm",
+      "columns": [
+        "cnignkey",
+        "cnignname"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cninvtransfer": {
+      "table_name": "cninvtransfer",
+      "columns": [
+        "ciokey",
+        "ciooldkey",
+        "cionewkey"
+      ],
+      "record_count": 4056,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cnnum": {
+      "table_name": "cnnum",
+      "columns": [
+        "cnnkey",
+        "cnnnum",
+        "cnncn",
+        "cnntype",
+        "cnnnote",
+        "cnntimeofentry",
+        "cnnnumnull"
+      ],
+      "record_count": 4708,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cnnumcs": {
+      "table_name": "cnnumcs",
+      "columns": [
+        "cn_key",
+        "name"
+      ],
+      "record_count": 4658,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cnnumenum": {
+      "table_name": "cnnumenum",
+      "columns": [
+        "cnncn",
+        "cnnums",
+        "ncount",
+        "nc"
+      ],
+      "record_count": 4656,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cnnumtype": {
+      "table_name": "cnnumtype",
+      "columns": [
+        "cnntkey",
+        "cnntname"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cnwithnum": {
+      "table_name": "cnwithnum",
+      "columns": [
+        "cn_key",
+        "cn_date",
+        "cn_note",
+        "cnmark",
+        "cntimeofentry",
+        "cn_number",
+        "cn_numbernull"
+      ],
+      "record_count": 4658,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cst": {
+      "table_name": "cst",
+      "columns": [
+        "cstkey",
+        "cstname",
+        "cstbussgm",
+        "cstoidold",
+        "cstmark"
+      ],
+      "record_count": 991,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cstkey"
+      ]
+    },
+    "cstag": {
+      "table_name": "cstag",
+      "columns": [
+        "cstakey",
+        "cstaag",
+        "cstacst",
+        "cstaoidold",
+        "cstainvestor"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cstakey"
+      ]
+    },
+    "cstagcs": {
+      "table_name": "cstagcs",
+      "columns": [
+        "cstakey",
+        "cstagnm"
+      ],
+      "record_count": 6258,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cstagpn": {
+      "table_name": "cstagpn",
+      "columns": [
+        "cstapkey",
+        "cstapcsta",
+        "cstapipgpnn",
+        "cstapoidold",
+        "cstapcstname",
+        "cstapcstname255",
+        "cstapogname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cstapkey"
+      ]
+    },
+    "cstagpnbranch": {
+      "table_name": "cstagpnbranch",
+      "columns": [
+        "cstapbkey",
+        "cstapbcstagpn",
+        "cstapbbranch",
+        "cstapbstart",
+        "cstapbend"
+      ],
+      "record_count": 2030,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cstagpnbranch_now": {
+      "table_name": "cstagpnbranch_now",
+      "columns": [
+        "cstapbkey",
+        "cstapbcstagpn",
+        "cstapbbranch",
+        "cstapbstart",
+        "cstapbend"
+      ],
+      "record_count": 1620,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cstagpncs": {
+      "table_name": "cstagpncs",
+      "columns": [
+        "cstapkey",
+        "cstagpnnm"
+      ],
+      "record_count": 8702,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cstagpnmnrl": {
+      "table_name": "cstagpnmnrl",
+      "columns": [
+        "amkey",
+        "amcstagpn",
+        "ampositing",
+        "amsum",
+        "amtype",
+        "ambranch"
+      ],
+      "record_count": 1576,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cstccngr": {
+      "table_name": "cstccngr",
+      "columns": [
+        "yyyy",
+        "mmmm",
+        "oganm",
+        "cstapipgpnn",
+        "costvat"
+      ],
+      "record_count": 1130,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "cststorgr": {
+      "table_name": "cststorgr",
+      "columns": [
+        "yyyy",
+        "mmmm",
+        "oganm",
+        "cstapipgpnn",
+        "costvat"
+      ],
+      "record_count": 772,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "dtqcontract": {
+      "table_name": "dtqcontract",
+      "columns": [
+        "impcnnum",
+        "impcndate",
+        "impcncounterparty",
+        "impcount",
+        "exebuirgcnnum",
+        "exebuirgcndate",
+        "exebuirgcounterparty",
+        "cnkey",
+        "cnnum",
+        "cndate",
+        "cnnote"
+      ],
+      "record_count": 0,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "dtqcounterparty": {
+      "table_name": "dtqcounterparty",
+      "columns": [
+        "№_контрагента",
+        "Контрагент",
+        "ИНН",
+        "org_id_key",
+        "org",
+        "org_id_value_l",
+        "ogkey",
+        "ognm"
+      ],
+      "record_count": 0,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "dtqinvoice": {
+      "table_name": "dtqinvoice",
+      "columns": [
+        "icninv",
+        "cn_key",
+        "cn_s_org_key",
+        "account_key",
+        "note",
+        "mark"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "mark"
+      ]
+    },
+    "dtqinvoicedbt": {
+      "table_name": "dtqinvoicedbt",
+      "columns": [
+        "cn_s_org_key",
+        "ciakey",
+        "cn_inv_date_start",
+        "cn_inv_date_maturity",
+        "debt_type",
+        "dbt_ttl",
+        "dbt_overd",
+        "cn_inv_dbt_upl",
+        "number",
+        "mark",
+        "cikey"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cn_inv_dbt_upl"
+      ]
+    },
+    "dym_pm_pm": {
+      "table_name": "dym_pm_pm",
+      "columns": [
+        "upl_key",
+        "upl_date",
+        "upl_name",
+        "number",
+        "debt_type",
+        "main_account",
+        "org_id_value_l",
+        "ognm",
+        "cn_number",
+        "cn_date",
+        "inv_of_dbt",
+        "dym_cn_inv_key",
+        "cn_inv_date_start",
+        "cn_inv_date_maturity",
+        "dbt_ttl",
+        "dbt_overd",
+        "cn_inv_dbt_upl",
+        "cn_inv_key"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "upl_key"
+      ]
+    },
+    "impcstcodestrange": {
+      "table_name": "impcstcodestrange",
+      "columns": [
+        "projectdefinition",
+        "sppelement",
+        "designation",
+        "projectcodenew",
+        "sppelementcodenew",
+        "csta"
+      ],
+      "record_count": 555,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "impgr": {
+      "table_name": "impgr",
+      "columns": [
+        "igrkey",
+        "igrnm",
+        "igrdate"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "imppir_21": {
+      "table_name": "imppir_21",
+      "columns": [
+        "cstagpn",
+        "cstname"
+      ],
+      "record_count": 1240,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "inv": {
+      "table_name": "inv",
+      "columns": [
+        "ikey",
+        "idate",
+        "inote",
+        "itimeofentry",
+        "idatenull",
+        "iname",
+        "inum"
+      ],
+      "record_count": 90806,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "ikey"
+      ]
+    },
+    "invbranch_23q1": {
+      "table_name": "invbranch_23q1",
+      "columns": [
+        "cstagpn",
+        "invbranch",
+        "ogkey"
+      ],
+      "record_count": 1098,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invbranch_23q2": {
+      "table_name": "invbranch_23q2",
+      "columns": [
+        "cstagpn",
+        "cstname",
+        "cstlim",
+        "branch",
+        "ogkey"
+      ],
+      "record_count": 1172,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invbranch_25q0": {
+      "table_name": "invbranch_25q0",
+      "columns": [
+        "cst",
+        "branch"
+      ],
+      "record_count": 958,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invbranch_25q1": {
+      "table_name": "invbranch_25q1",
+      "columns": [
+        "og",
+        "sheme",
+        "cons",
+        "const_old"
+      ],
+      "record_count": 1032,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invbranch_25q1_new": {
+      "table_name": "invbranch_25q1_new",
+      "columns": [
+        "og",
+        "cons",
+        "const_old",
+        "cstapkey",
+        "ogkey",
+        "cnt",
+        "cstapbbranch",
+        "rslt"
+      ],
+      "record_count": 60,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invcs": {
+      "table_name": "invcs",
+      "columns": [
+        "ikey",
+        "inum"
+      ],
+      "record_count": 181612,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invdbt": {
+      "table_name": "invdbt",
+      "columns": [
+        "idinv",
+        "idnum",
+        "idnote",
+        "idtimeofentry"
+      ],
+      "record_count": 11990,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invdbttmpciarel": {
+      "table_name": "invdbttmpciarel",
+      "columns": [
+        "idciainvdbtinv",
+        "idciainvdbtnum",
+        "idciacia"
+      ],
+      "record_count": 12732,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invdbtvalue": {
+      "table_name": "invdbtvalue",
+      "columns": [
+        "idvdbtinv",
+        "idvdbtinvnum",
+        "idvdbtnum",
+        "idvupl",
+        "idvaccnt",
+        "idvcnpartyorg",
+        "idvorgname",
+        "idvorgnum",
+        "idvorgtin"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "idvdbtinv",
+        "idvdbtnum",
+        "idvupl"
+      ]
+    },
+    "invnum": {
+      "table_name": "invnum",
+      "columns": [
+        "inkey",
+        "innum",
+        "innote",
+        "ininv",
+        "intimeofentry",
+        "innumnull"
+      ],
+      "record_count": 181632,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invnumenum": {
+      "table_name": "invnumenum",
+      "columns": [
+        "ininv",
+        "invnums",
+        "ncount",
+        "nc"
+      ],
+      "record_count": 181612,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "invwithnum": {
+      "table_name": "invwithnum",
+      "columns": [
+        "ikey",
+        "idate",
+        "idatenull",
+        "inote",
+        "itimeofentry",
+        "innum"
+      ],
+      "record_count": 181612,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipg": {
+      "table_name": "ipg",
+      "columns": [
+        "ipgkey",
+        "ipgog",
+        "ipgnm",
+        "ipgyy",
+        "ipgnum",
+        "ipgstr",
+        "ipgend",
+        "ipgrepl",
+        "ipgstrlsh",
+        "ipgyyyear"
+      ],
+      "record_count": 36,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgch": {
+      "table_name": "ipgch",
+      "columns": [
+        "ipgckey",
+        "ipgcname",
+        "ipgcstnetipg",
+        "ipgcipglate",
+        "ipgcyyyy"
+      ],
+      "record_count": 26,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgchrl": {
+      "table_name": "ipgchrl",
+      "columns": [
+        "ipgcrkey",
+        "ipgcrchain",
+        "ipgcripg",
+        "ipgcrutplgr"
+      ],
+      "record_count": 52,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgcostits": {
+      "table_name": "ipgcostits",
+      "columns": [
+        "icikey",
+        "iciname"
+      ],
+      "record_count": 124,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgcostitsnm": {
+      "table_name": "ipgcostitsnm",
+      "columns": [
+        "icinkey",
+        "icinnm",
+        "icincostits"
+      ],
+      "record_count": 126,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgcostitsnmall": {
+      "table_name": "ipgcostitsnmall",
+      "columns": [
+        "icikey",
+        "iciname"
+      ],
+      "record_count": 306,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgpn": {
+      "table_name": "ipgpn",
+      "columns": [
+        "ipgpkey",
+        "ipgpipg",
+        "ipgpnum",
+        "ipgpcstagpn",
+        "ipgpsmttl",
+        "ipgpsmwrk",
+        "ipgpsmequ",
+        "ipgpsmoth",
+        "ipgpsmagfee",
+        "ipgpcostadjust",
+        "ipgpsmreserv",
+        "ipgptskcms",
+        "ipgpsh"
+      ],
+      "record_count": 19452,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgpnlim": {
+      "table_name": "ipgpnlim",
+      "columns": [
+        "ipgplkey",
+        "ipgplpn",
+        "ipgplstcost",
+        "ipgpllim"
+      ],
+      "record_count": 29256,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgsh": {
+      "table_name": "ipgsh",
+      "columns": [
+        "ipgskey",
+        "ipgsnm"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgsmrslt": {
+      "table_name": "ipgsmrslt",
+      "columns": [
+        "ipgkey",
+        "ttlsm",
+        "wrksm",
+        "equsm",
+        "othsm"
+      ],
+      "record_count": 36,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgst": {
+      "table_name": "ipgst",
+      "columns": [
+        "ipgstkey",
+        "ipgstname",
+        "ipgslm"
+      ],
+      "record_count": 150,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgstlm": {
+      "table_name": "ipgstlm",
+      "columns": [
+        "ipgsplkey",
+        "ipgsplname"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgstpn": {
+      "table_name": "ipgstpn",
+      "columns": [
+        "ipgspkey",
+        "ipgspst",
+        "ipgsppn"
+      ],
+      "record_count": 17438,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgstrl": {
+      "table_name": "ipgstrl",
+      "columns": [
+        "ipgsrkey",
+        "ipgsrparent",
+        "ipgsrchaild"
+      ],
+      "record_count": 168,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgstrlsh": {
+      "table_name": "ipgstrlsh",
+      "columns": [
+        "ipgstrshkey",
+        "ipgstrshname",
+        "ipgstrshroot"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgstrlshp": {
+      "table_name": "ipgstrlshp",
+      "columns": [
+        "ipgstrshpkey",
+        "ipgstrshpsh",
+        "ipgstrshpstrl",
+        "ipgstrshpnum"
+      ],
+      "record_count": 244,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutpl": {
+      "table_name": "ipgutpl",
+      "columns": [
+        "iuplkey",
+        "iuplnm",
+        "iupldate",
+        "iuplag",
+        "iuplipg"
+      ],
+      "record_count": 388,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplgr": {
+      "table_name": "ipgutplgr",
+      "columns": [
+        "iuplgkey",
+        "iuplgipg",
+        "iuplgnm"
+      ],
+      "record_count": 34,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplgrp": {
+      "table_name": "ipgutplgrp",
+      "columns": [
+        "iuplgpkey",
+        "iuplgpgr",
+        "iuplgppl"
+      ],
+      "record_count": 406,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplp": {
+      "table_name": "ipgutplp",
+      "columns": [
+        "iuplpkey",
+        "iuplppl",
+        "iuplplim",
+        "iuplpq1",
+        "iuplpm01",
+        "iuplpm02",
+        "iuplpm03",
+        "iuplpq2",
+        "iuplpm04",
+        "iuplpm05",
+        "iuplpm06",
+        "iuplpq3",
+        "iuplpm07",
+        "iuplpm08",
+        "iuplpm09",
+        "iuplpq4",
+        "iuplpm10",
+        "iuplpm11",
+        "iuplpm12",
+        "iuplpsubag",
+        "iuplpipgpn",
+        "iuplpm02accum",
+        "iuplpm03accum",
+        "iuplpm04accum",
+        "iuplpm05accum",
+        "iuplpm06accum",
+        "iuplpm07accum",
+        "iuplpm08accum",
+        "iuplpm09accum",
+        "iuplpm10accum",
+        "iuplpm11accum",
+        "iuplpm12accum"
+      ],
+      "record_count": 18830,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplpncostits": {
+      "table_name": "ipgutplpncostits",
+      "columns": [
+        "iuplpckey",
+        "iuplpcplpn",
+        "iuplpclim",
+        "iuplpcq1",
+        "iuplpcm01",
+        "iuplpcm02",
+        "iuplpcm03",
+        "iuplpcq2",
+        "iuplpcm04",
+        "iuplpcm05",
+        "iuplpcm06",
+        "iuplpcq3",
+        "iuplpcm07",
+        "iuplpcm08",
+        "iuplpcm09",
+        "iuplpcq4",
+        "iuplpcm10",
+        "iuplpcm11",
+        "iuplpcm12",
+        "iuplpccostits",
+        "iuplpcm02accum",
+        "iuplpcm03accum",
+        "iuplpcm04accum",
+        "iuplpcm05accum",
+        "iuplpcm06accum",
+        "iuplpcm07accum",
+        "iuplpcm08accum",
+        "iuplpcm09accum",
+        "iuplpcm10accum",
+        "iuplpcm11accum",
+        "iuplpcm12accum"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "iuplpckey"
+      ]
+    },
+    "ipgutplpnlmmn": {
+      "table_name": "ipgutplpnlmmn",
+      "columns": [
+        "iuplpmkey",
+        "iuplpmplpn",
+        "iuplpmstcost",
+        "iuplpmmn",
+        "iuplpmlim"
+      ],
+      "record_count": 38844,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplpnlmqu": {
+      "table_name": "ipgutplpnlmqu",
+      "columns": [
+        "iuplpqkey",
+        "iuplpqplpn",
+        "iuplpqstcost",
+        "iuplpqqu",
+        "iuplpqlim"
+      ],
+      "record_count": 2968,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ipgutplpnlmye": {
+      "table_name": "ipgutplpnlmye",
+      "columns": [
+        "iuplpykey",
+        "iuplpyplpn",
+        "iuplpystcost",
+        "iuplpylim"
+      ],
+      "record_count": 4852,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundoc": {
+      "table_name": "juundoc",
+      "columns": [
+        "jkey",
+        "jnum",
+        "jdate",
+        "jnote",
+        "jtype",
+        "jkeyold",
+        "jdateadd"
+      ],
+      "record_count": 64126,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocchng": {
+      "table_name": "juundocchng",
+      "columns": [
+        "jcdockey",
+        "jcdoctype",
+        "jcdocchngtype"
+      ],
+      "record_count": 47690,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocchnggr": {
+      "table_name": "juundocchnggr",
+      "columns": [
+        "jcgkey",
+        "jcgname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jcgkey"
+      ]
+    },
+    "juundocchnggrrel": {
+      "table_name": "juundocchnggrrel",
+      "columns": [
+        "jcgrkey",
+        "jcgrgr",
+        "jcgrchng"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jcgrkey"
+      ]
+    },
+    "juundocchngtype": {
+      "table_name": "juundocchngtype",
+      "columns": [
+        "jctkey",
+        "jctname"
+      ],
+      "record_count": 8,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocchngvw": {
+      "table_name": "juundocchngvw",
+      "columns": [
+        "jcdocchngtype",
+        "jkey",
+        "jnum",
+        "jdate",
+        "jtype",
+        "jnote",
+        "jdateadd",
+        "jctname"
+      ],
+      "record_count": 47690,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocdocprmrinsert": {
+      "table_name": "juundocdocprmrinsert",
+      "columns": [
+        "jkeyold",
+        "jtype",
+        "jpdoctype",
+        "jrregistrynum",
+        "jrregistrynote",
+        "jrnumreg",
+        "jrnumregdate",
+        "jrnumregnote",
+        "jnum",
+        "jdate",
+        "jnote"
+      ],
+      "record_count": 14518,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocdocprmrinsertold": {
+      "table_name": "juundocdocprmrinsertold",
+      "columns": [
+        "jkeyold",
+        "jtype",
+        "jpdoctype",
+        "jrregistrynum",
+        "jrregistrynote",
+        "jrnumreg",
+        "jrnumregdate",
+        "jrnumregnote",
+        "jnum",
+        "jdate",
+        "jnote"
+      ],
+      "record_count": 14518,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocimport": {
+      "table_name": "juundocimport",
+      "columns": [
+        "dregistry",
+        "dnumreg",
+        "dnum",
+        "dagreementsparties",
+        "dname",
+        "ddocsheets",
+        "dadditmaterialsheets",
+        "dnote",
+        "dnoteerr",
+        "dcnterminated",
+        "durl",
+        "durllink",
+        "nkey",
+        "nregistrynum",
+        "nregistrynote",
+        "nnumregnum",
+        "nnumregdate",
+        "nnumregnote",
+        "nnumdoctype",
+        "nnumdocnum",
+        "nnumdocdate",
+        "nnumdocnote",
+        "nnumdoctypesuper",
+        "nprmdocnum",
+        "nprmdocdate",
+        "nprmdoctype",
+        "nprmdockey"
+      ],
+      "record_count": 62214,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocprmr": {
+      "table_name": "juundocprmr",
+      "columns": [
+        "jpdockey",
+        "jpdoctype",
+        "jpdocprmrtype"
+      ],
+      "record_count": 16436,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocprmrcount": {
+      "table_name": "juundocprmrcount",
+      "columns": [
+        "jpdockey",
+        "jpdoctype",
+        "jpdocprmrtype",
+        "jkey",
+        "jnum",
+        "jdate",
+        "jnote",
+        "jtype",
+        "jkeyold",
+        "jdateadd",
+        "countnumdate",
+        "countnum",
+        "countimp",
+        "jrregistrynum",
+        "jrregistrynote",
+        "jrnumreg",
+        "jrnumregdate",
+        "jrnumregnote"
+      ],
+      "record_count": 16442,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocprmrgr": {
+      "table_name": "juundocprmrgr",
+      "columns": [
+        "jpgkey",
+        "jpgname"
+      ],
+      "record_count": 230,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocprmrgrrel": {
+      "table_name": "juundocprmrgrrel",
+      "columns": [
+        "jpgrkey",
+        "jpgrgr",
+        "jpgrprmr"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jpgrkey"
+      ]
+    },
+    "juundocprmrtype": {
+      "table_name": "juundocprmrtype",
+      "columns": [
+        "jptkey",
+        "jptname"
+      ],
+      "record_count": 18,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocreg": {
+      "table_name": "juundocreg",
+      "columns": [
+        "jrkey",
+        "jrdoc",
+        "jrregistrynum",
+        "jrregistrynote",
+        "jrnumreg",
+        "jrnumregdate",
+        "jrnumregnote",
+        "jrkeyold"
+      ],
+      "record_count": 62210,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocreglink": {
+      "table_name": "juundocreglink",
+      "columns": [
+        "jrlkey",
+        "jrlreg",
+        "jrlhyperlink"
+      ],
+      "record_count": 61116,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocreglinkvw": {
+      "table_name": "juundocreglinkvw",
+      "columns": [
+        "jrlreg",
+        "link"
+      ],
+      "record_count": 61116,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocrelchng": {
+      "table_name": "juundocrelchng",
+      "columns": [
+        "jrckey",
+        "jrcdoc",
+        "jrcchng",
+        "jrcdateadd"
+      ],
+      "record_count": 47692,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocrelchngvw": {
+      "table_name": "juundocrelchngvw",
+      "columns": [
+        "doctype",
+        "docnum",
+        "docdate",
+        "jrcdoc",
+        "jrcchng",
+        "jrcdateadd",
+        "chngtype",
+        "chngnum",
+        "chngdate"
+      ],
+      "record_count": 47692,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "juundocside": {
+      "table_name": "juundocside",
+      "columns": [
+        "jskey",
+        "jsdoc",
+        "jstype",
+        "jsorg"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jskey"
+      ]
+    },
+    "juundocsideorg": {
+      "table_name": "juundocsideorg",
+      "columns": [
+        "jsokey",
+        "jsoname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jsokey"
+      ]
+    },
+    "juundocsidetype": {
+      "table_name": "juundocsidetype",
+      "columns": [
+        "jstkey",
+        "jstname"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "jstkey"
+      ]
+    },
+    "juundoctype": {
+      "table_name": "juundoctype",
+      "columns": [
+        "jkey",
+        "doctype"
+      ],
+      "record_count": 64126,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "mmmm": {
+      "table_name": "mmmm",
+      "columns": [
+        "mkey",
+        "mcs",
+        "mnum",
+        "mnm",
+        "mq",
+        "mhy"
+      ],
+      "record_count": 24,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "og": {
+      "table_name": "og",
+      "columns": [
+        "ogkey",
+        "ognm",
+        "ognmof",
+        "ognmfl",
+        "ogtxt",
+        "oginn",
+        "ogkpp",
+        "ogogrn",
+        "ogokpo",
+        "ogoe",
+        "ogrgtaxtype"
+      ],
+      "record_count": 850,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogag": {
+      "table_name": "ogag",
+      "columns": [
+        "ogakey",
+        "ogacode",
+        "ogaog",
+        "ogaoidold"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "ogakey"
+      ]
+    },
+    "ogagcs": {
+      "table_name": "ogagcs",
+      "columns": [
+        "ogakey",
+        "oganm"
+      ],
+      "record_count": 132,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfee": {
+      "table_name": "ogagfee",
+      "columns": [
+        "oafkey",
+        "oafnum",
+        "oafcapex",
+        "oafdate",
+        "oafarrived",
+        "oafarriveddate",
+        "oafreturned",
+        "oafreturneddate",
+        "oafreturnedreason",
+        "oafsent",
+        "oafsentdate",
+        "oafnote",
+        "oafy",
+        "oafm",
+        "cstaag",
+        "oafunit"
+      ],
+      "record_count": 1674,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfeegr": {
+      "table_name": "ogagfeegr",
+      "columns": [
+        "yyyy",
+        "mhy",
+        "mq",
+        "mnum",
+        "oganm",
+        "oafnum",
+        "pagfee",
+        "vat",
+        "total"
+      ],
+      "record_count": 1178,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfeegra": {
+      "table_name": "ogagfeegra",
+      "columns": [
+        "yyyy",
+        "ykey",
+        "oganm",
+        "ogakey",
+        "mhy",
+        "mq",
+        "mnum",
+        "mkey",
+        "oafnum",
+        "oafkey",
+        "pagfee",
+        "vat",
+        "total"
+      ],
+      "record_count": 2628,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfeep": {
+      "table_name": "ogagfeep",
+      "columns": [
+        "oafpkey",
+        "oafpnum",
+        "oafpoaf",
+        "oafpagfeearr",
+        "oafpvatarr",
+        "oafptotalarr",
+        "oafpagfee",
+        "oafpvat",
+        "oafptotal",
+        "oafpcstagpn",
+        "oafpnote"
+      ],
+      "record_count": 53256,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfeepntest": {
+      "table_name": "ogagfeepntest",
+      "columns": [
+        "oafptkey",
+        "oafptoafsender",
+        "oafptoafsenderkey",
+        "oafptactcount",
+        "oafptoafname",
+        "oafptoafdate",
+        "oafptpncstagpn",
+        "oafptpncstagpnkey",
+        "oafptttl",
+        "oafptcapex",
+        "oafptarrivednum",
+        "oafptarriveddate",
+        "oafptsendednum",
+        "oafptsendeddate",
+        "oafptunit",
+        "oafptreturnednum",
+        "oafptreturneddate",
+        "oafptreturnedreason",
+        "oafptreturnedsum",
+        "oafptpagescount"
+      ],
+      "record_count": 7270,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ogagfeepntestactattr": {
+      "table_name": "ogagfeepntestactattr",
+      "columns": [
+        "oafkey",
+        "countkey",
+        "oafnum",
+        "oafdate",
+        "cstaag",
+        "oganm"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cstaag"
+      ]
+    },
+    "ogagfeepntestactattrtrue": {
+      "table_name": "ogagfeepntestactattrtrue",
+      "columns": [
+        "oafkey",
+        "countkey",
+        "oafnum",
+        "oafdate",
+        "cstaag",
+        "oganm",
+        "arrivednumbd",
+        "arrivednumexc",
+        "arrivednumtest",
+        "arriveddatebd",
+        "arriveddateexc",
+        "arriveddatetest",
+        "sendednumbd",
+        "sendednumexc",
+        "sendednumtest",
+        "sendeddatebd",
+        "sendeddateexc",
+        "sendeddatetest",
+        "returnednumbd",
+        "returnednumexc",
+        "returnednumtest",
+        "returneddatebd",
+        "returneddateexc",
+        "returneddatetest",
+        "returnedreasonbd",
+        "returnedreasonexc",
+        "returnedreasontest",
+        "capexbd",
+        "capexexc",
+        "capextest",
+        "ybd",
+        "yyyybd",
+        "yexc",
+        "yyyyexc",
+        "ytest",
+        "mbd",
+        "mexc",
+        "mtest",
+        "unitbd",
+        "unitexc",
+        "unittest",
+        "test"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "cstaag"
+      ]
+    },
+    "ogagfeepntestactnew": {
+      "table_name": "ogagfeepntestactnew",
+      "columns": [
+        "oafptoafname",
+        "oafptoafdate",
+        "oafptoafsenderkey",
+        "oafkey",
+        "oganm"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "oafptoafname"
+      ]
+    },
+    "ogagfeepntestactpnnoeq": {
+      "table_name": "ogagfeepntestactpnnoeq",
+      "columns": [
+        "oafptoafname",
+        "oafptoafdate",
+        "oafptoafsender",
+        "oafptoafsenderkey",
+        "oafptpncstagpn",
+        "oafptpncstagpnkey",
+        "oafptttl",
+        "oafkey",
+        "oafpkey",
+        "oafptotal",
+        "ttltest"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "oafkey"
+      ]
+    },
+    "ogagfeepntestagentno": {
+      "table_name": "ogagfeepntestagentno",
+      "columns": [
+        "oafptoafsender",
+        "keycount"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "oafptoafsender"
+      ]
+    },
+    "ogagfeepntestcstno": {
+      "table_name": "ogagfeepntestcstno",
+      "columns": [
+        "oafptpncstagpn",
+        "cstapkey",
+        "oafptoafname",
+        "oafptoafdate",
+        "oafptkey",
+        "oganm"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "oafptkey"
+      ]
+    },
+    "ogagfeepntestdbno": {
+      "table_name": "ogagfeepntestdbno",
+      "columns": [
+        "oafptoafname",
+        "oafptoafdate",
+        "oafptoafsender",
+        "oafptoafsenderkey",
+        "oafptpncstagpn",
+        "oafptpncstagpnkey",
+        "oafptttl",
+        "oafkey"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "oafkey"
+      ]
+    },
+    "ognmf": {
+      "table_name": "ognmf",
+      "columns": [
+        "onfkey",
+        "onfog",
+        "onfname",
+        "onfnameext",
+        "onfstart",
+        "onfend"
+      ],
+      "record_count": 208,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ognmf_allvariants": {
+      "table_name": "ognmf_allvariants",
+      "columns": [
+        "ogkey",
+        "ognm",
+        "ognm255",
+        "repeatcount"
+      ],
+      "record_count": 1726,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ognmf_allvariantsag": {
+      "table_name": "ognmf_allvariantsag",
+      "columns": [
+        "ogakey",
+        "ogacode",
+        "ognm"
+      ],
+      "record_count": 296,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ognmf_allvariantsnorepeat": {
+      "table_name": "ognmf_allvariantsnorepeat",
+      "columns": [
+        "ogkey",
+        "ognm",
+        "ognm255",
+        "repeatcount"
+      ],
+      "record_count": 1722,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "org": {
+      "table_name": "org",
+      "columns": [
+        "org_key",
+        "org_name_s",
+        "org_name_l",
+        "org_name_os",
+        "org_name_ol"
+      ],
+      "record_count": 270,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "org_id": {
+      "table_name": "org_id",
+      "columns": [
+        "org_id_key",
+        "org",
+        "org_id_type",
+        "org_id_value_l",
+        "org_id_value_t",
+        "org_id_value_t_ext"
+      ],
+      "record_count": 1268,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "org_id_type": {
+      "table_name": "org_id_type",
+      "columns": [
+        "org_id_type_key",
+        "org_id_type_name"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "org_idcs": {
+      "table_name": "org_idcs",
+      "columns": [
+        "org_id_key",
+        "name"
+      ],
+      "record_count": 1268,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "q_cn_inv_dbt_str": {
+      "table_name": "q_cn_inv_dbt_str",
+      "columns": [
+        "cnnum",
+        "cndate",
+        "ctptcode",
+        "ctptname",
+        "cinum",
+        "account_num",
+        "cianame",
+        "dskey",
+        "dsstart",
+        "dsmaturity",
+        "dstype",
+        "dsttl",
+        "dsoverd",
+        "dsupl",
+        "dscia",
+        "dscias",
+        "ciacn_s_org",
+        "pcountcac",
+        "pcac",
+        "strcac",
+        "pcountag",
+        "pag",
+        "agcode",
+        "agname"
+      ],
+      "record_count": 84734,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "q_cn_inv_dbt_upl_sum": {
+      "table_name": "q_cn_inv_dbt_upl_sum",
+      "columns": [
+        "account_num",
+        "upl_key",
+        "upl_date",
+        "upl_name",
+        "uplnmcs",
+        "ttl",
+        "overd"
+      ],
+      "record_count": 304,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "q_cn_inv_pm_upl_sum": {
+      "table_name": "q_cn_inv_pm_upl_sum",
+      "columns": [
+        "cn_inv_pm_upl",
+        "account_num",
+        "dbt_blns",
+        "dbt_blns_overd",
+        "dbt_blns_not_overd",
+        "cdt_blns",
+        "cdt_blns_overd",
+        "cdt_blns_not_overd",
+        "blns"
+      ],
+      "record_count": 268,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "qqqq": {
+      "table_name": "qqqq",
+      "columns": [
+        "qkey",
+        "qnum",
+        "qstr"
+      ],
+      "record_count": 8,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra": {
+      "table_name": "ra",
+      "columns": [
+        "ra_key",
+        "ra_num",
+        "ra_date",
+        "ra_cac",
+        "ra_type",
+        "ra_work_type",
+        "ra_period",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_arrived_datefact",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_returnedreason",
+        "ra_sent",
+        "ra_sent_date",
+        "ra_note_t",
+        "ra_created",
+        "ra_org_sender",
+        "ra_note",
+        "ra_dateperiod"
+      ],
+      "record_count": 98958,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_change": {
+      "table_name": "ra_change",
+      "columns": [
+        "rac_key",
+        "raс_ra",
+        "raс_num",
+        "raс_date",
+        "ra_period",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_arrived_datefact",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_returnedreason",
+        "ra_sent",
+        "ra_sent_date",
+        "ra_note_t",
+        "ra_created",
+        "ra_org_sender",
+        "ra_note",
+        "rac_dateperiod",
+        "rcname"
+      ],
+      "record_count": 6094,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_change_summ": {
+      "table_name": "ra_change_summ",
+      "columns": [
+        "raсs_key",
+        "raсs_raс",
+        "raсs_total",
+        "raсs_work",
+        "raсs_equip",
+        "raсs_others",
+        "raсs_date"
+      ],
+      "record_count": 3848,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_change_summct": {
+      "table_name": "ra_change_summct",
+      "columns": [
+        "rcsckey",
+        "rcscrachsumm",
+        "rcscstcost",
+        "rcsclim"
+      ],
+      "record_count": 1650,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_chcs": {
+      "table_name": "ra_chcs",
+      "columns": [
+        "ra_chkey",
+        "ra_chnm",
+        "ra_chnmd"
+      ],
+      "record_count": 6094,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_chsmlt": {
+      "table_name": "ra_chsmlt",
+      "columns": [
+        "raсs_key",
+        "raсs_raс",
+        "raсs_total",
+        "raсs_work",
+        "raсs_equip",
+        "raсs_others",
+        "raсs_date"
+      ],
+      "record_count": 3714,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_period": {
+      "table_name": "ra_period",
+      "columns": [
+        "key",
+        "y",
+        "m",
+        "p",
+        "rap_dateperiod"
+      ],
+      "record_count": 199,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "key"
+      ]
+    },
+    "ra_summ": {
+      "table_name": "ra_summ",
+      "columns": [
+        "ras_key",
+        "ras_ra",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ras_date"
+      ],
+      "record_count": 71702,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_summct": {
+      "table_name": "ra_summct",
+      "columns": [
+        "rsckey",
+        "rscrasumm",
+        "rscstcost",
+        "rscsumm"
+      ],
+      "record_count": 39756,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ra_typegr": {
+      "table_name": "ra_typegr",
+      "columns": [
+        "typegr"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "racs": {
+      "table_name": "racs",
+      "columns": [
+        "ra_key",
+        "ranm"
+      ],
+      "record_count": 98958,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ralp": {
+      "table_name": "ralp",
+      "columns": [
+        "ralprkey",
+        "ralprakey",
+        "ralpnum",
+        "ralpdate",
+        "ralpcostandvat",
+        "ralpcstagpn",
+        "ralpogsender",
+        "ralparrived",
+        "ralparriveddate",
+        "ralpreturned",
+        "ralpreturneddate",
+        "ralpsent",
+        "ralpsentdate",
+        "ralpnote",
+        "ralpy",
+        "ralpm"
+      ],
+      "record_count": 22262,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ralpgr": {
+      "table_name": "ralpgr",
+      "columns": [
+        "ralpy",
+        "ralpm",
+        "oganm",
+        "ognm",
+        "arrived",
+        "tested",
+        "sented",
+        "returned",
+        "accepted"
+      ],
+      "record_count": 2522,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ralpold": {
+      "table_name": "ralpold",
+      "columns": [
+        "ralpkey",
+        "ralpnum",
+        "ralpdate",
+        "ralpcostandvat",
+        "ralpcstagpn",
+        "ralpogsender",
+        "ralparrived",
+        "ralparriveddate",
+        "ralpreturned",
+        "ralpreturneddate",
+        "ralpsent",
+        "ralpsentdate",
+        "ralpresponse",
+        "ralprespdate",
+        "ralpnote",
+        "ralpy",
+        "ralpm"
+      ],
+      "record_count": 2812,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ralpra": {
+      "table_name": "ralpra",
+      "columns": [
+        "ralprkey",
+        "ralprnum",
+        "ralprdate",
+        "ralprcstagpn",
+        "ralprogsender",
+        "ralpry",
+        "ralprm"
+      ],
+      "record_count": 22276,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ralpraau": {
+      "table_name": "ralpraau",
+      "columns": [
+        "ralprakey",
+        "ralprara",
+        "ralpracostandvat",
+        "ralpraarrived",
+        "ralpraarriveddate",
+        "ralprareturned",
+        "ralprareturneddate",
+        "ralprasent",
+        "ralprasentdate",
+        "ralpranote",
+        "ralprastatus",
+        "ralprateststartdate"
+      ],
+      "record_count": 22262,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rara_chsmlt": {
+      "table_name": "rara_chsmlt",
+      "columns": [
+        "yyyy",
+        "mhy",
+        "mq",
+        "mnum",
+        "ra_period",
+        "type",
+        "ra_key",
+        "ranm",
+        "ra_num",
+        "ra_date",
+        "ra_cac",
+        "ra_type",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_sent",
+        "ra_sent_date",
+        "ra_note",
+        "ra_created",
+        "ra_org_sender",
+        "summ",
+        "ras_key",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ras_date",
+        "cstaag"
+      ],
+      "record_count": 105052,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rara_chsmlt_rlt": {
+      "table_name": "rara_chsmlt_rlt",
+      "columns": [
+        "y",
+        "m",
+        "ag",
+        "agname",
+        "rapsntdsumttl",
+        "raacctdsumttl",
+        "ddd"
+      ],
+      "record_count": 1170,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rara_chsmlt_rltyy": {
+      "table_name": "rara_chsmlt_rltyy",
+      "columns": [
+        "y",
+        "m",
+        "ag",
+        "agname",
+        "rapsntdsumttl",
+        "raacctdsumttl",
+        "ddd",
+        "rapsntdsumttlyy",
+        "raacctdsumttlyy"
+      ],
+      "record_count": 0,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rasmlt": {
+      "table_name": "rasmlt",
+      "columns": [
+        "ras_key",
+        "ras_ra",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ras_date"
+      ],
+      "record_count": 68790,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ratime": {
+      "table_name": "ratime",
+      "columns": [
+        "ykey",
+        "yyyy",
+        "mkey",
+        "mcs",
+        "mnum",
+        "mnm",
+        "mq",
+        "mhy",
+        "ra_key",
+        "ra_num",
+        "ra_type",
+        "ra_sent",
+        "arrived",
+        "accepted",
+        "cstapkey",
+        "cstapipgpnn",
+        "cstacst",
+        "agagkey",
+        "agogkey",
+        "agnm",
+        "sendkey",
+        "sendnm"
+      ],
+      "record_count": 86612,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ratimeag": {
+      "table_name": "ratimeag",
+      "columns": [
+        "ykey",
+        "yyyy",
+        "mkey",
+        "mcs",
+        "mnum",
+        "mnm",
+        "mq",
+        "mhy",
+        "agagkey",
+        "agogkey",
+        "agnm",
+        "arrivedsm",
+        "accepted"
+      ],
+      "record_count": 1550,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "ratimeagprvs": {
+      "table_name": "ratimeagprvs",
+      "columns": [
+        "ykey",
+        "yyyy",
+        "mkey",
+        "mcs",
+        "mnum",
+        "mnm",
+        "mq",
+        "mhy",
+        "agagkey",
+        "agogkey",
+        "agnm",
+        "arrivedsm",
+        "accepted",
+        "arrivedsmprev",
+        "acceptedsmprev"
+      ],
+      "record_count": 1550,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxbuirg": {
+      "table_name": "rgtaxbuirg",
+      "columns": [
+        "rtbnum",
+        "rtbtype"
+      ],
+      "record_count": 144,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxidnumind": {
+      "table_name": "rgtaxidnumind",
+      "columns": [
+        "rtiniind",
+        "rtinitaxoffice",
+        "rtininum",
+        "rtinicode"
+      ],
+      "record_count": 8,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxidnumjurpers": {
+      "table_name": "rgtaxidnumjurpers",
+      "columns": [
+        "rtinjpmsrn",
+        "rtinjptaxoffice",
+        "rtinjpnum",
+        "rtinjpcode",
+        "rtinjpbuirg",
+        "rtinjpbuirgtype"
+      ],
+      "record_count": 156,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxind": {
+      "table_name": "rgtaxind",
+      "columns": [
+        "rtikey",
+        "rtinmsur",
+        "rtinm",
+        "rtinmptr"
+      ],
+      "record_count": 8,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxlgentfrmmtd": {
+      "table_name": "rgtaxlgentfrmmtd",
+      "columns": [
+        "rtlefmcode",
+        "rtlefmname",
+        "rtlefmch"
+      ],
+      "record_count": 22,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxlgenttrmmtd": {
+      "table_name": "rgtaxlgenttrmmtd",
+      "columns": [
+        "rtletmcode",
+        "rtletmname",
+        "rtletmch"
+      ],
+      "record_count": 22,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxmnstregnum": {
+      "table_name": "rgtaxmnstregnum",
+      "columns": [
+        "rtmsrnsignyy",
+        "rtmsrntaxregion",
+        "rtmsrnrecnum",
+        "rtmsrncode",
+        "rtmsrnnote",
+        "rtmsrnfrmmtd",
+        "rtmsrnfrmdate",
+        "rtmsrntrmmtd",
+        "rtmsrntrmdate",
+        "rtmsrnch",
+        "rtmsrndateassign",
+        "rtmsrnog",
+        "rtmsrntaxtype"
+      ],
+      "record_count": 170,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxmnstregnumind": {
+      "table_name": "rgtaxmnstregnumind",
+      "columns": [
+        "rtmsrnikey",
+        "rtmsrnitaxidnum",
+        "rtmsrnisignyy",
+        "rtmsrniregion",
+        "rtmsrninum",
+        "rtmsrnitype",
+        "rtmsrnidatereg",
+        "rtmsrnidatemsrni",
+        "rtmsrnidatetrm",
+        "rtmsrnicode",
+        "rtmsrnibuirg",
+        "rtmsrnibuirgtype",
+        "rtmsrniog",
+        "rtmsrnitaxtype"
+      ],
+      "record_count": 10,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxname": {
+      "table_name": "rgtaxname",
+      "columns": [
+        "rtnmsrn",
+        "rtndate",
+        "rtnname"
+      ],
+      "record_count": 184,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxnameshort": {
+      "table_name": "rgtaxnameshort",
+      "columns": [
+        "rtnsmsrn",
+        "rtnsdate",
+        "rtnsdateend",
+        "rtnsname"
+      ],
+      "record_count": 178,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxoffice": {
+      "table_name": "rgtaxoffice",
+      "columns": [
+        "rtoregion",
+        "rtonum",
+        "rtoname",
+        "rtocode"
+      ],
+      "record_count": 1428,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreason": {
+      "table_name": "rgtaxreason",
+      "columns": [
+        "rtecode",
+        "rtenamefull",
+        "rtename",
+        "rtenote"
+      ],
+      "record_count": 100,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreasoncode": {
+      "table_name": "rgtaxreasoncode",
+      "columns": [
+        "rtsctaxoffice",
+        "rtscreason",
+        "rtscnum",
+        "rtsctaxidnum",
+        "rtsctinrsncode",
+        "rtsccode",
+        "rtscdate"
+      ],
+      "record_count": 162,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxregion": {
+      "table_name": "rgtaxregion",
+      "columns": [
+        "rtrcode",
+        "rtrname"
+      ],
+      "record_count": 196,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreoracqui": {
+      "table_name": "rgtaxreoracqui",
+      "columns": [
+        "racquired",
+        "racquiredtrm",
+        "racquiring"
+      ],
+      "record_count": 12,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreordivis": {
+      "table_name": "rgtaxreordivis",
+      "columns": [
+        "rtrddivisiblemsrn",
+        "rtrddivisibletrmmtd",
+        "rtrddividedmsrn",
+        "rtrddividedfrmmtd"
+      ],
+      "record_count": 2,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreordivisacqu": {
+      "table_name": "rgtaxreordivisacqu",
+      "columns": [
+        "rdivisible",
+        "rdivisibletrm",
+        "rdividedacqu",
+        "rdividedacqufrm",
+        "rdividedacqutrm",
+        "racquiring"
+      ],
+      "record_count": 2,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreordivismerg": {
+      "table_name": "rgtaxreordivismerg",
+      "columns": [
+        "rdivisible",
+        "rdivisibletrm",
+        "rdividedmerg",
+        "rdividedmergfrm",
+        "rdividedmergtrm",
+        "rmerged",
+        "rmergedfrm"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "rdivisible",
+        "rdividedmerg"
+      ]
+    },
+    "rgtaxreormerge": {
+      "table_name": "rgtaxreormerge",
+      "columns": [
+        "rmergerable",
+        "rmergerabletrm",
+        "rmerged"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreorsepar": {
+      "table_name": "rgtaxreorsepar",
+      "columns": [
+        "rseparablemsrn",
+        "rseparatedmsrn",
+        "rseparatedfrmmtd"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreorseparacqu": {
+      "table_name": "rgtaxreorseparacqu",
+      "columns": [
+        "rseparable",
+        "rseparatedacqu",
+        "rseparatedacqufrm",
+        "rseparatedacqutrm",
+        "racquiring"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxreorseparmerg": {
+      "table_name": "rgtaxreorseparmerg",
+      "columns": [
+        "rseparable",
+        "rseparatedmerg",
+        "rseparatedmergfrm",
+        "rseparatedmergtrm",
+        "rmerged",
+        "rmergedfrm"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "rseparable",
+        "rseparatedmerg"
+      ]
+    },
+    "rgtaxreortrans": {
+      "table_name": "rgtaxreortrans",
+      "columns": [
+        "rtrttransformablemsrn",
+        "rtrttransformabletrmmtd",
+        "rtrttransformedmsrn",
+        "rtrttransformedfrmmtd"
+      ],
+      "record_count": 16,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxsubdivs": {
+      "table_name": "rgtaxsubdivs",
+      "columns": [
+        "rsdkey",
+        "rsdmsrn",
+        "rsdnote",
+        "rsddate",
+        "rsdtype",
+        "rsdog",
+        "rsdtaxtype"
+      ],
+      "record_count": 70,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxsubdivsbuirg": {
+      "table_name": "rgtaxsubdivsbuirg",
+      "columns": [
+        "rkey",
+        "rsubdiv",
+        "rbuirg",
+        "rtaxtype"
+      ],
+      "record_count": 58,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxsubdivsname": {
+      "table_name": "rgtaxsubdivsname",
+      "columns": [
+        "rsdnkey",
+        "rsdnsubdiv",
+        "rsdnname",
+        "rsdndate"
+      ],
+      "record_count": 60,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rgtaxsubdivsreas": {
+      "table_name": "rgtaxsubdivsreas",
+      "columns": [
+        "rsdrsubdiv",
+        "rsdrtaxoffice",
+        "rsdrreason",
+        "rsdrnum",
+        "rsdrcode",
+        "rsdrdate"
+      ],
+      "record_count": 60,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rrclist": {
+      "table_name": "rrclist",
+      "columns": [
+        "ra_period",
+        "type",
+        "ra_key",
+        "ranm",
+        "ra_num",
+        "ra_date",
+        "ra_cac",
+        "ra_type",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_sent",
+        "ra_sent_date",
+        "ra_note",
+        "ra_created",
+        "ra_org_sender",
+        "summ",
+        "ras_key",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ras_date",
+        "cstaag"
+      ],
+      "record_count": 105052,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rrclistview": {
+      "table_name": "rrclistview",
+      "columns": [
+        "yyyy",
+        "mnum",
+        "p",
+        "cstakey",
+        "cstaag",
+        "cstacst",
+        "oganm",
+        "cstapkey",
+        "cstapipgpnn",
+        "ra_key",
+        "ra_num",
+        "ra_date",
+        "ra_type",
+        "rachkey",
+        "rachnum",
+        "rachdate",
+        "ra_org_sender",
+        "ognm",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_sent",
+        "ra_sent_date"
+      ],
+      "record_count": 104232,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rrcrslt": {
+      "table_name": "rrcrslt",
+      "columns": [
+        "yyyy",
+        "hyhy",
+        "qqqq",
+        "mmmm",
+        "ra_period",
+        "ra_org_sender",
+        "psntd",
+        "acptd",
+        "rjctd",
+        "prccs",
+        "psntd_work",
+        "ra_psntd",
+        "ra_acptd",
+        "ra_rjctd",
+        "ra_prccs",
+        "ra_psntd_work",
+        "rao_psntd",
+        "rao_acptd",
+        "rao_rjctd",
+        "rao_prccs",
+        "rao_psntd_work",
+        "rc_psntd",
+        "rc_acptd",
+        "rc_rjctd",
+        "rc_prccs",
+        "rc_psntd_work",
+        "rasum_psntd_total",
+        "rasum_psntd_work",
+        "rasum_psntd_equip",
+        "rasum_psntd_others",
+        "rasum_acptd_total",
+        "rasum_acptd_work",
+        "rasum_acptd_equip",
+        "rasum_acptd_others",
+        "rasum_rjctd_total",
+        "rasum_rjctd_work",
+        "rasum_rjctd_equip",
+        "rasum_rjctd_others",
+        "rasum_prccs_total",
+        "rasum_prccs_work",
+        "rasum_prccs_equip",
+        "rasum_prccs_others",
+        "raosum_psntd_total",
+        "raosum_psntd_work",
+        "raosum_psntd_equip",
+        "raosum_psntd_others",
+        "raosum_acptd_total",
+        "raosum_acptd_work",
+        "raosum_acptd_equip",
+        "raosum_acptd_others",
+        "raosum_rjctd_total",
+        "raosum_rjctd_work",
+        "raosum_rjctd_equip",
+        "raosum_rjctd_others",
+        "raosum_prccs_total",
+        "raosum_prccs_work",
+        "raosum_prccs_equip",
+        "raosum_prccs_others",
+        "rcsum_psntd_total",
+        "rcsum_psntd_work",
+        "rcsum_psntd_equip",
+        "rcsum_psntd_others",
+        "rcsum_acptd_total",
+        "rcsum_acptd_work",
+        "rcsum_acptd_equip",
+        "rcsum_acptd_others",
+        "rcsum_rjctd_total",
+        "rcsum_rjctd_work",
+        "rcsum_rjctd_equip",
+        "rcsum_rjctd_others",
+        "rcsum_prccs_total",
+        "rcsum_prccs_work",
+        "rcsum_prccs_equip",
+        "rcsum_prccs_others"
+      ],
+      "record_count": 4042,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "rrctimelist": {
+      "table_name": "rrctimelist",
+      "columns": [
+        "ra_period",
+        "typegr",
+        "rsltofconsider",
+        "type",
+        "rakey",
+        "ranum",
+        "radate",
+        "compliancey",
+        "rckey",
+        "rcnum",
+        "rcdate",
+        "ranm",
+        "ra_cac",
+        "cstapipgpnn",
+        "ra_type",
+        "ra_arrived",
+        "ra_arrived_date",
+        "ra_returned",
+        "ra_returned_date",
+        "ra_sent",
+        "ra_sent_date",
+        "ra_note",
+        "ra_created",
+        "ra_org_sender",
+        "summ",
+        "ras_key",
+        "ras_total",
+        "ras_work",
+        "ras_equip",
+        "ras_others",
+        "ras_date",
+        "cstaag"
+      ],
+      "record_count": 105052,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "st": {
+      "table_name": "st",
+      "columns": [
+        "stkey",
+        "sttype",
+        "stnote",
+        "sttimeofentry"
+      ],
+      "record_count": 342,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stcost": {
+      "table_name": "stcost",
+      "columns": [
+        "stckey",
+        "stctype",
+        "stcnote",
+        "stctimeofentry"
+      ],
+      "record_count": 178,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stcostcs": {
+      "table_name": "stcostcs",
+      "columns": [
+        "stckey",
+        "costnm"
+      ],
+      "record_count": 178,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stcostnm": {
+      "table_name": "stcostnm",
+      "columns": [
+        "stcnkey",
+        "stcncost",
+        "stcnnm",
+        "stcnnote",
+        "stcntimeofentry"
+      ],
+      "record_count": 306,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stilim": {
+      "table_name": "stilim",
+      "columns": [
+        "stilkey",
+        "stilname"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stipg": {
+      "table_name": "stipg",
+      "columns": [
+        "stikey",
+        "stitype",
+        "stilim",
+        "stinote",
+        "stitimeofentry"
+      ],
+      "record_count": 164,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stipgcs": {
+      "table_name": "stipgcs",
+      "columns": [
+        "stikey",
+        "costnm"
+      ],
+      "record_count": 164,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stipgnm": {
+      "table_name": "stipgnm",
+      "columns": [
+        "stinkey",
+        "stinipg",
+        "stinnm",
+        "stinnote",
+        "stintimeofentry"
+      ],
+      "record_count": 166,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stnet": {
+      "table_name": "stnet",
+      "columns": [
+        "stnkey",
+        "stntype",
+        "stnname",
+        "stnroot"
+      ],
+      "record_count": 6,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "stnetpn": {
+      "table_name": "stnetpn",
+      "columns": [
+        "stnpkey",
+        "stnpstrel",
+        "stpnstnet",
+        "stpnnum"
+      ],
+      "record_count": 422,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "strel": {
+      "table_name": "strel",
+      "columns": [
+        "strkey",
+        "strparent",
+        "strchild"
+      ],
+      "record_count": 340,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "sttype": {
+      "table_name": "sttype",
+      "columns": [
+        "sttkey",
+        "sttname"
+      ],
+      "record_count": 4,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "sysobjectswithdescription": {
+      "table_name": "sysobjectswithdescription",
+      "columns": [
+        "name",
+        "object_id",
+        "type",
+        "type_desc",
+        "create_date",
+        "value"
+      ],
+      "record_count": 756,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "timersltcap": {
+      "table_name": "timersltcap",
+      "columns": [
+        "ykey",
+        "yyyy",
+        "mkey",
+        "mcs",
+        "mnum",
+        "mnm",
+        "mq",
+        "mhy",
+        "cstagpnkey",
+        "ipgkey",
+        "ipgnm",
+        "ipgstr",
+        "ipgend",
+        "cstainvestor",
+        "ogakey",
+        "ogkey",
+        "ognm",
+        "cstagpncode",
+        "typegr",
+        "lim",
+        "ishkey",
+        "ishnm",
+        "limplan",
+        "presented",
+        "accepted",
+        "presentedaccum",
+        "acceptedaccum",
+        "agfeepresented",
+        "agfeeaccepted",
+        "agfeepresentedaccum",
+        "agfeeacceptedaccum",
+        "presentedralp",
+        "acceptedralp",
+        "presentedralpaccum",
+        "acceptedralpaccum",
+        "storagesum",
+        "storagesumaccum",
+        "cctsum",
+        "cctsumaccum",
+        "mnrlsum",
+        "mnrlsumaccum"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "ykey"
+      ]
+    },
+    "timersltm": {
+      "table_name": "timersltm",
+      "columns": [
+        "ykey",
+        "yyyy",
+        "mkey",
+        "mnum",
+        "mcs",
+        "mnm",
+        "mq",
+        "mhy",
+        "ipgkey",
+        "ipgnm",
+        "cstainvestor",
+        "ogakey",
+        "ognm",
+        "typegr",
+        "typegrttl",
+        "lim",
+        "ishkey",
+        "ishnm",
+        "limplan",
+        "presented",
+        "presentedaccum",
+        "accepted",
+        "acceptedaccum",
+        "agfeepresented",
+        "agfeepresentedaccum",
+        "agfeeaccepted",
+        "agfeeacceptedaccum",
+        "presentedralp",
+        "presentedralpaccum",
+        "acceptedralp",
+        "acceptedralpaccum",
+        "storagesum",
+        "storagesumaccum",
+        "cctsum",
+        "cctsumaccum",
+        "mnrlsum",
+        "mnrlsumaccum",
+        "presentedttl",
+        "presentedttlaccum",
+        "acceptedttl",
+        "acceptedttlaccum",
+        "restoflimit",
+        "percentdev"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "ykey"
+      ]
+    },
+    "timersltmrl": {
+      "table_name": "timersltmrl",
+      "columns": [
+        "ipgnm",
+        "yyyy",
+        "mnum",
+        "ognm",
+        "typegrttl",
+        "ipgkey",
+        "ykey",
+        "mkey",
+        "lim",
+        "restoflimit",
+        "percentdev",
+        "presented",
+        "presentedaccum",
+        "accepted",
+        "acceptedaccum",
+        "agfeepresented",
+        "agfeepresentedaccum",
+        "agfeeaccepted",
+        "agfeeacceptedaccum",
+        "presentedralp",
+        "presentedralpaccum",
+        "acceptedralp",
+        "acceptedralpaccum",
+        "storagesum",
+        "storagesumaccum",
+        "cctsum",
+        "cctsumaccum",
+        "mnrlsum",
+        "mnrlsumaccum",
+        "presentedttl",
+        "presentedttlaccum",
+        "acceptedttl",
+        "acceptedttlaccum"
+      ],
+      "record_count": 0,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "timersltmrttl": {
+      "table_name": "timersltmrttl",
+      "columns": [
+        "ipgnm",
+        "yyyy",
+        "mnum",
+        "typegrttl",
+        "ipgkey",
+        "ipgstr",
+        "ipgend",
+        "ykey",
+        "mkey",
+        "lim",
+        "restoflimit",
+        "percentdev",
+        "presented",
+        "presentedaccum",
+        "accepted",
+        "acceptedaccum",
+        "agfeepresented",
+        "agfeepresentedaccum",
+        "agfeeaccepted",
+        "agfeeacceptedaccum",
+        "presentedralp",
+        "presentedralpaccum",
+        "acceptedralp",
+        "acceptedralpaccum",
+        "storagesum",
+        "storagesumaccum",
+        "cctsum",
+        "cctsumaccum",
+        "mnrlsum",
+        "mnrlsumaccum",
+        "presentedttl",
+        "presentedttlaccum",
+        "acceptedttl",
+        "acceptedttlaccum"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yyyy"
+      ]
+    },
+    "yr": {
+      "table_name": "yr",
+      "columns": [
+        "yr_key",
+        "yr_variant",
+        "cn_inv_dbt_upl",
+        "yyyy",
+        "yr_cmmgr",
+        "yr_progress"
+      ],
+      "record_count": 12,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "yr_ctrl": {
+      "table_name": "yr_ctrl",
+      "columns": [
+        "yr_key",
+        "upl_prnt",
+        "cn_inv_key",
+        "upl_chld",
+        "upl_date_ttl",
+        "upl_date_ovr",
+        "dbt_ttl",
+        "dbt_overd"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_ctrl_cm": {
+      "table_name": "yr_ctrl_cm",
+      "columns": [
+        "number",
+        "debt_type",
+        "account_num",
+        "agname",
+        "order_214",
+        "kontranum",
+        "ognm",
+        "cn_number",
+        "cn_date",
+        "cn_inv_num",
+        "doccur",
+        "cn_inv_date_maturity",
+        "yr_key",
+        "upl_prnt",
+        "cn_inv_key",
+        "upl_chld",
+        "bs_ttl",
+        "bs_ovr",
+        "overd_agent",
+        "qu_i_upl_chld",
+        "qu_i_ttl",
+        "qu_i_ovr",
+        "qu_i_matured",
+        "qu_ii_upl_chld",
+        "qu_ii_ttl",
+        "qu_ii_ovr",
+        "qu_ii_matured",
+        "qu_iii_upl_chld",
+        "qu_iii_ttl",
+        "qu_iii_ovr",
+        "qu_iii_matured",
+        "qu_iv_upl_chld",
+        "qu_iv_ttl",
+        "qu_iv_ovr",
+        "qu_iv_matured",
+        "qu_v_upl_chld",
+        "qu_v_ttl",
+        "qu_v_ovr",
+        "qu_v_matured",
+        "progn_matur",
+        "cstcodecm",
+        "cstnamecm",
+        "codefind",
+        "codefind2",
+        "cstcodeupl",
+        "cstnameupl",
+        "tomaturaction",
+        "note",
+        "note_kur",
+        "work_overd",
+        "togi",
+        "errbuirg",
+        "nolimits",
+        "process",
+        "terminationcontr",
+        "manager"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_ctrl_cm_21": {
+      "table_name": "yr_ctrl_cm_21",
+      "columns": [
+        "number",
+        "debt_type",
+        "account_num",
+        "agname",
+        "kontranum",
+        "ognm",
+        "cn_number",
+        "cn_date",
+        "cn_inv_num",
+        "doccur",
+        "cn_inv_date_maturity",
+        "yr_key",
+        "upl_prnt",
+        "cn_inv_key",
+        "upl_chld",
+        "bs_ttl",
+        "bs_ovr",
+        "cstcodeupl",
+        "cstnameupl"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_ctrl_cmacc21": {
+      "table_name": "yr_ctrl_cmacc21",
+      "columns": [
+        "number",
+        "debt_type",
+        "account_num",
+        "agname",
+        "order_214",
+        "kontranum",
+        "ognm",
+        "cn_number",
+        "cn_date",
+        "cinum",
+        "doccur",
+        "cn_inv_date_maturity",
+        "yr_key",
+        "upl_prnt",
+        "cidcninvaccnt",
+        "ciacninv",
+        "upl_chld",
+        "bs_ttl",
+        "bs_ovr",
+        "overd_agent",
+        "qu_i_upl_chld",
+        "qu_i_ttl",
+        "qu_i_ovr",
+        "qu_i_matured",
+        "progn_matur",
+        "cstcodecm",
+        "cstnamecm",
+        "codefind",
+        "codefind2",
+        "cstcodeupl",
+        "cstnameupl",
+        "tomaturaction",
+        "note",
+        "note_kur",
+        "work_overd",
+        "togi",
+        "errbuirg",
+        "nolimits",
+        "process",
+        "terminationcontr",
+        "manager"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_ctrl_cmacc21_06": {
+      "table_name": "yr_ctrl_cmacc21_06",
+      "columns": [
+        "number",
+        "debt_type",
+        "account_num",
+        "agname",
+        "kontranum",
+        "ognm",
+        "cn_number",
+        "cn_date",
+        "cinum",
+        "doccur",
+        "cn_inv_date_maturity",
+        "yr_key",
+        "upl_prnt",
+        "cidcninvaccnt",
+        "ciacninv",
+        "upl_chld",
+        "bs_ttl",
+        "bs_ovr",
+        "qu_i_upl_chld",
+        "qu_i_ttl",
+        "qu_i_ovr",
+        "qu_i_matured",
+        "qu_ii_upl_chld",
+        "qu_ii_ttl",
+        "qu_ii_ovr",
+        "qu_ii_matured",
+        "cstcodeupl",
+        "cstnameupl",
+        "num20_12",
+        "agentnew",
+        "progn_matur",
+        "cstcode",
+        "cstcodenew",
+        "tomaturaction",
+        "agentnote",
+        "note_kur",
+        "manager",
+        "mainnote"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_ctrlaccnt": {
+      "table_name": "yr_ctrlaccnt",
+      "columns": [
+        "yr_key",
+        "upl_prnt",
+        "cidcninvaccnt",
+        "upl_chld",
+        "upl_date_ttl",
+        "upl_date_ovr",
+        "dbt_ttl",
+        "dbt_overd"
+      ],
+      "record_count": 0,
+      "has_primary_key": true,
+      "primary_key_columns": [
+        "yr_key"
+      ]
+    },
+    "yr_upl_p": {
+      "table_name": "yr_upl_p",
+      "columns": [
+        "yr_upl_p_key",
+        "yr_upl_p_yr",
+        "cn_inv_dbt_upl"
+      ],
+      "record_count": 56,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "yrcs": {
+      "table_name": "yrcs",
+      "columns": [
+        "yrvarkey",
+        "yrvarnm"
+      ],
+      "record_count": 12,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    },
+    "yyyy": {
+      "table_name": "yyyy",
+      "columns": [
+        "ykey",
+        "yyyy"
+      ],
+      "record_count": 52,
+      "has_primary_key": false,
+      "primary_key_columns": []
+    }
+  },
+  "existing_primary_keys": {
+    "accnt": [
+      "account_key"
+    ],
+    "cn": [
+      "cn_key"
+    ],
+    "cn_inv": [
+      "cn_inv_key"
+    ],
+    "cn_inv_dbt": [
+      "cn_inv_dbt_key"
+    ],
+    "cn_inv_dbt_upl": [
+      "upl_key"
+    ],
+    "cn_inv_dbt_upl_g_p": [
+      "key"
+    ],
+    "cn_inv_dbt_upl_pm_upl": [
+      "cn_inv_dbt_upl"
+    ],
+    "cn_inv_doc": [
+      "cn_inv_doc_key"
+    ],
+    "cn_inv_pm": [
+      "cn_inv_pm_key"
+    ],
+    "cn_inv_pm_upl": [
+      "cn_key"
+    ],
+    "cn_prdoc": [
+      "cn_key"
+    ],
+    "cn_prdoccs": [
+      "cnpdkey"
+    ],
+    "cn_prdoct": [
+      "cn_key"
+    ],
+    "cn_s": [
+      "cn_key"
+    ],
+    "cn_s_org": [
+      "cn_key"
+    ],
+    "cn_s_org_smpl": [
+      "cn_key"
+    ],
+    "cn_s_org_smplcs": [
+      "cn_key"
+    ],
+    "cn_s_orgcs": [
+      "cn_key"
+    ],
+    "cn_s_orgcustbuirginv": [
+      "cn_key"
+    ],
+    "cn_s_orgexebuirg": [
+      "cn_key"
+    ],
+    "cn_s_orgexebuirginv": [
+      "cn_key"
+    ],
+    "cn_s_type": [
+      "cn_key"
+    ],
+    "cn_scs": [
+      "cn_key"
+    ],
+    "cncs": [
+      "cn_key"
+    ],
+    "cninv": [
+      "cn_key"
+    ],
+    "cninvaccnt": [
+      "cn_key"
+    ],
+    "cninvaccntcs": [
+      "ciakey"
+    ],
+    "cninvaccntsmpl": [
+      "cn_key"
+    ],
+    "cninvcmm": [
+      "cnickey"
+    ],
+    "cst": [
+      "cstkey"
+    ],
+    "cstag": [
+      "cstakey"
+    ],
+    "cstagpn": [
+      "cstapkey"
+    ],
+    "dtqinvoice": [
+      "mark"
+    ],
+    "dtqinvoicedbt": [
+      "cn_inv_dbt_upl"
+    ],
+    "dym_pm_pm": [
+      "upl_key"
+    ],
+    "inv": [
+      "ikey"
+    ],
+    "invdbtvalue": [
+      "idvdbtinv",
+      "idvdbtnum",
+      "idvupl"
+    ],
+    "ipgutplpncostits": [
+      "iuplpckey"
+    ],
+    "juundocchnggr": [
+      "jcgkey"
+    ],
+    "juundocchnggrrel": [
+      "jcgrkey"
+    ],
+    "juundocprmrgrrel": [
+      "jpgrkey"
+    ],
+    "juundocside": [
+      "jskey"
+    ],
+    "juundocsideorg": [
+      "jsokey"
+    ],
+    "juundocsidetype": [
+      "jstkey"
+    ],
+    "ogag": [
+      "ogakey"
+    ],
+    "ogagfeepntestactattr": [
+      "cstaag"
+    ],
+    "ogagfeepntestactattrtrue": [
+      "cstaag"
+    ],
+    "ogagfeepntestactnew": [
+      "oafptoafname"
+    ],
+    "ogagfeepntestactpnnoeq": [
+      "oafkey"
+    ],
+    "ogagfeepntestagentno": [
+      "oafptoafsender"
+    ],
+    "ogagfeepntestcstno": [
+      "oafptkey"
+    ],
+    "ogagfeepntestdbno": [
+      "oafkey"
+    ],
+    "ra_period": [
+      "key"
+    ],
+    "rgtaxreordivismerg": [
+      "rdivisible",
+      "rdividedmerg"
+    ],
+    "rgtaxreorseparmerg": [
+      "rseparable",
+      "rseparatedmerg"
+    ],
+    "timersltcap": [
+      "ykey"
+    ],
+    "timersltm": [
+      "ykey"
+    ],
+    "timersltmrttl": [
+      "yyyy"
+    ],
+    "yr_ctrl": [
+      "yr_key"
+    ],
+    "yr_ctrl_cm": [
+      "yr_key"
+    ],
+    "yr_ctrl_cm_21": [
+      "yr_key"
+    ],
+    "yr_ctrl_cmacc21": [
+      "yr_key"
+    ],
+    "yr_ctrl_cmacc21_06": [
+      "yr_key"
+    ],
+    "yr_ctrlaccnt": [
+      "yr_key"
+    ]
+  },
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/analyze-postgres-structure-20250830_214013.log"
+}

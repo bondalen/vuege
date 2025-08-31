@@ -1,0 +1,259 @@
+{
+  "timestamp": "2025-08-30T16:44:39.098437",
+  "total_tables_processed": 25,
+  "successful_pks": 0,
+  "failed_pks": 25,
+  "results": [
+    {
+      "table_name": "org",
+      "pk_columns": [
+        "ogkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['ogkey']"
+    },
+    {
+      "table_name": "cn",
+      "pk_columns": [
+        "cnkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey']"
+    },
+    {
+      "table_name": "cn_inv",
+      "pk_columns": [
+        "cnkey",
+        "invkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey']"
+    },
+    {
+      "table_name": "cn_inv_dbt",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "dbtkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'dbtkey']"
+    },
+    {
+      "table_name": "cn_inv_dbt_upl",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "dbtkey",
+        "uplkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'dbtkey', 'uplkey']"
+    },
+    {
+      "table_name": "cn_inv_dbt_upl_g_p",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "dbtkey",
+        "uplkey",
+        "gkey",
+        "pkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'dbtkey', 'uplkey', 'gkey', 'pkey']"
+    },
+    {
+      "table_name": "cn_inv_doc",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "dockey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'dockey']"
+    },
+    {
+      "table_name": "cn_inv_pm",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "pmkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'pmkey']"
+    },
+    {
+      "table_name": "cninvcmm",
+      "pk_columns": [
+        "cnkey",
+        "invkey",
+        "cmmkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cnkey', 'invkey', 'cmmkey']"
+    },
+    {
+      "table_name": "cst",
+      "pk_columns": [
+        "cstkey"
+      ],
+      "status": "error",
+      "error": "multiple primary keys for table \"cst\" are not allowed\n"
+    },
+    {
+      "table_name": "cstag",
+      "pk_columns": [
+        "cstkey",
+        "agkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cstkey', 'agkey']"
+    },
+    {
+      "table_name": "cstagpn",
+      "pk_columns": [
+        "cstkey",
+        "agkey",
+        "pnkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['cstkey', 'agkey', 'pnkey']"
+    },
+    {
+      "table_name": "inv",
+      "pk_columns": [
+        "invkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['invkey']"
+    },
+    {
+      "table_name": "invdbtvalue",
+      "pk_columns": [
+        "invkey",
+        "dbtkey",
+        "valuekey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['invkey', 'dbtkey', 'valuekey']"
+    },
+    {
+      "table_name": "ipgutplpncostits",
+      "pk_columns": [
+        "ipgkey",
+        "utkey",
+        "plkey",
+        "pnkey",
+        "costkey",
+        "itkey",
+        "skey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['ipgkey', 'utkey', 'plkey', 'pnkey', 'costkey', 'itkey', 'skey']"
+    },
+    {
+      "table_name": "juundocchnggr",
+      "pk_columns": [
+        "juundockey",
+        "chngkey",
+        "grkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'chngkey', 'grkey']"
+    },
+    {
+      "table_name": "juundocchnggrrel",
+      "pk_columns": [
+        "juundockey",
+        "chngkey",
+        "grkey",
+        "relkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'chngkey', 'grkey', 'relkey']"
+    },
+    {
+      "table_name": "juundocprmrgrrel",
+      "pk_columns": [
+        "juundockey",
+        "prmrkey",
+        "grkey",
+        "relkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'prmrkey', 'grkey', 'relkey']"
+    },
+    {
+      "table_name": "juundocside",
+      "pk_columns": [
+        "juundockey",
+        "sidekey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'sidekey']"
+    },
+    {
+      "table_name": "juundocsideorg",
+      "pk_columns": [
+        "juundockey",
+        "sidekey",
+        "orgkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'sidekey', 'orgkey']"
+    },
+    {
+      "table_name": "juundocsidetype",
+      "pk_columns": [
+        "juundockey",
+        "sidekey",
+        "typekey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['juundockey', 'sidekey', 'typekey']"
+    },
+    {
+      "table_name": "ogag",
+      "pk_columns": [
+        "ogkey",
+        "agkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['ogkey', 'agkey']"
+    },
+    {
+      "table_name": "ra_period",
+      "pk_columns": [
+        "rakey",
+        "periodkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['rakey', 'periodkey']"
+    },
+    {
+      "table_name": "rgtaxreordivismerg",
+      "pk_columns": [
+        "rgkey",
+        "taxkey",
+        "reorkey",
+        "diviskey",
+        "mergkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['rgkey', 'taxkey', 'reorkey', 'diviskey', 'mergkey']"
+    },
+    {
+      "table_name": "rgtaxreorseparmerg",
+      "pk_columns": [
+        "rgkey",
+        "taxkey",
+        "reorkey",
+        "separkey",
+        "mergkey"
+      ],
+      "status": "error",
+      "error": "Missing columns: ['rgkey', 'taxkey', 'reorkey', 'separkey', 'mergkey']"
+    }
+  ]
+}

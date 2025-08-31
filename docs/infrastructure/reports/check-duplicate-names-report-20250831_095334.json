@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-08-31T09:53:34.167163",
+  "sqlserver_duplicates": [],
+  "postgres_duplicates": [],
+  "control_duplicates": [],
+  "specific_names": {
+    "sqlserver": [],
+    "postgres": []
+  },
+  "log_file": "/home/alex/vuege/docs/infrastructure/logs/check-duplicate-names-20250831_095334.log"
+}

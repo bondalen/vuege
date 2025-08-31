@@ -1,0 +1,60 @@
+{
+  "created": "2025-08-30T11:56:53.075644",
+  "total_groups": 5,
+  "estimated_duration": "2-3 часа",
+  "groups": [
+    {
+      "name": "Группа 1: Основные справочники",
+      "tables": [
+        "cn",
+        "org",
+        "cst"
+      ],
+      "priority": "Высокий"
+    },
+    {
+      "name": "Группа 2: Документы и номера",
+      "tables": [
+        "cn_PrDoc",
+        "cn_PrDocP",
+        "invNum"
+      ],
+      "priority": "Высокий"
+    },
+    {
+      "name": "Группа 3: Инвестиционные операции",
+      "tables": [
+        "cnInvAccnt",
+        "cnInvCmmAg",
+        "cnInvCmmGr",
+        "cnInvCmmTp",
+        "cnInvGr"
+      ],
+      "priority": "Средний"
+    },
+    {
+      "name": "Группа 4: Долги и переводы",
+      "tables": [
+        "cnInvTransfer",
+        "cn_inv_dbt",
+        "cn_inv_doc",
+        "invDbt"
+      ],
+      "priority": "Средний"
+    },
+    {
+      "name": "Группа 5: Связующие таблицы",
+      "tables": [
+        "cn_s",
+        "cn_s_org"
+      ],
+      "priority": "Низкий"
+    }
+  ],
+  "recommendations": [
+    "Начать с групп высокого приоритета",
+    "Использовать DBHub для автоматической миграции",
+    "Валидировать каждую группу после миграции",
+    "Создать резервные копии перед миграцией"
+  ]
+}

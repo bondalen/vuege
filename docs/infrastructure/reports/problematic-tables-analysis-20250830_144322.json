@@ -1,0 +1,2975 @@
+[
+  {
+    "table_name": "ogAgFeeGr",
+    "structure": {
+      "table_name": "ogAgFeeGr",
+      "exists": true,
+      "columns": [
+        {
+          "name": "yyyy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mHy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mQ",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogaNm",
+          "type": "nvarchar",
+          "max_length": 511,
+          "nullable": "YES"
+        },
+        {
+          "name": "oafNum",
+          "type": "nvarchar",
+          "max_length": 100,
+          "nullable": "YES"
+        },
+        {
+          "name": "pAgFee",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "VAT",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "Total",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": 1178
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "cn_PrDocCs",
+    "structure": {
+      "table_name": "cn_PrDocCs",
+      "exists": true,
+      "columns": [
+        {
+          "name": "cnpdKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "name",
+          "type": "nvarchar",
+          "max_length": 945,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cnpdCnInvNew'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "cn_s_orgExeBuirg",
+    "structure": {
+      "table_name": "cn_s_orgExeBuirg",
+      "exists": true,
+      "columns": [
+        {
+          "name": "cn_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_note",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_s_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_s_org_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "csoCnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "csoAsbuID",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "org_id",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "org_id_value_l",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_s_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [
+      "dtqContract",
+      "dtqInvoice",
+      "dtqInvoiceDbt"
+    ],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "cnInvAccntCs",
+    "structure": {
+      "table_name": "cnInvAccntCs",
+      "exists": true,
+      "columns": [
+        {
+          "name": "ciaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "ciaName",
+          "type": "nvarchar",
+          "max_length": 1513,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'ciNum'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "cn_s_orgCustBuirgInv",
+    "structure": {
+      "table_name": "cn_s_orgCustBuirgInv",
+      "exists": true,
+      "columns": [
+        {
+          "name": "cn_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_note",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_s_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_s_org_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "csoCnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "csoAsbuID",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "org_id",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "org_id_value_l",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciaAccnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_s_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "cn_s_orgExeBuirgInv",
+    "structure": {
+      "table_name": "cn_s_orgExeBuirgInv",
+      "exists": true,
+      "columns": [
+        {
+          "name": "cn_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_note",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_s_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_s_org_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "csoCnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "csoAsbuID",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "org_id",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "org_id_value_l",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciaAccnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_s_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [
+      "dtqInvoice",
+      "dtqInvoiceDbt"
+    ],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "dtqInvoice",
+    "structure": {
+      "table_name": "dtqInvoice",
+      "exists": true,
+      "columns": [
+        {
+          "name": "iCnInv",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_s_org_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "note",
+          "type": "varchar",
+          "max_length": 73,
+          "nullable": "NO"
+        },
+        {
+          "name": "mark",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        }
+      ],
+      "record_count": "Error: (208, b\"Invalid object name 'ags.imp2021_II'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "dtqContract",
+    "structure": {
+      "table_name": "dtqContract",
+      "exists": true,
+      "columns": [
+        {
+          "name": "impCnNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "impCnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "impCnCounterparty",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "impCount",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "exeBuirgCnNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "exeBuirgCnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "exeBuirgCounterparty",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "CnKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "CnNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "CnDate",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "CnNote",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (208, b\"Invalid object name 'ags.imp2021_II'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "dtqCounterparty",
+    "structure": {
+      "table_name": "dtqCounterparty",
+      "exists": true,
+      "columns": [
+        {
+          "name": "№_контрагента",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "Контрагент",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "ИНН",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "org_id_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "org",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "org_id_value_l",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (208, b\"Invalid object name 'ags.imp2021_II'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "dtqInvoiceDbt",
+    "structure": {
+      "table_name": "dtqInvoiceDbt",
+      "exists": true,
+      "columns": [
+        {
+          "name": "cn_s_org_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_start",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_overd",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_dbt_upl",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mark",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "ciKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (208, b\"Invalid object name 'ags.imp2021_II'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "RaRa_chSmLt_RltYy",
+    "structure": {
+      "table_name": "RaRa_chSmLt_RltYy",
+      "exists": true,
+      "columns": [
+        {
+          "name": "y",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "m",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ag",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "AgName",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "RaPsntdSumTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "RaAcctdSumTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ddd",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "RaPsntdSumTtlYy",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "RaAcctdSumTtlYy",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (208, b\"Invalid object name 'FishEye.ags.RaRa_chSmLt_Rlt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "dym_pm_pm",
+    "structure": {
+      "table_name": "dym_pm_pm",
+      "exists": true,
+      "columns": [
+        {
+          "name": "upl_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_date",
+          "type": "date",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_name",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "main_account",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "org_id_value_l",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_date",
+          "type": "datetime",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "inv_of_dbt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "dym_cn_inv_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_inv_date_start",
+          "type": "datetime",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "datetime",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "dbt_overd",
+          "type": "money",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_inv_dbt_upl",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_inv_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "TimeRsltCAP",
+    "structure": {
+      "table_name": "TimeRsltCAP",
+      "exists": true,
+      "columns": [
+        {
+          "name": "yKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "yyyy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "mKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "mCs",
+          "type": "nvarchar",
+          "max_length": 287,
+          "nullable": "YES"
+        },
+        {
+          "name": "mNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mQ",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mHy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstAgPnKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgNm",
+          "type": "nvarchar",
+          "max_length": 150,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgStr",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgEnd",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstaInvestor",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstAgPnCode",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "typeGr",
+          "type": "nvarchar",
+          "max_length": 50,
+          "nullable": "YES"
+        },
+        {
+          "name": "lim",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "iShKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "iShNm",
+          "type": "nvarchar",
+          "max_length": 15,
+          "nullable": "YES"
+        },
+        {
+          "name": "limPlan",
+          "type": "varchar",
+          "max_length": 6,
+          "nullable": "YES"
+        },
+        {
+          "name": "presented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "accepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAccepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAcceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cnpdCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [
+      "TimeRsltM",
+      "TimeRsltMrl",
+      "TimeRsltMrTtl"
+    ],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "TimeRsltM",
+    "structure": {
+      "table_name": "TimeRsltM",
+      "exists": true,
+      "columns": [
+        {
+          "name": "yKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "yyyy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "mKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "mNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mCs",
+          "type": "nvarchar",
+          "max_length": 287,
+          "nullable": "YES"
+        },
+        {
+          "name": "mNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mQ",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mHy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgNm",
+          "type": "nvarchar",
+          "max_length": 150,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstaInvestor",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogaKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "typeGr",
+          "type": "nvarchar",
+          "max_length": 50,
+          "nullable": "YES"
+        },
+        {
+          "name": "typeGrTtl",
+          "type": "varchar",
+          "max_length": 23,
+          "nullable": "YES"
+        },
+        {
+          "name": "lim",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "iShKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "iShNm",
+          "type": "nvarchar",
+          "max_length": 15,
+          "nullable": "YES"
+        },
+        {
+          "name": "limPlan",
+          "type": "varchar",
+          "max_length": 6,
+          "nullable": "YES"
+        },
+        {
+          "name": "presented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "accepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAccepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAcceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "restOfLimit",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "percentDev",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cnpdCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "TimeRsltMrl",
+    "structure": {
+      "table_name": "TimeRsltMrl",
+      "exists": true,
+      "columns": [
+        {
+          "name": "ipgNm",
+          "type": "nvarchar",
+          "max_length": 150,
+          "nullable": "YES"
+        },
+        {
+          "name": "yyyy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "typeGrTtl",
+          "type": "varchar",
+          "max_length": 23,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "lim",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "restOfLimit",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "percentDev",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "accepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAccepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAcceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cnpdCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "TimeRsltMrTtl",
+    "structure": {
+      "table_name": "TimeRsltMrTtl",
+      "exists": true,
+      "columns": [
+        {
+          "name": "ipgNm",
+          "type": "nvarchar",
+          "max_length": 150,
+          "nullable": "YES"
+        },
+        {
+          "name": "yyyy",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "mNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "typeGrTtl",
+          "type": "varchar",
+          "max_length": 23,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgStr",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ipgEnd",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "mKey",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "lim",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "restOfLimit",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "percentDev",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "accepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresented",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeePresentedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAccepted",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agFeeAcceptedAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalp",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedRalpAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "storageSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cctSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "MnrlSumAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "presentedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "acceptedTtlAccum",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cnpdCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrl",
+    "structure": {
+      "table_name": "yr_ctrl",
+      "exists": true,
+      "columns": [
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_inv_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_date_ttl",
+          "type": "nvarchar",
+          "max_length": 34,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_date_ovr",
+          "type": "nvarchar",
+          "max_length": 34,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_overd",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_inv_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [
+      "yr_ctrl_cm",
+      "yr_ctrl_cm_21"
+    ],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrl_cm",
+    "structure": {
+      "table_name": "yr_ctrl_cm",
+      "exists": true,
+      "columns": [
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "AgName",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "order_214",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "kontraNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_date",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_num",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "dOccur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_inv_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "overd_agent",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_III_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_III_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_III_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_III_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_IV_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_IV_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_IV_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_IV_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_V_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_V_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_V_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_V_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "progn_matur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeCm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstNameCm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "codeFind",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "codeFind2",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeUpl",
+          "type": "nvarchar",
+          "max_length": 48,
+          "nullable": "NO"
+        },
+        {
+          "name": "cstNameUpl",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "toMaturAction",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "note",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "note_kur",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "work_overd",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "toGI",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "errBUiRG",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "noLimits",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "process",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "terminationContr",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "manager",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_inv_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrl_cm_21",
+    "structure": {
+      "table_name": "yr_ctrl_cm_21",
+      "exists": true,
+      "columns": [
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "AgName",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "kontraNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_date",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_num",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "dOccur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cn_inv_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeUpl",
+          "type": "nvarchar",
+          "max_length": 48,
+          "nullable": "NO"
+        },
+        {
+          "name": "cstNameUpl",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cn_inv_key'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrl_cmAcc21",
+    "structure": {
+      "table_name": "yr_ctrl_cmAcc21",
+      "exists": true,
+      "columns": [
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "AgName",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "order_214",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "kontraNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_date",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "dOccur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cidCnInvAccnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "ciaCnInv",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "overd_agent",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "progn_matur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeCm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstNameCm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "codeFind",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "codeFind2",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeUpl",
+          "type": "nvarchar",
+          "max_length": 48,
+          "nullable": "NO"
+        },
+        {
+          "name": "cstNameUpl",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "toMaturAction",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "note",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "note_kur",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "work_overd",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "toGI",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "errBUiRG",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "noLimits",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "process",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "terminationContr",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "manager",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cidCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrl_cmAcc21_06",
+    "structure": {
+      "table_name": "yr_ctrl_cmAcc21_06",
+      "exists": true,
+      "columns": [
+        {
+          "name": "number",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "debt_type",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "account_num",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "AgName",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "NO"
+        },
+        {
+          "name": "kontraNum",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ogNm",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_number",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_date",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "ciNum",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "dOccur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cn_inv_date_maturity",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cidCnInvAccnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "ciaCnInv",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "bs_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_I_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_ovr",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "qu_II_matured",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeUpl",
+          "type": "nvarchar",
+          "max_length": 48,
+          "nullable": "NO"
+        },
+        {
+          "name": "cstNameUpl",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "num20_12",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "agentNew",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "progn_matur",
+          "type": "date",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCode",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "cstCodeNew",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "toMaturAction",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "agentNote",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "note_kur",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        },
+        {
+          "name": "manager",
+          "type": "nvarchar",
+          "max_length": 255,
+          "nullable": "YES"
+        },
+        {
+          "name": "mainNote",
+          "type": "nvarchar",
+          "max_length": -1,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cidCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [],
+    "status": "analyzed"
+  },
+  {
+    "table_name": "yr_ctrlAccnt",
+    "structure": {
+      "table_name": "yr_ctrlAccnt",
+      "exists": true,
+      "columns": [
+        {
+          "name": "yr_key",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_prnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "cidCnInvAccnt",
+          "type": "int",
+          "max_length": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "upl_chld",
+          "type": "int",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_date_ttl",
+          "type": "nvarchar",
+          "max_length": 34,
+          "nullable": "YES"
+        },
+        {
+          "name": "upl_date_ovr",
+          "type": "nvarchar",
+          "max_length": 34,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_ttl",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "dbt_overd",
+          "type": "money",
+          "max_length": null,
+          "nullable": "YES"
+        }
+      ],
+      "record_count": "Error: (207, b\"Invalid column name 'cidCnInvAccnt'.DB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\nDB-Lib error message 20018, severity 16:\\nGeneral SQL Server error: Check messages from the SQL Server\\n\")"
+    },
+    "dependencies": {
+      "foreign_keys": [],
+      "indexes": []
+    },
+    "view_dependencies": [
+      "yr_ctrl_cmAcc21",
+      "yr_ctrl_cmAcc21_06"
+    ],
+    "status": "analyzed"
+  }
+]

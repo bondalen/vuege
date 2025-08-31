@@ -1,0 +1,36 @@
+{
+  "migration_info": {
+    "group_name": "Группа 2: Документы и номера",
+    "migration_date": "2025-08-30T12:20:52.360309",
+    "total_tables": 3,
+    "successful_migrations": 3,
+    "failed_migrations": 0
+  },
+  "table_results": {
+    "cn_PrDoc": {
+      "table_name": "cn_PrDoc",
+      "status": "success",
+      "rows_migrated": 1,
+      "validation_count": "5",
+      "timestamp": "2025-08-30T12:20:52.357413"
+    },
+    "cn_PrDocP": {
+      "table_name": "cn_PrDocP",
+      "status": "success",
+      "rows_migrated": 1,
+      "validation_count": "5",
+      "timestamp": "2025-08-30T12:20:52.358816"
+    },
+    "invNum": {
+      "table_name": "invNum",
+      "status": "success",
+      "rows_migrated": 1,
+      "validation_count": "5",
+      "timestamp": "2025-08-30T12:20:52.360299"
+    }
+  },
+  "summary": {
+    "success_rate": "100.0%",
+    "total_rows_migrated": 6
+  }
+}

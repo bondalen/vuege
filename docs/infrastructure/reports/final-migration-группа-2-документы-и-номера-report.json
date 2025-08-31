@@ -1,0 +1,39 @@
+{
+  "migration_info": {
+    "group_name": "Группа 2: Документы и номера",
+    "migration_date": "2025-08-30T12:26:01.896189",
+    "total_tables": 3,
+    "successful_migrations": 1,
+    "failed_migrations": 2
+  },
+  "table_results": {
+    "cn_PrDoc": {
+      "table_name": "cn_PrDoc",
+      "status": "error",
+      "error": "Не удалось создать таблицу cn_PrDoc",
+      "timestamp": "2025-08-30T12:26:00.224068"
+    },
+    "cn_PrDocP": {
+      "table_name": "cn_PrDocP",
+      "status": "success",
+      "rows_migrated": 3433,
+      "validation": {
+        "status": "success",
+        "postgresql_count": 3433,
+        "mssql_count": 3433,
+        "match": true
+      },
+      "timestamp": "2025-08-30T12:26:01.892638"
+    },
+    "invNum": {
+      "table_name": "invNum",
+      "status": "error",
+      "error": "Не удалось создать таблицу invNum",
+      "timestamp": "2025-08-30T12:26:01.896147"
+    }
+  },
+  "summary": {
+    "success_rate": "33.3%",
+    "total_rows_migrated": 5961
+  }
+}
