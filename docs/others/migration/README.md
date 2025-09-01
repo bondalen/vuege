@@ -9,6 +9,19 @@
 **Объем данных**: ~1,800,000+ записей
 **Статус**: Завершена с отличными результатами
 
+## 🆕 **НОВЫЕ ДОКУМЕНТЫ (31 августа 2025):**
+
+### **Система контроля миграции:**
+- **`migration-control-system.md`** - Основная документация системы контроля миграции
+- **`data-types-system.md`** - Система типов данных MS SQL Server
+- **`postgres-data-types-system.md`** - Система типов данных PostgreSQL
+- **`current-status-for-new-chat.md`** - Текущее состояние проекта для продолжения работы в новом чате
+
+### **Статус разработки:**
+- **Система контроля миграции** - полностью разработана и задокументирована
+- **PlantUML диаграммы** - созданы, исправлены и оптимизированы
+- **Следующий этап** - реализация схемы в PostgreSQL базе данных
+
 ## 📋 Ключевые документы
 
 ### 🏆 [ags-migration-final-completion-report.md](./ags-migration-final-completion-report.md)
@@ -134,6 +147,10 @@
 ```
 migration/
 ├── README.md                                    # Этот файл
+├── migration-control-system.md                  # Система контроля миграции
+├── data-types-system.md                        # Система типов данных MS SQL
+├── postgres-data-types-system.md               # Система типов данных PostgreSQL
+├── current-status-for-new-chat.md              # Статус для нового чата
 ├── ags-migration-final-completion-report.md    # Финальный отчет
 ├── dbhub-testing-report.md                     # Тестирование DBHub
 ├── ags-migration-fix-plan.md                   # План исправлений
@@ -162,4 +179,4 @@ migration/
 
 ---
 
-*Последнее обновление: 2025-08-30*
+*Последнее обновление: 2025-08-31*
