@@ -1,0 +1,109 @@
+{
+  "report_type": "database_comments_added",
+  "date": "2025-09-02",
+  "time": "07:45:00",
+  "project": "Vuege",
+  "module": "migration_control_system",
+  "schema": "mcl",
+  
+  "comments_added": {
+    "total_tables": 26,
+    "tables_with_comments": 26,
+    "coverage": "100%"
+  },
+  
+  "comment_categories": {
+    "migration_management": {
+      "tables": [
+        "migration_tasks",
+        "migration_problems"
+      ],
+      "description": "Таблицы для управления задачами и проблемами миграции"
+    },
+    
+    "mssql_objects": {
+      "tables": [
+        "mssql_objects",
+        "mssql_tables",
+        "mssql_views", 
+        "mssql_functions",
+        "mssql_stored_procedures"
+      ],
+      "description": "Таблицы для объектов Microsoft SQL Server с наследованием"
+    },
+    
+    "postgres_objects": {
+      "tables": [
+        "postgres_objects",
+        "postgres_tables",
+        "postgres_views",
+        "postgres_functions", 
+        "postgres_stored_procedures"
+      ],
+      "description": "Таблицы для объектов PostgreSQL с наследованием"
+    },
+    
+    "columns": {
+      "tables": [
+        "mssql_columns",
+        "postgres_columns"
+      ],
+      "description": "Таблицы для колонок таблиц (без прямой связи с задачами миграции)"
+    },
+    
+    "data_types": {
+      "tables": [
+        "mssql_data_types",
+        "mssql_base_types",
+        "mssql_derived_types",
+        "postgres_data_types",
+        "postgres_base_types",
+        "postgres_derived_types"
+      ],
+      "description": "Таблицы для типов данных с системой наследования"
+    },
+    
+    "problem_management": {
+      "tables": [
+        "table_migration_problems",
+        "column_migration_problems",
+        "table_problem_solutions",
+        "column_problem_solutions"
+      ],
+      "description": "Таблицы для управления проблемами миграции и способами их решения"
+    },
+    
+    "mapping_tables": {
+      "tables": [
+        "mssql_tables_problems_mapping",
+        "mssql_columns_problems_mapping"
+      ],
+      "description": "Промежуточные таблицы связи многие-ко-многим с автоматическим контролем уникальности"
+    }
+  },
+  
+  "key_comment_highlights": {
+    "inheritance_system": "Подчеркнуто использование наследования PostgreSQL для иерархии объектов",
+    "migration_tasks_connection": "Указаны связи с задачами миграции через task_id",
+    "columns_no_direct_connection": "Отмечено отсутствие прямой связи колонок с задачами миграции согласно схеме",
+    "problem_solution_relationship": "Описана связь один-ко-многим между проблемами и способами решения",
+    "automatic_uniqueness_control": "Подчеркнут автоматический контроль уникальности через триггеры",
+    "many_to_many_mapping": "Описаны промежуточные таблицы для связей многие-ко-многим"
+  },
+  
+  "technical_notes": {
+    "inheritance": "Все таблицы объектов используют PostgreSQL наследование от родительских таблиц",
+    "triggers": "Таблицы связи имеют триггеры для автоматического контроля уникальности",
+    "relationships": "Установлены связи один-ко-многим и многие-ко-многим согласно архитектуре",
+    "constraints": "Добавлены уникальные ограничения для обеспечения целостности данных"
+  },
+  
+  "next_steps": [
+    "Система готова к использованию с полным описанием назначения всех таблиц",
+    "Комментарии помогут разработчикам понимать архитектуру системы",
+    "Можно начинать заполнение таблиц данными о существующих объектах",
+    "Система автоматического контроля уникальности работает корректно"
+  ],
+  
+  "summary": "Добавлены комментарии ко всем 26 таблицам схемы mcl с детальным описанием их назначения, связей и технических особенностей. Комментарии отражают архитектуру системы контроля миграции, систему наследования PostgreSQL, управление проблемами и автоматический контроль уникальности."
+}
