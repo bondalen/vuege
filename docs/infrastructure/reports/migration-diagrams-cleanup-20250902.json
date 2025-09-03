@@ -1,0 +1,103 @@
+{
+  "report_type": "diagrams_cleanup",
+  "date": "2025-09-02",
+  "time": "09:15:00",
+  "project": "Vuege",
+  "module": "migration_diagrams",
+  
+  "cleanup_actions": {
+    "deleted_files": [
+      {
+        "file": "migration-process-flow-clean.puml",
+        "reason": "Низкая ценность - основная диаграмма уже упрощена",
+        "replacement": "Основная диаграмма migration-process-flow.puml"
+      },
+      {
+        "file": "migration-process-flow-detailed.puml",
+        "reason": "Низкая ценность - создана ранее, но не используется в проекте",
+        "replacement": "table-migration-subprocess.puml для детализации"
+      },
+      {
+        "file": "migration-process-flow-with-subprocesses.puml",
+        "reason": "Низкая ценность - основная диаграмма уже реструктурирована",
+        "replacement": "Основная диаграмма с подпроцессом + table-migration-subprocess.puml"
+      }
+    ],
+    
+    "files_retained": [
+      {
+        "file": "migration-process-flow.puml",
+        "reason": "Основная диаграмма процесса миграции с подпроцессами",
+        "value": "Высокая - ключевая диаграмма проекта"
+      },
+      {
+        "file": "table-migration-subprocess.puml",
+        "reason": "Детализация подпроцесса 'Перенос таблиц'",
+        "value": "Высокая - детализация основного процесса"
+      },
+      {
+        "file": "migration-control-system-schema.puml",
+        "reason": "Схема данных системы контроля миграции",
+        "value": "Высокая - архитектура системы"
+      },
+      {
+        "file": "migration-functions-schema.puml",
+        "reason": "Схема функций и триггеров",
+        "value": "Высокая - техническая реализация"
+      },
+      {
+        "file": "migration-reporting-system.puml",
+        "reason": "Схема системы отчетности",
+        "value": "Высокая - функциональность отчетов"
+      },
+      {
+        "file": "migration-reporting-system-simple.puml",
+        "reason": "Альтернативная версия схемы отчетности",
+        "value": "Средняя - совместимость с разными версиями PlantUML"
+      }
+    ]
+  },
+  
+  "current_structure": {
+    "total_files": 6,
+    "core_diagrams": 2,
+    "schema_diagrams": 3,
+    "alternative_versions": 1,
+    "structure": "Оптимизирована - убраны дублирующие и неценные файлы"
+  },
+  
+  "value_assessment": {
+    "high_value": [
+      "migration-process-flow.puml - основная диаграмма процесса",
+      "table-migration-subprocess.puml - детализация подпроцесса",
+      "migration-control-system-schema.puml - архитектура системы",
+      "migration-functions-schema.puml - техническая реализация",
+      "migration-reporting-system.puml - функциональность отчетов"
+    ],
+    "medium_value": [
+      "migration-reporting-system-simple.puml - альтернативная версия для совместимости"
+    ],
+    "deleted_value": [
+      "migration-process-flow-clean.puml - дублирование функциональности",
+      "migration-process-flow-detailed.puml - неиспользуемый файл",
+      "migration-process-flow-with-subprocesses.puml - устаревшая версия"
+    ]
+  },
+  
+  "benefits_of_cleanup": [
+    "Убраны дублирующие диаграммы",
+    "Упрощена структура файлов",
+    "Сохранены только ценные для проекта диаграммы",
+    "Улучшена читаемость документации",
+    "Снижена путаница при выборе диаграмм"
+  ],
+  
+  "next_steps": [
+    "Протестировать генерацию изображений для оставшихся диаграмм",
+    "Обновить документацию проекта с учетом новой структуры",
+    "Рассмотреть возможность интеграции диаграмм в основные документы",
+    "Планировать развитие только ценных диаграмм"
+  ],
+  
+  "summary": "Проведена очистка производных диаграмм от migration-process-flow.puml. Удалены 3 неценных файла, оставлены 6 ценных диаграмм. Структура оптимизирована, убраны дублирования и неиспользуемые версии. Проект теперь содержит только диаграммы с высокой ценностью для понимания архитектуры и процесса миграции."
+}

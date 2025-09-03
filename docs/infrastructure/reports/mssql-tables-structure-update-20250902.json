@@ -1,0 +1,99 @@
+{
+  "report_type": "table_structure_update",
+  "date": "2025-09-02",
+  "time": "10:00:00",
+  "project": "Vuege",
+  "module": "mssql_tables_structure",
+  "database": "Fish_Eye",
+  "schema": "mcl",
+  
+  "changes_made": {
+    "table_name": "mssql_tables",
+    "changes": [
+      {
+        "field": "has_primary_key",
+        "action": "RENAME TO primary_key_count",
+        "type_change": "boolean → integer",
+        "reason": "Хранение реального количества первичных ключей для контроля миграции"
+      },
+      {
+        "field": "has_foreign_keys",
+        "action": "RENAME TO foreign_key_count",
+        "type_change": "boolean → integer",
+        "reason": "Хранение реального количества внешних ключей для контроля миграции"
+      },
+      {
+        "field": "has_indexes",
+        "action": "RENAME TO index_count",
+        "type_change": "boolean → integer",
+        "reason": "Хранение реального количества индексов для контроля миграции"
+      },
+      {
+        "field": "has_triggers",
+        "action": "RENAME TO trigger_count",
+        "type_change": "boolean → integer",
+        "reason": "Хранение реального количества триггеров для контроля миграции"
+      }
+    ]
+  },
+  
+  "new_structure": {
+    "count_fields": {
+      "primary_key_count": "integer - количество первичных ключей",
+      "foreign_key_count": "integer - количество внешних ключей",
+      "index_count": "integer - количество индексов",
+      "trigger_count": "integer - количество триггеров"
+    },
+    "benefits": [
+      "Детальный контроль количества объектов при миграции",
+      "Возможность отслеживания прогресса миграции по типам объектов",
+      "Сравнение исходного и целевого состояния",
+      "Анализ сложности таблиц для планирования миграции"
+    ]
+  },
+  
+  "compatibility_with_query": {
+    "query_field": "PRIMARY_KEY_COUNT",
+    "table_field": "primary_key_count",
+    "compatibility": "Полная - прямое соответствие типов integer",
+    
+    "query_field": "FOREIGN_KEY_COUNT",
+    "table_field": "foreign_key_count",
+    "compatibility": "Полная - прямое соответствие типов integer",
+    
+    "query_field": "INDEX_COUNT",
+    "table_field": "index_count",
+    "compatibility": "Полная - прямое соответствие типов integer",
+    
+    "additional_field": "trigger_count",
+    "purpose": "Дополнительное поле для будущего расширения запроса"
+  },
+  
+  "migration_control_benefits": {
+    "detailed_tracking": "Теперь можно отслеживать точное количество объектов каждого типа",
+    "progress_monitoring": "Контроль прогресса миграции по типам объектов",
+    "comparison_analysis": "Сравнение исходного и целевого состояния таблиц",
+    "complexity_assessment": "Оценка сложности миграции на основе количества объектов",
+    "planning_improvement": "Лучшее планирование процесса миграции"
+  },
+  
+  "sql_commands_executed": [
+    "ALTER TABLE mcl.mssql_tables RENAME COLUMN has_primary_key TO primary_key_count;",
+    "ALTER TABLE mcl.mssql_tables ALTER COLUMN primary_key_count TYPE integer USING CASE WHEN primary_key_count = true THEN 1 ELSE 0 END;",
+    "ALTER TABLE mcl.mssql_tables RENAME COLUMN has_foreign_keys TO foreign_key_count;",
+    "ALTER TABLE mcl.mssql_tables ALTER COLUMN foreign_key_count TYPE integer USING CASE WHEN foreign_key_count = true THEN 1 ELSE 0 END;",
+    "ALTER TABLE mcl.mssql_tables RENAME COLUMN has_indexes TO index_count;",
+    "ALTER TABLE mcl.mssql_tables ALTER COLUMN index_count TYPE integer USING CASE WHEN index_count = true THEN 1 ELSE 0 END;",
+    "ALTER TABLE mcl.mssql_tables RENAME COLUMN has_triggers TO trigger_count;",
+    "ALTER TABLE mcl.mssql_tables ALTER COLUMN trigger_count TYPE integer USING CASE WHEN trigger_count = true THEN 1 ELSE 0 END;"
+  ],
+  
+  "next_steps": [
+    "Обновить альтернативный SQL запрос для включения trigger_count",
+    "Протестировать заполнение таблицы mssql_tables обновленными данными",
+    "Создать представления для анализа прогресса миграции по типам объектов",
+    "Интегрировать обновленную структуру в процесс миграции"
+  ],
+  
+  "summary": "Структура таблицы mcl.mssql_tables обновлена для хранения реального количества ключей, индексов и триггеров вместо boolean значений. Это обеспечивает детальный контроль хода миграции и позволяет отслеживать прогресс по типам объектов. Теперь таблица полностью совместима с альтернативным SQL запросом для получения метаданных таблиц схемы ags."
+}

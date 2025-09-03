@@ -1,0 +1,88 @@
+{
+  "report_type": "duplicate_columns_removal",
+  "date": "2025-09-02",
+  "time": "10:30:00",
+  "project": "Vuege",
+  "module": "mssql_tables_structure_optimization",
+  "database": "Fish_Eye",
+  "schema": "mcl",
+  
+  "columns_removed": {
+    "postgres_table_name": {
+      "data_type": "character varying(255)",
+      "reason": "Дублирует object_name из связанной таблицы postgres_tables",
+      "alternative": "JOIN с postgres_tables по source_table_id"
+    },
+    "postgres_schema_name": {
+      "data_type": "character varying(100)",
+      "reason": "Дублирует schema_name из связанной таблицы postgres_tables",
+      "alternative": "JOIN с postgres_tables по source_table_id"
+    },
+    "postgres_row_count": {
+      "data_type": "integer",
+      "reason": "Дублирует row_count из связанной таблицы postgres_tables",
+      "alternative": "JOIN с postgres_tables по source_table_id"
+    },
+    "postgres_table_size": {
+      "data_type": "bigint",
+      "reason": "Дублирует table_size из связанной таблицы postgres_tables",
+      "alternative": "JOIN с postgres_tables по source_table_id"
+    }
+  },
+  
+  "sql_commands_executed": [
+    "ALTER TABLE mcl.mssql_tables DROP COLUMN postgres_table_name;",
+    "ALTER TABLE mcl.mssql_tables DROP COLUMN postgres_schema_name;",
+    "ALTER TABLE mcl.mssql_tables DROP COLUMN postgres_row_count;",
+    "ALTER TABLE mcl.mssql_tables DROP COLUMN postgres_table_size;"
+  ],
+  
+  "benefits_of_removal": {
+    "eliminate_duplication": "Устранение дублирования данных между таблицами",
+    "improve_normalization": "Улучшение нормализации базы данных",
+    "simplify_structure": "Упрощение структуры таблицы mssql_tables",
+    "reduce_inconsistency_risk": "Снижение риска несогласованности данных",
+    "simplify_maintenance": "Упрощение поддержки и обновления данных"
+  },
+  
+  "current_table_structure": {
+    "total_columns": 28,
+    "removed_columns": 4,
+    "remaining_columns": 24,
+    "inheritance": "Наследует от mcl.mssql_objects (15 полей) + 9 специфичных полей"
+  },
+  
+  "alternative_data_access": {
+    "method": "JOIN запросы с таблицей postgres_tables",
+    "example_query": "SELECT mt.*, pt.object_name as postgres_table_name, pt.schema_name as postgres_schema_name, pt.row_count as postgres_row_count, pt.table_size as postgres_table_size FROM mcl.mssql_tables mt LEFT JOIN mcl.postgres_tables pt ON pt.source_table_id = mt.id;",
+    "benefits": [
+      "Данные всегда актуальны",
+      "Нет дублирования",
+      "Соблюдение принципа нормализации",
+      "Гибкость в получении данных"
+    ]
+  },
+  
+  "relationship_maintained": {
+    "foreign_key": "postgres_tables.source_table_id → mssql_tables.id",
+    "constraint_name": "fk_postgres_tables_source_table",
+    "status": "Активна - связь между таблицами сохранена",
+    "usage": "Для получения данных PostgreSQL объектов через JOIN"
+  },
+  
+  "optimization_results": {
+    "before_optimization": "32 колонки с дублированием данных",
+    "after_optimization": "28 колонок без дублирования",
+    "space_saved": "4 колонки удалены",
+    "data_integrity": "Улучшена - нет риска несогласованности дублированных данных"
+  },
+  
+  "next_steps": [
+    "Протестировать JOIN запросы для получения данных PostgreSQL объектов",
+    "Обновить документацию системы контроля миграции",
+    "Создать представления для упрощения доступа к связанным данным",
+    "Интегрировать оптимизированную структуру в процесс миграции"
+  ],
+  
+  "summary": "Удалены 4 дублирующие колонки с префиксом postgres_ из таблицы mssql_tables. Это устранило дублирование данных, улучшило нормализацию базы данных и упростило структуру. Данные PostgreSQL объектов теперь доступны через JOIN запросы с таблицей postgres_tables, что обеспечивает актуальность и согласованность данных."
+}

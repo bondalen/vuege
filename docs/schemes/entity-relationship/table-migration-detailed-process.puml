@@ -1,0 +1,14 @@
+@startuml Table Migration Detailed Process
+
+start
+
+#lightgreen:Создание запроса для получения списка таблиц исходной БД;
+
+:Заполнение системы контроля данными;
+note right: INSERT INTO mcl.mssql_objects, mcl.mssql_tables
+
+stop
+
+@enduml
+
+@enduml
