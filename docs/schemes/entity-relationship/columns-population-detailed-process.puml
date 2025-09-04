@@ -1,0 +1,34 @@
+@startuml Columns Population Detailed Process
+
+start
+
+#lightgreen:Получение и проверка исходных данных с помощью запроса;
+note right: 1001 колонка из схемы ags
+
+#lightgreen:Создание временной таблицы mcl.temp_mssql_columns;
+note right: Структура с полями для связей
+
+#lightgreen:Загрузка данных о колонках из MS SQL Server;
+note right: 1001 колонка из схемы ags
+
+#lightgreen:Проверка связей с таблицами mssql_tables;
+note right: Все table_name найдены
+
+#lightgreen:Проверка связей с типами данных mssql_derived_types;
+note right: Все комбинации типов найдены
+
+#lightgreen:Заполнение полей связей table_id и data_type_id;
+note right: Автоматическое связывание
+
+#lightgreen:Загрузка данных в постоянную таблицу mssql_columns;
+note right: INSERT INTO mcl.mssql_columns
+
+#lightgreen:Проверка целостности данных;
+note right: 1001 колонка связана корректно
+
+#lightgreen:Удаление временной таблицы;
+note right: Очистка
+
+stop
+
+@enduml
