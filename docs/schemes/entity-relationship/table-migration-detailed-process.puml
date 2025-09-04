@@ -4,11 +4,15 @@ start
 
 #lightgreen:Создание запроса для получения списка таблиц исходной БД;
 
-:Заполнение системы контроля данными;
-note right: INSERT INTO mcl.mssql_objects, mcl.mssql_tables
+#lightgreen:Заполнение системы контроля данными о исходныхтаблицах;
+note right: INSERT INTO mcl.mssql_tables
+
+#lightgreen:Заполнение системы контроля данными о исходных типах данных;
+note right: таблицы базовых и производных типов данных
+
+:Заполнение системы контроля данными о полях исходных таблиц;
+note right: таблица mssql_columns с привязкой к типам данных
 
 stop
-
-@enduml
 
 @enduml

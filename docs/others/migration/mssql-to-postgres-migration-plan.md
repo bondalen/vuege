@@ -4,6 +4,9 @@
 
 Данный документ описывает план миграции схемы `ags` из базы данных `Fish_Eye` (SQL Server) в базу данных `Fish_Eye` (PostgreSQL).
 
+**📚 ДОПОЛНИТЕЛЬНАЯ ДОКУМЕНТАЦИЯ:**
+- [Архитектура баз данных - Уточнение](./database-architecture-clarification.md) - Подробное описание двух баз данных проекта
+
 ## 🎯 Цели миграции
 
 1. **Перенос структуры данных**: Создание таблиц в PostgreSQL с правильными типами данных
@@ -18,13 +21,19 @@
 - **База данных**: Fish_Eye
 - **Схема**: ags
 - **Тип**: Источник данных для миграции
+- **Статус**: Содержит 166 таблиц схемы ags
 
 ### Целевая база данных:
-- **Сервер**: PostgreSQL 16
-- **База данных**: Fish_Eye
-- **Схема**: ags (создается в процессе миграции)
-- **Схема**: mcl (система контроля миграции)
+- **Сервер**: PostgreSQL 16 (контейнер postgres-java-universal)
+- **База данных**: Fish_Eye (ОТДЕЛЬНАЯ от базы vuege)
+- **Схема ags**: Пуста (готово для миграции данных из SQL Server)
+- **Схема mcl**: 26 таблиц системы контроля миграции (полностью реализована)
 - **Тип**: Целевая база данных для мигрированных данных
+
+### ⚠️ ВАЖНО: Различие баз данных
+- **База `vuege`**: Основная база данных проекта Vuege (схемы: public, ags, gis, history, migration_control, vuege)
+- **База `Fish_Eye`**: База данных для миграции MS SQL → PostgreSQL (схемы: ags, mcl, public)
+- **НЕ ПУТАТЬ**: Это две разные базы данных с разными целями!
 
 ## 📊 Анализ баз данных миграции
 
@@ -35,10 +44,11 @@
 - **Схема**: ags
 
 ### Целевая база данных (PostgreSQL):
-- **База данных**: Fish_Eye
-- **Схема ags**: Пуста (готово для миграции данных)
+- **База данных**: Fish_Eye (ОТДЕЛЬНАЯ от vuege)
+- **Схема ags**: Пуста (готово для миграции данных из SQL Server)
 - **Схема mcl**: 26 таблиц системы контроля миграции (полностью реализована)
 - **Статус**: Готово к миграции данных из SQL Server
+- **Подключение**: docker exec postgres-java-universal psql -U postgres -d Fish_Eye
 
 ### Основные группы таблиц:
 1. **Контракты (cn_*)**: Таблицы для работы с контрактами
@@ -139,6 +149,15 @@ docker exec postgres-java-universal psql -U postgres -d vuege -c "SELECT 1;"
 ```bash
 cd /home/alex/vuege/scripts
 ./run-migration.sh
+```
+
+### 4. Проверка статуса миграции:
+```bash
+# Проверка базы Fish_Eye
+docker exec postgres-java-universal psql -U postgres -d Fish_Eye -c "SELECT migration_status, COUNT(*) FROM mcl.mssql_tables WHERE schema_name = 'ags' GROUP BY migration_status;"
+
+# Проверка прогресса миграции
+docker exec postgres-java-universal psql -U postgres -d Fish_Eye -c "SELECT COUNT(*) as migrated_tables FROM mcl.postgres_tables;"
 ```
 
 ## 📊 Мониторинг процесса
