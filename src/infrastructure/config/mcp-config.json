@@ -2,7 +2,7 @@
   "mcpServers": {
     "dbhub": {
       "command": "node",
-      "args": ["/home/alex/vuege/dbhub/dist/index.js", "--transport", "stdio", "--dsn", "postgres://testuser:testpass@localhost:5432/testdb?sslmode=disable"],
+      "args": ["/home/alex/vuege/dbhub/node_modules/@bytebase/dbhub/dist/index.js", "--transport", "stdio", "--dsn", "postgres://postgres:postgres@localhost:5432/Fish_Eye?sslmode=disable"],
       "env": {
         "READONLY": "false"
       }
