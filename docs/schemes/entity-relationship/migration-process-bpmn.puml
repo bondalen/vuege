@@ -1,0 +1,58 @@
+@startuml Migration Process BPMN
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #E1F5FE
+  BorderColor #0277BD
+  FontColor #000000
+}
+skinparam activityDiamond {
+  BackgroundColor #FFF3E0
+  BorderColor #F57C00
+}
+skinparam note {
+  BackgroundColor #F3E5F5
+  BorderColor #7B1FA2
+}
+
+start
+
+:Создание запроса для получения списка таблиц исходной БД;
+note right: MS SQL Server Fish_Eye
+
+:Заполнение системы контроля данными о исходных таблицах;
+note right: INSERT INTO mcl.mssql_tables
+
+:Заполнение системы контроля данными о исходных типах данных;
+note right: таблицы базовых и производных типов данных
+
+partition "Заполнение системы контроля данными о полях исходных таблиц" {
+    :Заполнение системы контроля данными о полях исходных таблиц;
+    note right: Детализация в отдельной диаграмме
+}
+
+:Оптимизация поля описаний колонок;
+note right: Переименование readable_description в column_description
+
+:Определение аналогов Postgres для исходных типов данных;
+note right: таблицы базовых и производных типов Postgres
+
+:Создание аналогов таблиц без объектов таблиц;
+
+:Создание аналогов колонок таблиц;
+
+:Создание аналогов ключей, индексов, ограничений;
+
+:Анализ необходимости дополнительных компонентов миграции;
+note right: Партиционирование, полнотекстовые индексы, XML схемы, пользовательские типы
+
+:Последовательный перенос таблиц на основе системы контроля;
+
+stop
+
+@enduml
+
+
+
+

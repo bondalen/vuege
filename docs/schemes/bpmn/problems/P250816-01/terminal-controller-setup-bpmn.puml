@@ -1,0 +1,44 @@
+@startuml Terminal Controller Setup BPMN
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+  BackgroundColor #E1F5FE
+  BorderColor #0277BD
+  FontColor #000000
+}
+skinparam activityDiamond {
+  BackgroundColor #FFF3E0
+  BorderColor #F57C00
+}
+skinparam note {
+  BackgroundColor #F3E5F5
+  BorderColor #7B1FA2
+}
+
+title Terminal Controller MCP Server Setup Process
+
+start
+
+:Установка пакета terminal-controller\nчерез pip в виртуальное окружение;
+note right: pip install terminal-controller
+
+:Создание обертки terminal-controller-wrapper.py\nдля корректного запуска MCP сервера;
+note right: Python wrapper script
+
+:Настройка конфигурации MCP\nв ~/.cursor/mcp.json с использованием обертки;
+note right: MCP configuration file
+
+:Перезапуск Cursor IDE\nдля применения новой конфигурации;
+note right: Restart required
+
+:Результат: terminal-controller появился\nв MCP Tools с зеленой точкой\nи стал доступен для использования;
+note right: Success indicator
+
+stop
+
+@enduml
+
+
+
+

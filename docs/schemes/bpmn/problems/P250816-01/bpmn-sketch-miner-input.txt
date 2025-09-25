@@ -1,0 +1,26 @@
+# BPMN Sketch Miner Input - Terminal Controller Setup
+
+## Process Description:
+Установка и настройка terminal-controller MCP сервера в Cursor IDE
+
+## Process Steps:
+1. Установка пакета terminal-controller через pip в виртуальное окружение
+2. Создание обертки terminal-controller-wrapper.py для корректного запуска MCP сервера
+3. Настройка конфигурации MCP в ~/.cursor/mcp.json с использованием обертки
+4. Перезапуск Cursor IDE для применения новой конфигурации
+5. Результат: terminal-controller появился в MCP Tools с зеленой точкой и стал доступен для использования
+
+## BPMN Elements:
+- Start Event: Начало установки
+- Task 1: Установка пакета через pip
+- Task 2: Создание обертки wrapper.py
+- Task 3: Настройка конфигурации MCP
+- Task 4: Перезапуск Cursor IDE
+- End Event: Успешная установка и доступность
+
+## Sequence Flow:
+Start → Install Package → Create Wrapper → Configure MCP → Restart IDE → End
+
+
+
+
